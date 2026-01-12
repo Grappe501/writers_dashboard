@@ -19,3 +19,19 @@ reports/
 
 # Large zips you regenerate
 *.zip
+
+archive/
+reports/reorg/
+* text=auto
+*.py text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.js text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+archive/
+reports/reorg/
+reports/polish/
+*.bak_polish
