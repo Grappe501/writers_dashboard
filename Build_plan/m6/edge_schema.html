@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>M6.2 Relationship / Edge Schema — Directionality &amp; Semantics</title>
+<style>
+:root{--bg:#0b0f14;--panel:#111826;--text:#e6edf3;--muted:#9fb0c0;--accent:#7dd3fc;--border:#223046;}
+*{box-sizing:border-box}
+body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; background:var(--bg); color:var(--text); line-height:1.5}
+a{color:var(--accent); text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{display:flex;min-height:100vh}
+nav{width:320px;max-width:85vw; background:var(--panel); border-right:1px solid var(--border); padding:18px; position:sticky; top:0; height:100vh; overflow:auto}
+main{flex:1; padding:28px; max-width:1100px}
+h1,h2,h3{line-height:1.2}
+h1{font-size:28px;margin:0 0 14px}
+h2{font-size:20px;margin:26px 0 10px}
+h3{font-size:16px;margin:18px 0 8px;color:var(--accent)}
+.small{color:var(--muted); font-size:13px}
+.card{border:1px solid var(--border); background:rgba(255,255,255,.02); border-radius:14px; padding:16px; margin:14px 0}
+.k{display:inline-block; padding:2px 8px; border:1px solid var(--border); border-radius:999px; font-size:12px; color:var(--muted); margin-right:8px}
+ol{padding-left:20px}
+li{margin:6px 0}
+code,pre{background:rgba(255,255,255,.06); border:1px solid var(--border); border-radius:10px}
+code{padding:2px 6px}
+pre{padding:12px; overflow:auto}
+hr{border:none;border-top:1px solid var(--border); margin:22px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav>
+  <div style="font-weight:700;font-size:16px;margin-bottom:6px;">Master Build Plan</div>
+  <div class="small" style="margin-bottom:14px;">M6–M8 Micro-step Pages</div>
+  <div class="card">
+    <div class="small">M6 / edge_schema</div>
+    <div style="margin-top:8px;"><a href="../index.html">← Back to index</a></div>
+  </div>
+  <div class="small">Tip: Keep this open while building. Each page ends with Definition of Done.</div>
+</nav>
+<main>
+<h1>M6.2 Relationship / Edge Schema — Directionality &amp; Semantics</h1>
+<div class="card"><h3>Micro-steps</h3><ol><li>Create `schemas/edge.schema.json` and `schemas/edge_type_registry.json`.</li><li>Define edge fields: id, type, from_id, to_id, directed, weight, confidence, provenance, evidence_refs.</li><li>Define edge typing rules (allowed from/to entity types per edge type).</li><li>Implement `make_edge_id()` (stable hash of from/to/type + evidence key).</li><li>Implement `validate_edge_types()` with clear error messages.</li><li>Sort edges deterministically: (from_id, type, to_id, id).</li><li>Emit `edges.json` and `edge_stats.json`.</li></ol></div>
+<div class="card"><h3>Edge cases</h3><ol><li>Self-referential edges (allowed only for explicit types).</li><li>Multiple edges between same nodes with distinct evidence.</li><li>Cycles (allowed; must be detectable and reportable).</li></ol></div>
+<div class="card"><h3>Definition of Done</h3><ol><li>Edge registry enforces typing constraints.</li><li>Edge IDs are stable; duplicates are detectable and reported.</li><li>Edges output is deterministically ordered.</li></ol></div>
+<hr/>
+<div class="small">Generated micro-step spec pages (strict, drift-resistant). Author overrides must be explicit and logged.</div>
+</main>
+</div>
+</body></html>

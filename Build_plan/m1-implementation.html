@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>M1 Implementation — Omniscient Build Plan</title>
+<style>
+:root{--bg:#0b0f14;--fg:#e8eef6;--muted:rgba(232,238,246,.72);--card:rgba(255,255,255,.04);--border:rgba(255,255,255,.12);--accent:#7cc4ff;--ok:#7CFFB2;--warn:#ffcc66;--bad:#ff6b6b;}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.5;}
+header{position:sticky;top:0;z-index:10;background:rgba(11,15,20,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
+.brand{max-width:1240px;margin:0 auto;padding:14px;}
+.brand h1{margin:0;font-size:18px;}
+.brand .sub{color:var(--muted);font-size:12px;margin-top:2px}
+nav{max-width:1240px;margin:0 auto;padding:0 14px 14px 14px;display:flex;gap:10px;flex-wrap:wrap}
+nav a{text-decoration:none;color:var(--muted);border:1px solid var(--border);background:rgba(255,255,255,.03);padding:6px 10px;border-radius:999px;font-size:12px}
+nav a.active{color:var(--fg);border-color:rgba(124,196,255,.55)}
+nav a:hover{color:var(--fg)}
+.wrap{max-width:1240px;margin:0 auto;padding:14px 14px 70px 14px}
+.card{border:1px solid var(--border);background:var(--card);border-radius:14px;padding:14px;margin:12px 0}
+h2{margin:0 0 10px 0;font-size:16px}
+h3{margin:18px 0 8px 0;font-size:14px;color:rgba(232,238,246,.92)}
+ul{margin:8px 0 8px 18px}
+li{margin:6px 0}
+details{border:1px solid var(--border);background:rgba(255,255,255,.03);border-radius:12px;padding:10px;margin:10px 0}
+details>summary{cursor:pointer;font-weight:800}
+pre{white-space:pre-wrap;word-break:break-word;background:rgba(255,255,255,.04);border:1px solid var(--border);padding:12px;border-radius:12px}
+.badge{display:inline-block;border:1px solid var(--border);background:rgba(255,255,255,.04);padding:2px 8px;border-radius:999px;font-size:11px;color:var(--muted)}
+.ok{border-left:3px solid var(--ok);padding-left:10px}
+.callout{border-left:3px solid var(--warn);padding-left:10px}
+table{width:100%;border-collapse:collapse;margin-top:10px}
+th,td{border:1px solid var(--border);padding:8px;text-align:left;vertical-align:top}
+th{background:rgba(255,255,255,.04)}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <h1>Omniscient Build Plan — M1 Implementation Kickoff</h1>
+    <div class="sub">v1.1 • Desktop-first • M1 LOCKED • Convert M1 design → executable tasks • Generated Jan 12, 2026</div>
+  </div>
+  <nav><a class="" href="index.html">Overview</a> <a class="" href="m1-contracts.html">M1 Contracts Map</a> <a class="active" href="m1-implementation.html">M1 Implementation</a> <a class="" href="task-board.html">Task Board</a> <a class="" href="integration.html">M1↔M2 Integration</a></nav>
+</header>
+<div class="wrap">
+
+<div class="card ok">
+  <h2>M1 Implementation Plan (Desktop-first) — Pass 1</h2>
+  <p>This is the hand-off ready execution breakdown for building the CEO Cockpit as a desktop app.</p>
+</div>
+
+<details open><summary>Task M1-T0 — Desktop scaffold (Tauri + Vite) + repo structure</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Initialize desktop app container (Tauri preferred).</li>
+<li>Set up client app (React + routing + state + local storage abstraction).</li>
+<li>Set up local service folder (API proxy + file I/O).</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/desktop/ (tauri/electron config)
+/client/
+/server/ (local services)
+/docs/DEV_SETUP.md</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Desktop app launches, shows a home screen.</li>
+<li>Local service starts (even with placeholder endpoints).</li>
+</ul>
+</div></details>
+
+<details open><summary>Task M1-T1 — Data model for writing workspace (local project store)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Define local project format (folder-based) for portability.</li>
+<li>Define objects: Project, Novel, StoryDay, ChapterDraft, SessionLoadout, AI Run Log.</li>
+<li>Implement autosave + version snapshots.</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/lib/project_store/*
+/client/state/*
+/server/fs/*
+/docs/PROJECT_FORMAT.md</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Create/open project folder works.</li>
+<li>Autosave persists drafts and metadata.</li>
+</ul>
+</div></details>
+
+<details open><summary>Task M1-T2 — CEO Cockpit shell (Agenda/KPIs/Queue)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Today dashboard layout</li>
+<li>Queue CRUD with filters</li>
+<li>KPIs derived from actual writing activity (wordcount, days completed, unresolved seeds)</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/pages/Cockpit.*
+/client/components/kpi/*
+/client/components/queue/*
+/client/lib/metrics/*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Queue items can be created, assigned to StoryDays, and marked done.</li>
+<li>KPIs update without manual edits.</li>
+</ul>
+</div></details>
+
+<details open><summary>Task M1-T3 — Chapter=Day editor (spine writing surface)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Calendar/day navigation</li>
+<li>Editor with autosave</li>
+<li>Wordcount + read-time estimate (20–30 min target)</li>
+<li>Draft staging for AI merges</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/editor/*
+/client/pages/DayEditor.*
+/client/lib/read_time/*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Author can write and navigate days without losing text.</li>
+<li>Read-time estimate updates live.</li>
+</ul>
+</div></details>
+
+<details open><summary>Task M1-T4 — Session Context Builder (WHY/HOW/WHAT gate)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Session loadout UI: plot/subplot, characters, settings, symbols, payoff type</li>
+<li>Require WHY/HOW/WHAT before AI runs and before “Chapter Complete”</li>
+<li>Preset saving and re-use</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/session/*
+/client/components/loadout/*
+/client/lib/validation/*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>AI run button disabled until required fields are satisfied (with clear error messages).</li>
+<li>Loadouts save/restore correctly.</li>
+</ul>
+</div></details>
+
+<details open><summary>Task M1-T5 — Symbolism suite (Color + Sound) + alerts</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Symbol registry (modality-first: color, sound, environment, ritual)</li>
+<li>Chapter palette + soundscape chooser</li>
+<li>Overuse/underuse warnings</li>
+<li>Intentional override notes</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/symbols/*
+/client/lib/alerts/*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Symbols can be attached to days/scenes.</li>
+<li>Alerts trigger when thresholds exceeded.</li>
+</ul>
+</div></details>
+
+<details open><summary>Task M1-T6 — Setting intelligence tabs + deep vault stubs</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Location dashboards: sensory profile + culture + power + economics</li>
+<li>Deep-vault entries (facts/metrics/claims) read from M2</li>
+<li>Portal-ready export stub (later in M5/M7)</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/settings/*
+/client/locations/*
+/client/lib/canon/*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Location panels render and can be linked to StoryDays.</li>
+<li>Canon facts display read-only from M2 API.</li>
+</ul>
+</div></details>
+
+<details open><summary>Task M1-T7 — Character engine (growth cycles + Bio Factory UI)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Character profiles: Enneagram, fears/desires, stress/growth markers</li>
+<li>Growth cycle timeline (growth/regress/stagnate) with triggers</li>
+<li>Bio Factory templates (auto/biography, diary/blog, audio/video script stubs)</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/characters/*
+/client/bio_factory/*
+/client/lib/templates/*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Character timeline can be updated per day/week.</li>
+<li>Bio Factory can generate structured drafts stored in project folder (canon write later).</li>
+</ul>
+</div></details>
+
+<details open><summary>Task M1-T8 — Beat board (drag/drop) + Scene model</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Beat model tied to StoryDay + scene + intent</li>
+<li>Drag/drop beat board per day</li>
+<li>Beat-to-draft AI hooks (calls tools in T10)</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/beats/*
+/client/components/dragdrop/*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Beats reorder deterministically and persist.</li>
+<li>Beat board can export a “scene plan” JSON.</li>
+</ul>
+</div></details>
+
+<details open><summary>Task M1-T9 — Continuity map (graph view) + queries</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Graph visualization of entities/seeds/symbols across days</li>
+<li>Filters: character, location, symbol, subplot</li>
+<li>Flags: dropped seeds, overused entities, missing payoff</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/graphs/*
+/client/lib/graph_queries/*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Graph loads from project metadata + M2 canon reads.</li>
+<li>Flags are reproducible (same inputs → same warnings).</li>
+</ul>
+</div></details>
+
+<details open><summary>Task M1-T10 — AI suite (local proxy, tools, logs, cost caps)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Local proxy for OpenAI calls (server-only key)</li>
+<li>Tool schemas: outline, beats, constrained drafting, revision ops, continuity scan, voice lock</li>
+<li>Scope slider: sentence/paragraph/scene/chapter</li>
+<li>Run log (inputs, outputs, model/settings, token/cost estimates)</li>
+<li>Cost caps + rate limits</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/server/ai_proxy/*
+/client/ai/*
+/client/runlog/*
+/docs/AI_TOOLS.md</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Browser/UI never sees the API key.</li>
+<li>Every AI run produces a log entry and a draft staged for accept/reject.</li>
+</ul>
+</div></details>
+
+<details open><summary>Task M1-T11 — Inline AI rewrite (selection-scoped) + diff merge</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Select text → run rewrite op (clarity/pacing/voice/dialogue/etc.)</li>
+<li>Diff UI: accept/reject per paragraph</li>
+<li>Constraints: no future knowledge; no new entities default</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/editor/inline_ai/*
+/client/components/diff/*
+/server/ai_proxy/tools/rewrite.*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Only selection + declared context sent to proxy.</li>
+<li>Author can accept/reject changes granularly.</li>
+</ul>
+</div></details>
+
+<details open><summary>Task M1-T12 — Export/backup (project portability)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>One-click zip export of project</li>
+<li>Daily automatic backup rotation (local)</li>
+<li>Export manuscript (per novel, per day) to Markdown/Docx later (M7)</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/server/fs/export/*
+/client/export/*
+/docs/EXPORTS.md</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>User can export a zip and restore it on another machine.</li>
+</ul>
+</div></details>
+
+<details open><summary>Task M1-T13 — Desktop packaging, updates, and crash recovery</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Packaging for macOS/Windows/Linux</li>
+<li>Crash recovery: restore last autosave state</li>
+<li>Settings panel: paths, caps, models, offline mode</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/desktop/*
+/client/settings_app/*
+/docs/RELEASE.md</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>App rebuilds reliably with a repeatable release process.</li>
+<li>Crash recovery works (forced kill test).</li>
+</ul>
+</div></details>
+
+<div class="card"><span class="badge">No-drift</span> Build only within task file-touch lists. If a task needs more files, update the task spec first.</div>
+</div>
+</body>
+</html>

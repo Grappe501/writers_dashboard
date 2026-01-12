@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>M6–M8 Micro-step Pages</title>
+<style>
+:root{--bg:#0b0f14;--panel:#111826;--text:#e6edf3;--muted:#9fb0c0;--accent:#7dd3fc;--border:#223046;}
+*{box-sizing:border-box}
+body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; background:var(--bg); color:var(--text); line-height:1.5}
+a{color:var(--accent); text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{display:flex;min-height:100vh}
+nav{width:320px;max-width:85vw; background:var(--panel); border-right:1px solid var(--border); padding:18px; position:sticky; top:0; height:100vh; overflow:auto}
+main{flex:1; padding:28px; max-width:1100px}
+h1,h2,h3{line-height:1.2}
+h1{font-size:28px;margin:0 0 14px}
+h2{font-size:20px;margin:26px 0 10px}
+h3{font-size:16px;margin:18px 0 8px;color:var(--accent)}
+.small{color:var(--muted); font-size:13px}
+.card{border:1px solid var(--border); background:rgba(255,255,255,.02); border-radius:14px; padding:16px; margin:14px 0}
+.k{display:inline-block; padding:2px 8px; border:1px solid var(--border); border-radius:999px; font-size:12px; color:var(--muted); margin-right:8px}
+ol{padding-left:20px}
+li{margin:6px 0}
+code,pre{background:rgba(255,255,255,.06); border:1px solid var(--border); border-radius:10px}
+code{padding:2px 6px}
+pre{padding:12px; overflow:auto}
+hr{border:none;border-top:1px solid var(--border); margin:22px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav>
+  <div style="font-weight:800;font-size:18px;">Micro-step Spec Reader</div>
+  <div class="small" style="margin-top:6px;">M6–M8 first pass</div>
+  <div class="card">
+    <div class="small">Jump</div>
+    <div style="margin-top:8px;display:grid;gap:6px;">
+      <a href="#m6">M6</a>
+      <a href="#m7">M7</a>
+      <a href="#m8">M8</a>
+    </div>
+  </div>
+</nav>
+<main>
+<h1>M6–M8 Micro-step Pages</h1>
+
+<div class="card">
+  <div class="small">Scope</div>
+  <p>This bundle adds the <b>micro-step pages</b> for <b>M6, M7, M8</b> first, as requested. Each page is build-order oriented and ends with a strict Definition of Done.</p>
+  <div class="small">Rule</div>
+  <p>Any intentional author override must be explicitly recorded (override_log) — otherwise treat these steps as binding.</p>
+</div>
+<h2>Modules</h2>
+
+    <div class="card">
+      <div style="font-weight:700;margin-bottom:8px;">M6</div>
+      <ul style="margin:0;padding-left:18px;"><li><a href="m6/overview.html">M6 Overview — Entity Graph &amp; Crosslinking Engine</a></li><li><a href="m6/entity_schema.html">M6.1 Entity Schema — IDs, Types, Fields</a></li><li><a href="m6/edge_schema.html">M6.2 Relationship / Edge Schema — Directionality &amp; Semantics</a></li><li><a href="m6/alias_dedupe.html">M6.3 Alias &amp; Dedupe — Merge Rules + Audit Trail</a></li><li><a href="m6/graph_build.html">M6.4 Deterministic Graph Build — Indexes &amp; Adjacency</a></li><li><a href="m6/validation_rules.html">M6.5 Validation Rules — Canon Integrity &amp; Graph Sanity</a></li><li><a href="m6/crosslink_render.html">M6.6 Crosslinks &amp; Backlinks — Rendering Contracts</a></li><li><a href="m6/conflict_explainability.html">M6.7 Conflict Explainability — “Why is this linked?”</a></li><li><a href="m6/api_contracts.html">M6.8 API Contracts to M7 — What M7 Can Rely On</a></li><li><a href="m6/tests_fixtures.html">M6.9 Tests &amp; Fixtures — ToyBook + Book1Window</a></li><li><a href="m6/telemetry_reports.html">M6.10 Telemetry &amp; Reports — Build Stats You’ll Actually Use</a></li></ul>
+    </div>
+    <div class="card">
+      <div style="font-weight:700;margin-bottom:8px;">M7</div>
+      <ul style="margin:0;padding-left:18px;"><li><a href="m7/overview.html">M7 Overview — Spoiler-Safe Search &amp; Retrieval</a></li><li><a href="m7/searchdoc_schema.html">M7.1 SearchDoc Schema — One Format to Index Everything</a></li><li><a href="m7/index_builder_pipeline.html">M7.2 Index Builder Pipeline — Deterministic from JSONL to Index</a></li><li><a href="m7/spoiler_gating.html">M7.3 Spoiler Gate — Levels, Rules, and Explanations</a></li><li><a href="m7/query_language_parser.html">M7.4 M7QL Parser — Query → AST → Executor</a></li><li><a href="m7/ranking_snippets.html">M7.5 Ranking &amp; Snippets — Stable and Explainable</a></li><li><a href="m7/filters_facets.html">M7.6 Facets &amp; Filters — Doc Types, Entities, Days</a></li><li><a href="m7/explain_hidden_ui.html">M7.7 Explain Hidden UI Payloads — “Why can’t I see this?”</a></li><li><a href="m7/api_contracts.html">M7.8 API Contracts to M8 — What Packaging Needs</a></li><li><a href="m7/tests_fixtures.html">M7.9 Tests &amp; Fixtures — Golden Queries</a></li><li><a href="m7/telemetry.html">M7.10 Telemetry — Index Stats &amp; Query Performance</a></li></ul>
+    </div>
+    <div class="card">
+      <div style="font-weight:700;margin-bottom:8px;">M8</div>
+      <ul style="margin:0;padding-left:18px;"><li><a href="m8/overview.html">M8 Overview — Packaging, Determinism, Releases</a></li><li><a href="m8/manifest_schema.html">M8.1 Release Manifest Schema — The Source of Truth</a></li><li><a href="m8/collector_stage.html">M8.2 Collector Stage — Gather + Normalize Inputs</a></li><li><a href="m8/validator_stage.html">M8.3 Validator Stage — Integrity, Contracts, and Sanity</a></li><li><a href="m8/renderer_stage.html">M8.4 Renderer Stage — Offline Reader Output</a></li><li><a href="m8/packaging_stage.html">M8.5 Packaging Stage — Deterministic ZIP/TAR</a></li><li><a href="m8/determinism.html">M8.6 Determinism &amp; Reproducibility — Guard Rails</a></li><li><a href="m8/ci_release.html">M8.7 CI + Release Pipeline — Fast Builds, No Surprises</a></li><li><a href="m8/incremental_cache.html">M8.8 Incremental Builds &amp; Caching — Optional but Planned</a></li><li><a href="m8/golden_outputs.html">M8.9 Golden Outputs — Snapshots for Trust</a></li><li><a href="m8/telemetry.html">M8.10 Telemetry — Build Time, Size, Integrity</a></li></ul>
+    </div>
+<div class="card">
+  <h3>Next after this</h3>
+  <ol>
+    <li>Backfill M0–M5 with the same micro-step template depth.</li>
+    <li>Lock Interface Control Documents (ICDs) between M4↔M6↔M7↔M8.</li>
+    <li>Create golden fixture releases (ToyBook + Book1Window) and enforce reproducibility in CI.</li>
+  </ol>
+</div>
+
+<h2 id="m6">M6</h2>
+
+    <div class="card">
+      <div style="font-weight:700;margin-bottom:8px;">M6</div>
+      <ul style="margin:0;padding-left:18px;"><li><a href="m6/overview.html">M6 Overview — Entity Graph &amp; Crosslinking Engine</a></li><li><a href="m6/entity_schema.html">M6.1 Entity Schema — IDs, Types, Fields</a></li><li><a href="m6/edge_schema.html">M6.2 Relationship / Edge Schema — Directionality &amp; Semantics</a></li><li><a href="m6/alias_dedupe.html">M6.3 Alias &amp; Dedupe — Merge Rules + Audit Trail</a></li><li><a href="m6/graph_build.html">M6.4 Deterministic Graph Build — Indexes &amp; Adjacency</a></li><li><a href="m6/validation_rules.html">M6.5 Validation Rules — Canon Integrity &amp; Graph Sanity</a></li><li><a href="m6/crosslink_render.html">M6.6 Crosslinks &amp; Backlinks — Rendering Contracts</a></li><li><a href="m6/conflict_explainability.html">M6.7 Conflict Explainability — “Why is this linked?”</a></li><li><a href="m6/api_contracts.html">M6.8 API Contracts to M7 — What M7 Can Rely On</a></li><li><a href="m6/tests_fixtures.html">M6.9 Tests &amp; Fixtures — ToyBook + Book1Window</a></li><li><a href="m6/telemetry_reports.html">M6.10 Telemetry &amp; Reports — Build Stats You’ll Actually Use</a></li></ul>
+    </div>
+<h2 id="m7">M7</h2>
+
+    <div class="card">
+      <div style="font-weight:700;margin-bottom:8px;">M7</div>
+      <ul style="margin:0;padding-left:18px;"><li><a href="m7/overview.html">M7 Overview — Spoiler-Safe Search &amp; Retrieval</a></li><li><a href="m7/searchdoc_schema.html">M7.1 SearchDoc Schema — One Format to Index Everything</a></li><li><a href="m7/index_builder_pipeline.html">M7.2 Index Builder Pipeline — Deterministic from JSONL to Index</a></li><li><a href="m7/spoiler_gating.html">M7.3 Spoiler Gate — Levels, Rules, and Explanations</a></li><li><a href="m7/query_language_parser.html">M7.4 M7QL Parser — Query → AST → Executor</a></li><li><a href="m7/ranking_snippets.html">M7.5 Ranking &amp; Snippets — Stable and Explainable</a></li><li><a href="m7/filters_facets.html">M7.6 Facets &amp; Filters — Doc Types, Entities, Days</a></li><li><a href="m7/explain_hidden_ui.html">M7.7 Explain Hidden UI Payloads — “Why can’t I see this?”</a></li><li><a href="m7/api_contracts.html">M7.8 API Contracts to M8 — What Packaging Needs</a></li><li><a href="m7/tests_fixtures.html">M7.9 Tests &amp; Fixtures — Golden Queries</a></li><li><a href="m7/telemetry.html">M7.10 Telemetry — Index Stats &amp; Query Performance</a></li></ul>
+    </div>
+<h2 id="m8">M8</h2>
+
+    <div class="card">
+      <div style="font-weight:700;margin-bottom:8px;">M8</div>
+      <ul style="margin:0;padding-left:18px;"><li><a href="m8/overview.html">M8 Overview — Packaging, Determinism, Releases</a></li><li><a href="m8/manifest_schema.html">M8.1 Release Manifest Schema — The Source of Truth</a></li><li><a href="m8/collector_stage.html">M8.2 Collector Stage — Gather + Normalize Inputs</a></li><li><a href="m8/validator_stage.html">M8.3 Validator Stage — Integrity, Contracts, and Sanity</a></li><li><a href="m8/renderer_stage.html">M8.4 Renderer Stage — Offline Reader Output</a></li><li><a href="m8/packaging_stage.html">M8.5 Packaging Stage — Deterministic ZIP/TAR</a></li><li><a href="m8/determinism.html">M8.6 Determinism &amp; Reproducibility — Guard Rails</a></li><li><a href="m8/ci_release.html">M8.7 CI + Release Pipeline — Fast Builds, No Surprises</a></li><li><a href="m8/incremental_cache.html">M8.8 Incremental Builds &amp; Caching — Optional but Planned</a></li><li><a href="m8/golden_outputs.html">M8.9 Golden Outputs — Snapshots for Trust</a></li><li><a href="m8/telemetry.html">M8.10 Telemetry — Build Time, Size, Integrity</a></li></ul>
+    </div>
+</main>
+</div>
+</body></html>

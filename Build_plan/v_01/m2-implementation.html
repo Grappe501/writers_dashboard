@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>M2 Implementation — Omniscient Build Plan</title>
+<style>
+:root{--bg:#0b0f14;--fg:#e8eef6;--muted:rgba(232,238,246,.72);--card:rgba(255,255,255,.04);--border:rgba(255,255,255,.12);--accent:#7cc4ff;--ok:#7CFFB2;--warn:#ffcc66;}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.5;}
+header{position:sticky;top:0;z-index:10;background:rgba(11,15,20,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
+.brand{max-width:1240px;margin:0 auto;padding:14px;}
+.brand h1{margin:0;font-size:18px;}
+.brand .sub{color:var(--muted);font-size:12px;margin-top:2px}
+nav{max-width:1240px;margin:0 auto;padding:0 14px 14px 14px;display:flex;gap:10px;flex-wrap:wrap}
+nav a{text-decoration:none;color:var(--muted);border:1px solid var(--border);background:rgba(255,255,255,.03);padding:6px 10px;border-radius:999px;font-size:12px}
+nav a.active{color:var(--fg);border-color:rgba(124,196,255,.55)}
+nav a:hover{color:var(--fg)}
+.wrap{max-width:1240px;margin:0 auto;padding:14px 14px 70px 14px}
+.card{border:1px solid var(--border);background:var(--card);border-radius:14px;padding:14px;margin:12px 0}
+h2{margin:0 0 10px 0;font-size:16px}
+h3{margin:18px 0 8px 0;font-size:14px;color:rgba(232,238,246,.92)}
+ul{margin:8px 0 8px 18px}
+li{margin:6px 0}
+pre{white-space:pre-wrap;word-break:break-word;background:rgba(255,255,255,.04);border:1px solid var(--border);padding:12px;border-radius:12px}
+.badge{display:inline-block;border:1px solid var(--border);background:rgba(255,255,255,.04);padding:2px 8px;border-radius:999px;font-size:11px;color:var(--muted)}
+.ok{border-left:3px solid var(--ok);padding-left:10px}
+.callout{border-left:3px solid var(--warn);padding-left:10px}
+table{width:100%;border-collapse:collapse;margin-top:10px}
+th,td{border:1px solid var(--border);padding:8px;text-align:left;vertical-align:top}
+th{background:rgba(255,255,255,.04)}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <h1>Omniscient Build Plan — Implementation Kickoff</h1>
+    <div class="sub">v1.0 • M2 LOCKED • Convert contracts → executable tasks • Generated Jan 12, 2026</div>
+  </div>
+  <nav><a class="" href="index.html">Overview</a> <a class="active" href="m2-implementation.html">M2 Implementation</a> <a class="" href="m2-contracts.html">M2 Contracts Map</a> <a class="" href="task-board.html">Task Board</a></nav>
+</header>
+<div class="wrap">
+
+<div class="card ok">
+  <h2>M2 Implementation Plan (Pass 1)</h2>
+  <p>This is the “hand-off ready” execution breakdown. Each task includes scope, file-touch list, and acceptance criteria.</p>
+</div>
+
+<details open><summary>Task M2-T0 — Repo scaffold for Canon Engine</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Create server skeleton folders for DB, models, validators, services, API, tests.</li>
+<li>Add environment config stubs (local only).</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/server/
+/server/db/
+/server/models/
+/server/validators/
+/server/services/
+/server/api/
+/server/tests/
+/data/.gitignore</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Server can start (even with placeholder routes).</li>
+<li>Repo contains empty-but-correct structure to implement tasks below.</li>
+</ul>
+</div></details>
+
+<details open><summary>Task M2-T1 — DB + migration runner</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>SQLite connection factory</li>
+<li>Migration runner (apply ordered scripts)</li>
+<li>CLI commands: init/migrate/reset</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/server/db/
+/server/migrations/
+/server/cli/ (or equivalent)
+/server/tests/test_db_bootstrap.*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li><code>init+migrate</code> creates schema from scratch.</li>
+<li><code>reset</code> drops + recreates + loads fixtures (later).</li>
+</ul>
+</div></details>
+
+<details open><summary>Task M2-T2 — Core tables (entities) + deterministic IDs</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Implement tables/models for: Person, Location, Org, Faction, StoryDay, Event, Artifact, Symbol, Metric, Claim, Evidence</li>
+<li>Deterministic ID generator + collision detection</li>
+<li>Alias table + reveal linkage (identity_of)</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/server/migrations/0001_core_tables.*
+/server/models/*
+/server/utils/id_generator.*
+/server/tests/test_ids.*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Creating entities requires valid IDs.</li>
+<li>Aliases can be added and queried without breaking entity references.</li>
+</ul>
+</div></details>
+
+<details open><summary>Task M2-T3 — Invariants + validators</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Implement testable invariants from <code>canon_invariants_v1</code></li>
+<li>Key ones: timeline overlap, location impossibility, symbol modality, evidence required for elevated facts</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/server/validators/*
+/server/tests/test_invariants.*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Invalid writes are rejected with clear errors.</li>
+<li>Tests cover core invariants and pass on fixtures.</li>
+</ul>
+</div></details>
+
+<details open><summary>Task M2-T4 — CanonCommit (preview/apply/revert)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Commit table + commit_items table</li>
+<li>Preview diff</li>
+<li>Apply commit transaction</li>
+<li>Revert commit transaction</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/server/migrations/0002_canon_commit.*
+/server/services/canon_commit_service.*
+/server/tests/test_commit.*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>All mutations run through CanonCommit.</li>
+<li>Rollback restores prior state without corruption.</li>
+</ul>
+</div></details>
+
+<details open><summary>Task M2-T5 — Canon API (read + write via commits)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>CRUD READ: list/get/search per entity</li>
+<li>WRITE: create/update/delete via commit endpoints</li>
+<li>Timeline endpoints: by StoryDay</li>
+<li>Graph endpoint: neighborhood relations</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/server/api/*
+/server/services/*
+/server/tests/test_api.*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>No direct-write endpoints exist.</li>
+<li>API returns deterministic, structured JSON for cockpit consumption.</li>
+</ul>
+</div></details>
+
+<details open><summary>Task M2-T6 — Fixtures + smoke tests</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Build a 1-month sample world dataset</li>
+<li>Ensure invariants and commit protocol pass</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/server/fixtures/*
+/server/tests/test_fixtures.*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li><code>reset</code> loads fixtures cleanly.</li>
+<li>Smoke suite passes end-to-end (init → migrate → load → query).</li>
+</ul>
+</div></details>
+
+<details open><summary>Task M2-T7 — M1 integration stubs (read-only)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Add read-only client functions for M1: getStoryDay, searchEntities, fetchRelations, fetchSymbols</li>
+<li>No writing from M1 until M2 is stable</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/lib/canon_api_client.*
+/client/tests/test_canon_client.*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>M1 can display canon data with stable caching behavior.</li>
+</ul>
+</div></details>
+
+<div class="card"><span class="badge">No-drift</span> Build only within task file-touch lists. If a task needs more files, update the task spec first.</div>
+</div>
+</body>
+</html>

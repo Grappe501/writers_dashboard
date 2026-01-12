@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>M8 Overview — Packaging, Determinism, Releases</title>
+<style>
+:root{--bg:#0b0f14;--panel:#111826;--text:#e6edf3;--muted:#9fb0c0;--accent:#7dd3fc;--border:#223046;}
+*{box-sizing:border-box}
+body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; background:var(--bg); color:var(--text); line-height:1.5}
+a{color:var(--accent); text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{display:flex;min-height:100vh}
+nav{width:320px;max-width:85vw; background:var(--panel); border-right:1px solid var(--border); padding:18px; position:sticky; top:0; height:100vh; overflow:auto}
+main{flex:1; padding:28px; max-width:1100px}
+h1,h2,h3{line-height:1.2}
+h1{font-size:28px;margin:0 0 14px}
+h2{font-size:20px;margin:26px 0 10px}
+h3{font-size:16px;margin:18px 0 8px;color:var(--accent)}
+.small{color:var(--muted); font-size:13px}
+.card{border:1px solid var(--border); background:rgba(255,255,255,.02); border-radius:14px; padding:16px; margin:14px 0}
+.k{display:inline-block; padding:2px 8px; border:1px solid var(--border); border-radius:999px; font-size:12px; color:var(--muted); margin-right:8px}
+ol{padding-left:20px}
+li{margin:6px 0}
+code,pre{background:rgba(255,255,255,.06); border:1px solid var(--border); border-radius:10px}
+code{padding:2px 6px}
+pre{padding:12px; overflow:auto}
+hr{border:none;border-top:1px solid var(--border); margin:22px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav>
+  <div style="font-weight:700;font-size:16px;margin-bottom:6px;">Master Build Plan</div>
+  <div class="small" style="margin-bottom:14px;">M6–M8 Micro-step Pages</div>
+  <div class="card">
+    <div class="small">M8 / overview</div>
+    <div style="margin-top:8px;"><a href="../index.html">← Back to index</a></div>
+  </div>
+  <div class="small">Tip: Keep this open while building. Each page ends with Definition of Done.</div>
+</nav>
+<main>
+<h1>M8 Overview — Packaging, Determinism, Releases</h1>
+<div class="card"><h3>Goal</h3><ul><li>Turn the whole project into deterministic offline artifacts (readers, manifests, indices, reports) with zero drift and reproducible builds.</li></ul></div>
+<div class="card"><h3>Inputs</h3><ul><li>M4 items, M6 graph, M7 search, all schemas + validation reports.</li></ul></div>
+<div class="card"><h3>Outputs</h3><ul><li>release.zip, release_manifest.json, build_report.json, integrity_hashes.json, offline_reader/</li></ul></div>
+<div class="card"><h3>Micro-steps (build order)</h3><ol><li>Finalize release manifest schema and required artifacts.</li><li>Implement collector stage (gather inputs + normalize paths).</li><li>Implement validator stage (schema + integrity + cross-module contracts).</li><li>Implement renderer stage (HTML readers + navigation + crosslinks).</li><li>Implement packaging stage (zip/tar) deterministically.</li><li>Implement reproducibility checks + golden snapshots.</li><li>Integrate CI pipeline and release versioning rules.</li></ol></div>
+<div class="card"><h3>Definition of Done</h3><ol><li>Two builds from same inputs produce byte-identical release.zip.</li><li>Manifest fully describes contents and hashes.</li><li>Offline reader works with crosslinks + search without network.</li></ol></div>
+<hr/>
+<div class="small">Generated micro-step spec pages (strict, drift-resistant). Author overrides must be explicit and logged.</div>
+</main>
+</div>
+</body></html>

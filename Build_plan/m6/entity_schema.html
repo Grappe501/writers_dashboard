@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>M6.1 Entity Schema — IDs, Types, Fields</title>
+<style>
+:root{--bg:#0b0f14;--panel:#111826;--text:#e6edf3;--muted:#9fb0c0;--accent:#7dd3fc;--border:#223046;}
+*{box-sizing:border-box}
+body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; background:var(--bg); color:var(--text); line-height:1.5}
+a{color:var(--accent); text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{display:flex;min-height:100vh}
+nav{width:320px;max-width:85vw; background:var(--panel); border-right:1px solid var(--border); padding:18px; position:sticky; top:0; height:100vh; overflow:auto}
+main{flex:1; padding:28px; max-width:1100px}
+h1,h2,h3{line-height:1.2}
+h1{font-size:28px;margin:0 0 14px}
+h2{font-size:20px;margin:26px 0 10px}
+h3{font-size:16px;margin:18px 0 8px;color:var(--accent)}
+.small{color:var(--muted); font-size:13px}
+.card{border:1px solid var(--border); background:rgba(255,255,255,.02); border-radius:14px; padding:16px; margin:14px 0}
+.k{display:inline-block; padding:2px 8px; border:1px solid var(--border); border-radius:999px; font-size:12px; color:var(--muted); margin-right:8px}
+ol{padding-left:20px}
+li{margin:6px 0}
+code,pre{background:rgba(255,255,255,.06); border:1px solid var(--border); border-radius:10px}
+code{padding:2px 6px}
+pre{padding:12px; overflow:auto}
+hr{border:none;border-top:1px solid var(--border); margin:22px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav>
+  <div style="font-weight:700;font-size:16px;margin-bottom:6px;">Master Build Plan</div>
+  <div class="small" style="margin-bottom:14px;">M6–M8 Micro-step Pages</div>
+  <div class="card">
+    <div class="small">M6 / entity_schema</div>
+    <div style="margin-top:8px;"><a href="../index.html">← Back to index</a></div>
+  </div>
+  <div class="small">Tip: Keep this open while building. Each page ends with Definition of Done.</div>
+</nav>
+<main>
+<h1>M6.1 Entity Schema — IDs, Types, Fields</h1>
+<div class="card"><h3>Key decisions to lock</h3><ol><li>Entity types list and required fields per type.</li><li>Stable ID strategy (uuidv5 / hash-of-normalized-key) and migration strategy.</li><li>Display name vs canonical name vs slug rules.</li></ol></div>
+<div class="card"><h3>Micro-steps</h3><ol><li>Create `schemas/entity.schema.json` and `schemas/entity_type_registry.json`.</li><li>Define required core fields: id, type, name, slug, created_at, updated_at, provenance.</li><li>Define optional fields: description, tags, attributes, canonical_refs, timeline_refs.</li><li>Implement `normalize_entity_key()` (casefold, whitespace, punctuation rules).</li><li>Implement `make_entity_id()` (stable, deterministic; no random UUIDs).</li><li>Write loader `load_entities()` that validates schema and sorts deterministically.</li><li>Emit `entities.json` with stable field ordering (canonical serialization).</li></ol></div>
+<div class="card"><h3>Edge cases</h3><ol><li>Multiple spellings, accents, punctuation variants.</li><li>Same name across different types (Person vs Place).</li><li>Entities introduced before fully known (placeholder stubs).</li></ol></div>
+<div class="card"><h3>Definition of Done</h3><ol><li>Schema validation fails fast with actionable errors.</li><li>IDs are stable across rebuilds and independent of file order.</li><li>Entity JSON output is deterministically ordered and formatted.</li></ol></div>
+<hr/>
+<div class="small">Generated micro-step spec pages (strict, drift-resistant). Author overrides must be explicit and logged.</div>
+</main>
+</div>
+</body></html>

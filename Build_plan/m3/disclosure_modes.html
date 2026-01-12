@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>M3.1 Disclosure Modes — Levels, Policies, Unlock Rules</title>
+<style>:root{--bg:#0b0f14;--panel:#111826;--text:#e6edf3;--muted:#9fb0c0;--accent:#7dd3fc;--border:#223046;}
+*{box-sizing:border-box}
+body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; background:var(--bg); color:var(--text); line-height:1.5}
+a{color:var(--accent); text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{display:flex;min-height:100vh}
+nav{width:320px;max-width:85vw; background:var(--panel); border-right:1px solid var(--border); padding:18px; position:sticky; top:0; height:100vh; overflow:auto}
+main{flex:1; padding:28px; max-width:1100px}
+h1,h2,h3{line-height:1.2}
+h1{font-size:28px;margin:0 0 14px}
+h2{font-size:20px;margin:26px 0 10px}
+h3{font-size:16px;margin:18px 0 8px;color:var(--accent)}
+.small{color:var(--muted); font-size:13px}
+.card{border:1px solid var(--border); background:rgba(255,255,255,.02); border-radius:14px; padding:16px; margin:14px 0}
+.k{display:inline-block; padding:2px 8px; border:1px solid var(--border); border-radius:999px; font-size:12px; color:var(--muted); margin-right:8px}
+ol{padding-left:20px}
+li{margin:6px 0}
+code,pre{background:rgba(255,255,255,.06); border:1px solid var(--border); border-radius:10px}
+code{padding:2px 6px}
+pre{padding:12px; overflow:auto}
+hr{border:none;border-top:1px solid var(--border); margin:22px 0}</style>
+</head><body>
+<div class="wrap">
+<nav>
+<div style="font-weight:700;font-size:16px;margin-bottom:6px;">Master Build Plan</div>
+<div class="small" style="margin-bottom:14px;">Micro-step Pages</div>
+<div class="card">
+<div class="small">m3 / disclosure_modes</div>
+<div style="margin-top:8px;"><a href="../index.html">← Back to index</a></div>
+</div>
+<div class="small">Tip: Keep this open while building. Each page ends with Definition of Done.</div>
+</nav>
+<main>
+<h1>M3.1 Disclosure Modes — Levels, Policies, Unlock Rules</h1>
+<div class="card"><h3>Goal</h3><p>Define levels (e.g., Strict, Standard, Full) and what each allows.</p></div><div class="card"><h3>Baseline Levels</h3><ul><li><b>Strict</b>: only items up to progress day; no foreshadow; minimal crosslinks.</li><li><b>Standard</b>: crosslinks allowed if they do not reveal future outcomes.</li><li><b>Full</b>: everything visible; spoiler warnings still available.</li></ul></div><div class="card"><h3>Build Order (micro-steps)</h3><ol><li>Define disclosure policy table.</li><li>Implement gating function (item, reader_state) → allow/deny + reason.</li><li>Expose reason codes to UI (M7 explain-hidden).</li></ol></div><div class="card"><h3>Definition of Done (DoD)</h3><ul><li>Every hidden item provides a reason code and human explanation.</li></ul></div>
+</main>
+</div>
+</body></html>

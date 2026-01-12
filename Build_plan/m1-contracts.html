@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>M1 Contracts Map — Omniscient Build Plan</title>
+<style>
+:root{--bg:#0b0f14;--fg:#e8eef6;--muted:rgba(232,238,246,.72);--card:rgba(255,255,255,.04);--border:rgba(255,255,255,.12);--accent:#7cc4ff;--ok:#7CFFB2;--warn:#ffcc66;--bad:#ff6b6b;}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.5;}
+header{position:sticky;top:0;z-index:10;background:rgba(11,15,20,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
+.brand{max-width:1240px;margin:0 auto;padding:14px;}
+.brand h1{margin:0;font-size:18px;}
+.brand .sub{color:var(--muted);font-size:12px;margin-top:2px}
+nav{max-width:1240px;margin:0 auto;padding:0 14px 14px 14px;display:flex;gap:10px;flex-wrap:wrap}
+nav a{text-decoration:none;color:var(--muted);border:1px solid var(--border);background:rgba(255,255,255,.03);padding:6px 10px;border-radius:999px;font-size:12px}
+nav a.active{color:var(--fg);border-color:rgba(124,196,255,.55)}
+nav a:hover{color:var(--fg)}
+.wrap{max-width:1240px;margin:0 auto;padding:14px 14px 70px 14px}
+.card{border:1px solid var(--border);background:var(--card);border-radius:14px;padding:14px;margin:12px 0}
+h2{margin:0 0 10px 0;font-size:16px}
+h3{margin:18px 0 8px 0;font-size:14px;color:rgba(232,238,246,.92)}
+ul{margin:8px 0 8px 18px}
+li{margin:6px 0}
+details{border:1px solid var(--border);background:rgba(255,255,255,.03);border-radius:12px;padding:10px;margin:10px 0}
+details>summary{cursor:pointer;font-weight:800}
+pre{white-space:pre-wrap;word-break:break-word;background:rgba(255,255,255,.04);border:1px solid var(--border);padding:12px;border-radius:12px}
+.badge{display:inline-block;border:1px solid var(--border);background:rgba(255,255,255,.04);padding:2px 8px;border-radius:999px;font-size:11px;color:var(--muted)}
+.ok{border-left:3px solid var(--ok);padding-left:10px}
+.callout{border-left:3px solid var(--warn);padding-left:10px}
+table{width:100%;border-collapse:collapse;margin-top:10px}
+th,td{border:1px solid var(--border);padding:8px;text-align:left;vertical-align:top}
+th{background:rgba(255,255,255,.04)}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <h1>Omniscient Build Plan — M1 Implementation Kickoff</h1>
+    <div class="sub">v1.1 • Desktop-first • M1 LOCKED • Convert M1 design → executable tasks • Generated Jan 12, 2026</div>
+  </div>
+  <nav><a class="" href="index.html">Overview</a> <a class="active" href="m1-contracts.html">M1 Contracts Map</a> <a class="" href="m1-implementation.html">M1 Implementation</a> <a class="" href="task-board.html">Task Board</a> <a class="" href="integration.html">M1↔M2 Integration</a></nav>
+</header>
+<div class="wrap">
+
+<div class="card ok">
+  <h2>M1 Contracts → Implementation mapping</h2>
+  <p>M1’s “contracts” are primarily UX + safety + workflow constraints. These become executable tasks and tests.</p>
+  <table>
+    <tr><th>Contract / Rule</th><th>Implemented by</th><th>Primary folders</th></tr>
+    <tr><td>AI key server-only</td><td>Local proxy service + IPC</td><td><code>/server/ai_proxy</code>, <code>/desktop/</code></td></tr>
+    <tr><td>No silent mutation</td><td>Draft staging + accept/reject merge UI</td><td><code>/client/editor</code></td></tr>
+    <tr><td>Scope slider (sentence→chapter)</td><td>Tool request schema + UI control + logs</td><td><code>/client/ai</code>, <code>/server/ai_proxy</code></td></tr>
+    <tr><td>Golden Circle required</td><td>Session loadout form + validation gate</td><td><code>/client/session</code></td></tr>
+    <tr><td>POV + Enneagram voice lock</td><td>Voice profiles + rewrite tools + evaluators</td><td><code>/client/ai/tools</code></td></tr>
+    <tr><td>Color & sound symbolism</td><td>Symbol palette panel + registry + alerts</td><td><code>/client/symbols</code></td></tr>
+    <tr><td>Continuity map</td><td>Graph view + queries to M2</td><td><code>/client/graphs</code></td></tr>
+    <tr><td>Canon reads/writes</td><td>M2 API client (read now; write later)</td><td><code>/client/lib/canon</code>, <code>/server/canon</code></td></tr>
+  </table>
+</div>
+
+<div class="card"><span class="badge">No-drift</span> Build only within task file-touch lists. If a task needs more files, update the task spec first.</div>
+</div>
+</body>
+</html>

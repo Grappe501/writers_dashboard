@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>M0–M8 Micro-step Pages</title>
+<style>:root{--bg:#0b0f14;--panel:#111826;--text:#e6edf3;--muted:#9fb0c0;--accent:#7dd3fc;--border:#223046;}
+*{box-sizing:border-box}
+body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; background:var(--bg); color:var(--text); line-height:1.5}
+a{color:var(--accent); text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{display:flex;min-height:100vh}
+nav{width:320px;max-width:85vw; background:var(--panel); border-right:1px solid var(--border); padding:18px; position:sticky; top:0; height:100vh; overflow:auto}
+main{flex:1; padding:28px; max-width:1100px}
+h1,h2,h3{line-height:1.2}
+h1{font-size:28px;margin:0 0 14px}
+h2{font-size:20px;margin:26px 0 10px}
+h3{font-size:16px;margin:18px 0 8px;color:var(--accent)}
+.small{color:var(--muted); font-size:13px}
+.card{border:1px solid var(--border); background:rgba(255,255,255,.02); border-radius:14px; padding:16px; margin:14px 0}
+.k{display:inline-block; padding:2px 8px; border:1px solid var(--border); border-radius:999px; font-size:12px; color:var(--muted); margin-right:8px}
+ol{padding-left:20px}
+li{margin:6px 0}
+code,pre{background:rgba(255,255,255,.06); border:1px solid var(--border); border-radius:10px}
+code{padding:2px 6px}
+pre{padding:12px; overflow:auto}
+hr{border:none;border-top:1px solid var(--border); margin:22px 0}</style>
+</head><body>
+<div class="wrap">
+<nav>
+<div style="font-weight:700;font-size:16px;margin-bottom:6px;">Master Build Plan</div>
+<div class="small" style="margin-bottom:14px;">Micro-step Pages (M0–M8)</div>
+<div class="card">
+<div class="small">Start here</div>
+<div style="margin-top:8px;"><a href="m0/overview.html">M0 Overview</a></div>
+</div>
+<div class="small">Tip: follow build order; keep golden fixtures running in CI.</div>
+</nav>
+<main>
+<h1>M0–M8 Micro-step Pages</h1>
+
+<div class="card">
+<div class="small">Scope</div>
+<p>This bundle contains <b>micro-step pages</b> for <b>M0–M8</b>. Each page is build-order oriented and ends with a strict <b>Definition of Done</b>.</p>
+<div class="small">Rule</div>
+<p>Any intentional author override must be explicitly recorded (<code>override_log</code>) — otherwise treat these steps as binding.</p>
+</div>
+<h2>Modules</h2>
+
+<div class="card">
+<div style="font-weight:700;margin-bottom:8px;">M0</div>
+<ul style="margin:0;padding-left:18px;"><li><a href="m0/overview.html">M0 Overview</a></li>
+<li><a href="m0/repo_structure.html">M0.1 Repository Structure</a></li>
+<li><a href="m0/change_control.html">M0.2 Change Control</a></li>
+<li><a href="m0/env_setup.html">M0.3 Environment Setup</a></li>
+<li><a href="m0/ci_pipeline.html">M0.4 CI Pipeline</a></li>
+<li><a href="m0/testing_strategy.html">M0.5 Test Strategy</a></li></ul>
+</div>
+
+<div class="card">
+<div style="font-weight:700;margin-bottom:8px;">M1</div>
+<ul style="margin:0;padding-left:18px;"><li><a href="m1/overview.html">M1 Overview</a></li>
+<li><a href="m1/cockpit_layout.html">M1.1 Cockpit Layout</a></li>
+<li><a href="m1/item_editor.html">M1.2 Item Editor</a></li>
+<li><a href="m1/validation_conflicts_ui.html">M1.3 Validation & Conflicts UI</a></li>
+<li><a href="m1/override_workflow.html">M1.4 Override Workflow</a></li>
+<li><a href="m1/versioning_autosave.html">M1.5 Autosave & Versioning</a></li>
+<li><a href="m1/api_contracts.html">M1.6 API Contracts</a></li>
+<li><a href="m1/tests_fixtures.html">M1.7 Tests & Fixtures</a></li></ul>
+</div>
+
+<div class="card">
+<div style="font-weight:700;margin-bottom:8px;">M2</div>
+<ul style="margin:0;padding-left:18px;"><li><a href="m2/overview.html">M2 Overview</a></li>
+<li><a href="m2/canon_schema.html">M2.1 Canon Schema</a></li>
+<li><a href="m2/day_architecture.html">M2.2 Day-Based Architecture</a></li>
+<li><a href="m2/rules_engine.html">M2.3 Rules Engine</a></li>
+<li><a href="m2/conflict_resolution.html">M2.4 Conflict Resolution</a></li>
+<li><a href="m2/override_layer.html">M2.5 Override Layer</a></li>
+<li><a href="m2/exports_views.html">M2.6 Canon Exports</a></li>
+<li><a href="m2/tests_fixtures.html">M2.7 Tests & Fixtures</a></li></ul>
+</div>
+
+<div class="card">
+<div style="font-weight:700;margin-bottom:8px;">M3</div>
+<ul style="margin:0;padding-left:18px;"><li><a href="m3/overview.html">M3 Overview</a></li>
+<li><a href="m3/disclosure_modes.html">M3.1 Disclosure Modes</a></li>
+<li><a href="m3/progress_tracking.html">M3.2 Progress Tracking</a></li>
+<li><a href="m3/navigation.html">M3.3 Navigation</a></li>
+<li><a href="m3/annotations_bookmarks.html">M3.4 Annotations & Bookmarks</a></li>
+<li><a href="m3/standalone_reader_build.html">M3.5 Standalone Reader Build</a></li>
+<li><a href="m3/api_contracts.html">M3.6 API Contracts</a></li>
+<li><a href="m3/tests_fixtures.html">M3.7 Tests & Fixtures</a></li></ul>
+</div>
+
+<div class="card">
+<div style="font-weight:700;margin-bottom:8px;">M4</div>
+<ul style="margin:0;padding-left:18px;"><li><a href="m4/overview.html">M4 Overview</a></li>
+<li><a href="m4/anchor_window.html">M4.1 Anchor Window</a></li>
+<li><a href="m4/sequence_ordering.html">M4.2 Sequence & Ordering</a></li>
+<li><a href="m4/timeline_conflicts.html">M4.3 Timeline Conflicts</a></li>
+<li><a href="m4/timeline_audit_reports.html">M4.4 Timeline Audit Reports</a></li>
+<li><a href="m4/override_timeline.html">M4.5 Timeline Overrides</a></li>
+<li><a href="m4/api_contracts.html">M4.6 API Contracts</a></li>
+<li><a href="m4/tests_fixtures.html">M4.7 Tests & Fixtures</a></li></ul>
+</div>
+
+<div class="card">
+<div style="font-weight:700;margin-bottom:8px;">M5</div>
+<ul style="margin:0;padding-left:18px;"><li><a href="m5/overview.html">M5 Overview</a></li>
+<li><a href="m5/readiness_model.html">M5.1 Build Readiness Model</a></li>
+<li><a href="m5/dashboards.html">M5.2 Dashboards</a></li>
+<li><a href="m5/command_palette.html">M5.3 Command Palette</a></li>
+<li><a href="m5/integration_build.html">M5.4 Build Integration</a></li>
+<li><a href="m5/roles_permissions.html">M5.5 Roles & Permissions</a></li>
+<li><a href="m5/tests_fixtures.html">M5.6 Tests & Fixtures</a></li></ul>
+</div>
+
+<div class="card">
+<div style="font-weight:700;margin-bottom:8px;">M6</div>
+<ul style="margin:0;padding-left:18px;"><li><a href="m6/alias_dedupe.html">M6.3 Alias &amp; Dedupe</a></li>
+<li><a href="m6/api_contracts.html">M6.8 API Contracts to M7</a></li>
+<li><a href="m6/conflict_explainability.html">M6.7 Conflict Explainability</a></li>
+<li><a href="m6/crosslink_render.html">M6.6 Crosslinks &amp; Backlinks</a></li>
+<li><a href="m6/edge_schema.html">M6.2 Relationship / Edge Schema</a></li>
+<li><a href="m6/entity_schema.html">M6.1 Entity Schema</a></li>
+<li><a href="m6/graph_build.html">M6.4 Deterministic Graph Build</a></li>
+<li><a href="m6/overview.html">M6 Overview</a></li>
+<li><a href="m6/telemetry_reports.html">M6.10 Telemetry &amp; Reports</a></li>
+<li><a href="m6/tests_fixtures.html">M6.9 Tests &amp; Fixtures</a></li>
+<li><a href="m6/validation_rules.html">M6.5 Validation Rules</a></li></ul>
+</div>
+
+<div class="card">
+<div style="font-weight:700;margin-bottom:8px;">M7</div>
+<ul style="margin:0;padding-left:18px;"><li><a href="m7/api_contracts.html">M7.8 API Contracts to M8</a></li>
+<li><a href="m7/explain_hidden_ui.html">M7.7 Explain Hidden UI Payloads</a></li>
+<li><a href="m7/filters_facets.html">M7.6 Facets &amp; Filters</a></li>
+<li><a href="m7/index_builder_pipeline.html">M7.2 Index Builder Pipeline</a></li>
+<li><a href="m7/overview.html">M7 Overview</a></li>
+<li><a href="m7/query_language_parser.html">M7.4 M7QL Parser</a></li>
+<li><a href="m7/ranking_snippets.html">M7.5 Ranking &amp; Snippets</a></li>
+<li><a href="m7/searchdoc_schema.html">M7.1 SearchDoc Schema</a></li>
+<li><a href="m7/spoiler_gating.html">M7.3 Spoiler Gate</a></li>
+<li><a href="m7/telemetry.html">M7.10 Telemetry</a></li>
+<li><a href="m7/tests_fixtures.html">M7.9 Tests &amp; Fixtures</a></li></ul>
+</div>
+
+<div class="card">
+<div style="font-weight:700;margin-bottom:8px;">M8</div>
+<ul style="margin:0;padding-left:18px;"><li><a href="m8/ci_release.html">M8.7 CI + Release Pipeline</a></li>
+<li><a href="m8/collector_stage.html">M8.2 Collector Stage</a></li>
+<li><a href="m8/determinism.html">M8.6 Determinism &amp; Reproducibility</a></li>
+<li><a href="m8/golden_outputs.html">M8.9 Golden Outputs</a></li>
+<li><a href="m8/incremental_cache.html">M8.8 Incremental Builds &amp; Caching</a></li>
+<li><a href="m8/manifest_schema.html">M8.1 Release Manifest Schema</a></li>
+<li><a href="m8/overview.html">M8 Overview</a></li>
+<li><a href="m8/packaging_stage.html">M8.5 Packaging Stage</a></li>
+<li><a href="m8/renderer_stage.html">M8.4 Renderer Stage</a></li>
+<li><a href="m8/telemetry.html">M8.10 Telemetry</a></li>
+<li><a href="m8/validator_stage.html">M8.3 Validator Stage</a></li></ul>
+</div>
+
+</main>
+</div>
+</body></html>

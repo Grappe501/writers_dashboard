@@ -1,0 +1,1484 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Project Master Reader — M0/M1/M2 + M3</title>
+<style>
+:root {
+  --bg: #0b0f14;
+  --panel: #0f1620;
+  --text: #e7edf4;
+  --muted: #a8b3c2;
+  --line: rgba(255,255,255,.08);
+  --accent: #7dd3fc;
+  --accent2: #a78bfa;
+  --danger: #fb7185;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  background: var(--bg);
+  color: var(--text);
+}
+a { color: inherit; text-decoration: none; }
+a:hover { color: var(--accent); }
+.layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  height: 100vh;
+}
+.sidebar {
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0));
+  border-right: 1px solid var(--line);
+  padding: 16px 14px;
+  overflow: auto;
+}
+.brand {
+  display:flex; flex-direction:column; gap:8px;
+  padding: 10px 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255,255,255,.03);
+}
+.brand h1 {
+  font-size: 16px;
+  margin: 0;
+  letter-spacing: .2px;
+}
+.brand .sub {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.35;
+}
+.brand .lock {
+  display:flex; gap:8px; align-items:center; flex-wrap:wrap;
+  margin-top: 6px;
+}
+.badge {
+  display:inline-flex; align-items:center; gap:6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-size: 12px;
+  color: var(--muted);
+  background: rgba(255,255,255,.02);
+}
+.badge strong { color: var(--text); font-weight: 600; }
+.search {
+  margin: 12px 0 14px;
+}
+.search input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.03);
+  color: var(--text);
+  outline: none;
+}
+.search input:focus { border-color: rgba(125,211,252,.6); }
+.nav-group {
+  margin: 14px 0;
+  padding: 10px 8px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255,255,255,.02);
+}
+.nav-group-title {
+  font-size: 12px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 8px 8px;
+}
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.nav-list li a {
+  display:block;
+  padding: 8px 10px;
+  border-radius: 12px;
+  color: var(--text);
+  border: 1px solid transparent;
+}
+.nav-list li a:hover {
+  background: rgba(125,211,252,.07);
+  border-color: rgba(125,211,252,.18);
+}
+.nav-list li a.active {
+  background: rgba(167,139,250,.12);
+  border-color: rgba(167,139,250,.25);
+}
+.main {
+  overflow: auto;
+}
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+  background: rgba(11,15,20,.75);
+  border-bottom: 1px solid var(--line);
+  padding: 14px 18px;
+}
+.topbar .row {
+  display:flex; gap:10px; align-items:center; justify-content:space-between;
+}
+.topbar .row .left {
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+}
+.pill {
+  display:inline-flex;
+  align-items:center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-size: 12px;
+  color: var(--muted);
+  background: rgba(255,255,255,.02);
+}
+.pill.subtle { opacity: .85; }
+.jump {
+  display:flex; gap:8px; flex-wrap:wrap; align-items:center;
+}
+.jump button {
+  padding: 8px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.03);
+  color: var(--text);
+  cursor: pointer;
+}
+.jump button:hover {
+  border-color: rgba(125,211,252,.35);
+}
+.content {
+  padding: 18px;
+  max-width: 1100px;
+}
+.doc-section {
+  margin: 0 0 22px;
+  padding: 16px 16px 18px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.02);
+}
+.doc-section .meta {
+  display:flex; gap:8px; flex-wrap:wrap;
+  margin-bottom: 12px;
+}
+.doc-content :is(h1,h2,h3) {
+  scroll-margin-top: 80px;
+}
+.doc-content h1 {
+  font-size: 22px;
+  margin: 0 0 10px;
+}
+.doc-content h2 {
+  font-size: 18px;
+  margin: 18px 0 8px;
+}
+.doc-content h3 {
+  font-size: 15px;
+  margin: 14px 0 6px;
+  color: var(--text);
+}
+.doc-content p, .doc-content li {
+  color: var(--text);
+  line-height: 1.55;
+}
+.doc-content p { color: rgba(231,237,244,.92); }
+.doc-content code {
+  padding: 2px 6px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.03);
+  color: var(--accent);
+}
+hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 16px 0;
+}
+.small {
+  color: var(--muted);
+  font-size: 12px;
+}
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">
+      <h1>Project Master Reader</h1>
+      <div class="sub">
+        Consolidated one-page reader for M0/M1/M2 plus generated M3.<br/>
+        Works offline (no fetch/CORS). M2 is elevated to first-class navigation.
+      </div>
+      <div class="lock">
+        <span class="badge"><strong>Book 1 source timeline lock:</strong> Dec 1 → Jan 3</span>
+        <span class="badge">Architecture: <strong>day-based</strong> (in‑universe layer later)</span>
+      </div>
+      <div class="small">Generated: 2026-01-12</div>
+    </div>
+
+    <div class="search">
+      <input id="navSearch" type="text" placeholder="Filter navigation… (e.g., m2, contracts, task)"/>
+    </div>
+
+    <nav id="nav">
+      <div class="nav-group"><div class="nav-group-title">Project</div>
+<ul class="nav-list">
+<li><a href="#project-index" data-target="project-index">Index</a></li>
+<li><a href="#project-modules-overview" data-target="project-modules-overview">Modules Overview</a></li>
+<li><a href="#project-integration" data-target="project-integration">Integration</a></li>
+<li><a href="#project-change-control" data-target="project-change-control">Change Control</a></li>
+<li><a href="#project-task-board" data-target="project-task-board">Task Board</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">M0</div>
+<ul class="nav-list">
+<li><a href="#m0-module-0" data-target="m0-module-0">Module 0</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">M1</div>
+<ul class="nav-list">
+<li><a href="#m1-overview" data-target="m1-overview">Overview</a></li>
+<li><a href="#m1-contracts" data-target="m1-contracts">Contracts</a></li>
+<li><a href="#m1-implementation" data-target="m1-implementation">Implementation</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">M2</div>
+<ul class="nav-list">
+<li><a href="#m2-index-v-01" data-target="m2-index-v-01">Index (v_01)</a></li>
+<li><a href="#m2-contracts-v-01" data-target="m2-contracts-v-01">Contracts (v_01)</a></li>
+<li><a href="#m2-implementation-v-01" data-target="m2-implementation-v-01">Implementation (v_01)</a></li>
+<li><a href="#m2-task-board-v-01" data-target="m2-task-board-v-01">Task Board (v_01)</a></li>
+<li><a href="#m2-m2-m8-summary" data-target="m2-m2-m8-summary">M2–M8 Summary</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">M3</div>
+<ul class="nav-list">
+<li><a href="#m3-overview" data-target="m3-overview">Overview</a></li>
+<li><a href="#m3-contracts" data-target="m3-contracts">Contracts</a></li>
+<li><a href="#m3-implementation" data-target="m3-implementation">Implementation</a></li>
+</ul></div>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="row">
+        <div class="left">
+          <span class="pill" id="activeGroup">—</span>
+          <span class="pill" id="activeName">—</span>
+        </div>
+        <div class="jump">
+          <button id="btnTop" title="Scroll to top">Top</button>
+          <button id="btnNext" title="Next section">Next</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="content" id="content">
+      <section id="project-index" class="doc-section" data-group="Project" data-name="Index">
+<div class="meta"><span class="pill">Project</span> <span class="pill">Index</span> <span class="pill subtle">index.html</span></div>
+<div class="doc-content">
+
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — M1 Implementation Kickoff</h1>
+<div class="sub">v1.1 • Desktop-first • M1 LOCKED • Convert M1 design → executable tasks • Generated Jan 12, 2026</div>
+</div>
+<nav><a class="active" href="index.html">Overview</a> <a class="" href="m1-contracts.html">M1 Contracts Map</a> <a class="" href="m1-implementation.html">M1 Implementation</a> <a class="" href="task-board.html">Task Board</a> <a class="" href="integration.html">M1↔M2 Integration</a></nav>
+</header>
+<div class="wrap">
+<div class="card ok">
+<h2>Decision locked: Desktop-first</h2>
+<ul>
+<li>The CEO Cockpit ships as a <b>desktop app</b> (offline-first, fast, stable).</li>
+<li>All OpenAI calls go through a <b>local server proxy</b> (key never in UI).</li>
+<li>M1 reads canon via M2 API; M1 writes canon only via CanonCommit (later, after M2 stability).</li>
+</ul>
+</div>
+<div class="card">
+<h2>Recommended desktop stack (baseline)</h2>
+<ul>
+<li><b>Tauri + Vite/React</b> (preferred: lightweight, secure)</li>
+<li><b>Electron</b> fallback if needed for plugin ecosystem</li>
+<li>Local service: Node/Fastify or Python/FastAPI for:
+      <ul>
+<li>OpenAI proxy</li>
+<li>M2 canon API (if we host M2 in same service)</li>
+<li>File system exports/imports</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="card callout">
+<h2>Core behavior rules</h2>
+<ul>
+<li>AI proposes; author approves. No silent inserts.</li>
+<li>Every session declares WHY → HOW → WHAT.</li>
+<li>Payoff rule: cognitive domination OR emotional resolution OR cliffhanger.</li>
+<li>Reader stance: inside the rebellion.</li>
+</ul>
+</div>
+<div class="card"><span class="badge">No-drift</span> Build only within task file-touch lists. If a task needs more files, update the task spec first.</div>
+</div>
+
+</div></section>
+<section id="project-modules-overview" class="doc-section" data-group="Project" data-name="Modules Overview">
+<div class="meta"><span class="pill">Project</span> <span class="pill">Modules Overview</span> <span class="pill subtle">modules.html</span></div>
+<div class="doc-content">
+
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — Living World Novel Engine</h1>
+<div class="sub">HTML Protocol Edition (v0.7) • M1 expanded with AI Writing Suite (author-controlled scope) • No-drift • Generated Jan 12, 2026</div>
+</div>
+<nav><a class="navlink" href="index.html">Overview</a><a class="navlink active" href="modules.html">All Modules</a><a class="navlink" href="m0.html">M0 Repo Hardening</a><a class="navlink" href="m1.html">M1 CEO Cockpit + AI</a><a class="navlink" href="m2-m8.html">M2–M8 Baselines</a><a class="navlink" href="change-control.html">Change Control</a></nav>
+</header>
+<div class="wrap">
+<div class="card">
+<h2>Modules</h2>
+<p class="muted">We are deepening M1 before moving to M2. M2–M8 remain baseline placeholders for now.</p>
+<ol>
+<li><a href="m0.html"><b>M0</b> Constitution &amp; Repo Hardening</a></li>
+<li><a href="m1.html"><b>M1</b> CEO Writer Cockpit + AI Writing Suite</a></li>
+<li><a href="m2-m8.html"><b>M2–M8</b> Baseline phases</a></li>
+</ol>
+</div>
+<div class="card muted">No-drift reminder: any change outside a phase’s file-touch list requires a contract update first. All design stays in HTML until you say “LOCK.”</div>
+</div>
+
+</div></section>
+<section id="project-integration" class="doc-section" data-group="Project" data-name="Integration">
+<div class="meta"><span class="pill">Project</span> <span class="pill">Integration</span> <span class="pill subtle">integration.html</span></div>
+<div class="doc-content">
+
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — M1 Implementation Kickoff</h1>
+<div class="sub">v1.1 • Desktop-first • M1 LOCKED • Convert M1 design → executable tasks • Generated Jan 12, 2026</div>
+</div>
+<nav><a class="" href="index.html">Overview</a> <a class="" href="m1-contracts.html">M1 Contracts Map</a> <a class="" href="m1-implementation.html">M1 Implementation</a> <a class="" href="task-board.html">Task Board</a> <a class="active" href="integration.html">M1↔M2 Integration</a></nav>
+</header>
+<div class="wrap">
+<div class="card ok">
+<h2>M1 ↔ M2 Integration (no drift boundary)</h2>
+<ul>
+<li><b>Read path (now):</b> M1 reads canon via M2 API (entities, events, symbols, metrics, relations).</li>
+<li><b>Write path (later):</b> M1 writes to canon only through CanonCommit endpoints (after M2 stability).</li>
+<li><b>Project store:</b> M1 stores drafts + session metadata locally; canon remains the authoritative truth graph.</li>
+</ul>
+</div>
+<div class="card">
+<h2>Read-only queries M1 needs on day 1</h2>
+<ul>
+<li>Get StoryDay package: events + involved entities + symbols + locations</li>
+<li>Search entities by name/alias</li>
+<li>Fetch relationships neighborhood for an entity</li>
+<li>Fetch setting facts/metrics/claims</li>
+</ul>
+</div>
+<div class="card">
+<h2>Write operations (deferred until M2 is stable)</h2>
+<ul>
+<li>Commit new Symbol definitions</li>
+<li>Commit new Artifact entries (bio factory outputs)</li>
+<li>Commit new Events discovered during writing</li>
+</ul>
+<p class="callout">All writes must create a CanonCommit with rationale and diff preview.</p>
+</div>
+<div class="card"><span class="badge">No-drift</span> Build only within task file-touch lists. If a task needs more files, update the task spec first.</div>
+</div>
+
+</div></section>
+<section id="project-change-control" class="doc-section" data-group="Project" data-name="Change Control">
+<div class="meta"><span class="pill">Project</span> <span class="pill">Change Control</span> <span class="pill subtle">change-control.html</span></div>
+<div class="doc-content">
+
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — Living World Novel Engine</h1>
+<div class="sub">HTML Protocol Edition (v0.7) • M1 expanded with AI Writing Suite (author-controlled scope) • No-drift • Generated Jan 12, 2026</div>
+</div>
+<nav><a class="navlink" href="index.html">Overview</a><a class="navlink" href="modules.html">All Modules</a><a class="navlink" href="m0.html">M0 Repo Hardening</a><a class="navlink" href="m1.html">M1 CEO Cockpit + AI</a><a class="navlink" href="m2-m8.html">M2–M8 Baselines</a><a class="navlink active" href="change-control.html">Change Control</a></nav>
+</header>
+<div class="wrap">
+<div class="card">
+<h2>Change control (HTML protocol)</h2>
+<ol>
+<li>All edits happen in HTML until you say <b>LOCK</b>.</li>
+<li>Change requests must specify module/phase + acceptance criteria.</li>
+<li>Once LOCK: generate Markdown build doc + contracts, then code starts by phase.</li>
+</ol>
+</div>
+<div class="card"><h2>Change request template</h2>
+<pre>CHANGE REQUEST
+- Version: v0.7
+- Module/Phase:
+- What to change:
+- Why:
+- Acceptance criteria:
+- Any files affected (if known):</pre></div>
+<div class="card muted">No-drift reminder: any change outside a phase’s file-touch list requires a contract update first. All design stays in HTML until you say “LOCK.”</div>
+</div>
+
+</div></section>
+<section id="project-task-board" class="doc-section" data-group="Project" data-name="Task Board">
+<div class="meta"><span class="pill">Project</span> <span class="pill">Task Board</span> <span class="pill subtle">task-board.html</span></div>
+<div class="doc-content">
+
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — M1 Implementation Kickoff</h1>
+<div class="sub">v1.1 • Desktop-first • M1 LOCKED • Convert M1 design → executable tasks • Generated Jan 12, 2026</div>
+</div>
+<nav><a class="" href="index.html">Overview</a> <a class="" href="m1-contracts.html">M1 Contracts Map</a> <a class="" href="m1-implementation.html">M1 Implementation</a> <a class="active" href="task-board.html">Task Board</a> <a class="" href="integration.html">M1↔M2 Integration</a></nav>
+</header>
+<div class="wrap">
+<div class="card ok">
+<h2>Task Board (copy into GitHub Issues / Linear)</h2>
+<pre>
+M1-T0 Desktop scaffold (Tauri + Vite) + repo structure
+M1-T1 Local project store format (portable)
+M1-T2 CEO Cockpit shell (Agenda/KPIs/Queue)
+M1-T3 Chapter=Day editor (spine writing surface)
+M1-T4 Session Context Builder (WHY/HOW/WHAT gate)
+M1-T5 Symbolism suite (Color + Sound) + alerts
+M1-T6 Setting intelligence tabs + deep vault stubs
+M1-T7 Character engine (growth cycles + Bio Factory UI)
+M1-T8 Beat board (drag/drop) + scene model
+M1-T9 Continuity map (graph view) + flags
+M1-T10 AI suite (local proxy, tools, logs, cost caps)
+M1-T11 Inline AI rewrite (selection-scoped) + diff merge
+M1-T12 Export/backup (project portability)
+M1-T13 Desktop packaging, updates, crash recovery
+  </pre>
+</div>
+<div class="card callout">
+<h2>Definition of Done (M1)</h2>
+<ul>
+<li>Daily writing workflow is frictionless (create day → plan → write → AI assist → accept/reject → mark complete).</li>
+<li>All AI calls are server-proxied; logs + caps in place.</li>
+<li>Project is portable; exports restore cleanly.</li>
+<li>Read-only canon integration works (M2).</li>
+</ul>
+</div>
+<div class="card"><span class="badge">No-drift</span> Build only within task file-touch lists. If a task needs more files, update the task spec first.</div>
+</div>
+
+</div></section>
+<section id="m0-module-0" class="doc-section" data-group="M0" data-name="Module 0">
+<div class="meta"><span class="pill">M0</span> <span class="pill">Module 0</span> <span class="pill subtle">m0.html</span></div>
+<div class="doc-content">
+
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — Living World Novel Engine</h1>
+<div class="sub">HTML Protocol Edition (v0.7) • M1 expanded with AI Writing Suite (author-controlled scope) • No-drift • Generated Jan 12, 2026</div>
+</div>
+<nav><a class="navlink" href="index.html">Overview</a><a class="navlink" href="modules.html">All Modules</a><a class="navlink active" href="m0.html">M0 Repo Hardening</a><a class="navlink" href="m1.html">M1 CEO Cockpit + AI</a><a class="navlink" href="m2-m8.html">M2–M8 Baselines</a><a class="navlink" href="change-control.html">Change Control</a></nav>
+</header>
+<div class="wrap">
+<div class="card ok">
+<h2>M0 — Constitution &amp; Repo Hardening</h2>
+<p class="muted">See v0.5 zip for full M0 micro-steps. (Kept unchanged; order preserved.)</p>
+</div>
+<div class="card muted">No-drift reminder: any change outside a phase’s file-touch list requires a contract update first. All design stays in HTML until you say “LOCK.”</div>
+</div>
+
+</div></section>
+<section id="m1-overview" class="doc-section" data-group="M1" data-name="Overview">
+<div class="meta"><span class="pill">M1</span> <span class="pill">Overview</span> <span class="pill subtle">m1.html</span></div>
+<div class="doc-content">
+
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — Living World Novel Engine</h1>
+<div class="sub">HTML Protocol Edition (v0.7) • M1 expanded with AI Writing Suite (author-controlled scope) • No-drift • Generated Jan 12, 2026</div>
+</div>
+<nav><a class="navlink" href="index.html">Overview</a><a class="navlink" href="modules.html">All Modules</a><a class="navlink" href="m0.html">M0 Repo Hardening</a><a class="navlink active" href="m1.html">M1 CEO Cockpit + AI</a><a class="navlink" href="m2-m8.html">M2–M8 Baselines</a><a class="navlink" href="change-control.html">Change Control</a></nav>
+</header>
+<div class="wrap">
+<div class="card ok">
+<h2>M1 — CEO Writer Cockpit + AI Writing Suite</h2>
+<p>This module is your <b>CEO command center</b> for producing the book (spine) and building the living world behind it — with heavy AI assistance that stays disciplined.</p>
+<p class="muted callout"><b>Scope slider rule:</b> The author decides how much AI writes in a pass (sentence → paragraph → scene → chapter).</p>
+</div>
+<div class="card">
+<h2>Non‑negotiables (AI discipline)</h2>
+<ul>
+<li><b>Known‑variables only:</b> every generation must list its inputs (day, beats, entities, seeds, POV constraints).</li>
+<li><b>No silent changes:</b> AI never inserts text without explicit accept.</li>
+<li><b>Audit trail:</b> every run is logged (inputs, model, settings, outputs, diffs).</li>
+<li><b>Guardrails:</b> “no new entities” default; “no future day info” default.</li>
+</ul>
+</div>
+<details open="">
+<summary>Phase M1.6 — AI system architecture contract (key safety + observability)</summary>
+<div class="card">
+<h3>Objective</h3>
+<ul>
+<li>Design AI integration so it is powerful, measurable, and safe.</li>
+<li>Keep OpenAI key <b>server-only</b>. Browser never sees secrets.</li>
+</ul>
+<h3>Micro-steps</h3>
+<ul class="checklist">
+<li>Create <code>/contracts/ai_architecture_v1.md</code>:
+        <ul>
+<li>Local proxy API for all model calls (FastAPI or Node)</li>
+<li>Rate limits + cost caps + token budgets</li>
+<li>Request/response logging (aiRunLog)</li>
+<li>Determinism knobs (temperature presets)</li>
+<li>Offline behavior</li>
+</ul>
+</li>
+<li>Define AI “modes”: Draft / Revise / Continuity / Voice / Outline.</li>
+<li>Define tool schemas (structured inputs/outputs; no free-form chaos).</li>
+<li>Define “no-canon-write” rule: AI produces suggestions only.</li>
+</ul>
+</div>
+</details>
+<details open="">
+<summary>Phase M1.7 — Scope Slider + Pass Templates (sentence → chapter)</summary>
+<div class="card">
+<h3>Objective</h3>
+<ul><li>Make AI output size and intent author-controlled, every time.</li></ul>
+<h3>Micro-steps</h3>
+<ul class="checklist">
+<li>Add “Scope” control: Sentence / Paragraph / Scene / Chapter.</li>
+<li>Add “Pass template” chooser (per scope):
+        <ul>
+<li>Outline-only</li>
+<li>Beats + notes</li>
+<li>Draft prose</li>
+<li>Draft + revision notes</li>
+</ul>
+</li>
+<li>Require “Known variables” panel to be filled (or confirmed) before run.</li>
+<li>Store scope + template in aiRunLog.</li>
+</ul>
+<h3>Acceptance criteria</h3>
+<ul><li>Author can reliably request exactly as much writing as desired per run.</li></ul>
+</div>
+</details>
+<details open="">
+<summary>Phase M1.8 — Tool Pack: Outline &amp; Beats (Day/Scene)</summary>
+<div class="card">
+<h3>Objective</h3>
+<ul><li>Generate actionable outlines and beats tied to a specific StoryDay.</li></ul>
+<h3>Micro-steps</h3>
+<ul class="checklist">
+<li>Tool: Day Outline Generator (returns beats, goals, stakes, cliffhanger options).</li>
+<li>Tool: Scene Beat Builder (returns 3–7 beats per scene with escalation notes).</li>
+<li>Tool: Beat-to-Scene Draft (writes within constraints; no new entities by default).</li>
+<li>Outputs are structured JSON + optional prose blocks.</li>
+</ul>
+</div>
+</details>
+<details open="">
+<summary>Phase M1.9 — Tool Pack: Drafting &amp; Co‑writing (paragraph → chapter)</summary>
+<div class="card">
+<h3>Objective</h3>
+<ul><li>AI can draft full paragraphs, scenes, or entire chapters confined to known variables.</li></ul>
+<h3>Micro-steps</h3>
+<ul class="checklist">
+<li>Tool: Constrained Chapter Draft (inputs: beats + seed targets + entity roster + tone constraints).</li>
+<li>Tool: Dialogue-first Draft (writes dialogue skeleton then fills action).</li>
+<li>Tool: Action-first Draft (writes action/scene geography then layers dialogue).</li>
+<li>Require “No new entities” toggle (default ON).</li>
+<li>Require “No future day knowledge” toggle (default ON).</li>
+<li>Each output includes:
+        <ul>
+<li>Assumptions list</li>
+<li>Seeds touched</li>
+<li>Entities referenced</li>
+<li>Potential continuity risks</li>
+</ul>
+</li>
+</ul>
+</div>
+</details>
+<details open="">
+<summary>Phase M1.10 — Revision Suite (operations, not black-box rewrites)</summary>
+<div class="card">
+<h3>Objective</h3>
+<ul><li>AI revisions are selectable operations with granular accept/reject.</li></ul>
+<h3>Micro-steps</h3>
+<ul class="checklist">
+<li>Operations: clarity, pacing, imagery, dialogue realism, tone consistency.</li>
+<li>Require constraints block: what must not change.</li>
+<li>Output includes change summary + paragraph-level diffs.</li>
+<li>Accept/Reject per paragraph (author-controlled merge).</li>
+</ul>
+</div>
+</details>
+<details open="">
+<summary>Phase M1.11 — Continuity &amp; Seed Intelligence (pre-canon)</summary>
+<div class="card">
+<h3>Objective</h3>
+<ul><li>Catch contradictions and missing payoffs before they become canon.</li></ul>
+<h3>Micro-steps</h3>
+<ul class="checklist">
+<li>Continuity scan scope: current day + previous 7 days + open seeds.</li>
+<li>Flag categories: contradiction, ambiguity, missing payoff, unintroduced entity.</li>
+<li>Produce fix suggestions with links back to day/seed.</li>
+<li>Store continuity reports in export bundle.</li>
+</ul>
+</div>
+</details>
+<details open="">
+<summary>Phase M1.12 — Enneagram Voice Lock (POV truth with override)</summary>
+<div class="card">
+<h3>Objective</h3>
+<ul><li>Rewrite drill-down POV in-character with Enneagram contracts + explicit override.</li></ul>
+<h3>Micro-steps</h3>
+<ul class="checklist">
+<li>Inputs always include Enneagram profile + stress/growth state + forbidden moves.</li>
+<li>Output includes voice rating + what changed notes.</li>
+<li>Override requires reason and renders “intentional break” banner in output.</li>
+</ul>
+</div>
+</details>
+<details open="">
+<summary>Phase M1.13 — Safety, privacy, and cost controls (must-have)</summary>
+<div class="card">
+<h3>Objective</h3>
+<ul><li>Prevent runaway costs, data leaks, and spoiler contamination.</li></ul>
+<h3>Micro-steps</h3>
+<ul class="checklist">
+<li>Cost caps per day/week (soft + hard).</li>
+<li>Token budgets per tool/scope.</li>
+<li>Log redaction policy (hashes/snippets; avoid full text by default).</li>
+<li>Local-only mode (disable external calls).</li>
+</ul>
+</div>
+</details>
+<div class="card muted">No-drift reminder: any change outside a phase’s file-touch list requires a contract update first. All design stays in HTML until you say “LOCK.”</div>
+</div>
+
+</div></section>
+<section id="m1-contracts" class="doc-section" data-group="M1" data-name="Contracts">
+<div class="meta"><span class="pill">M1</span> <span class="pill">Contracts</span> <span class="pill subtle">m1-contracts.html</span></div>
+<div class="doc-content">
+
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — M1 Implementation Kickoff</h1>
+<div class="sub">v1.1 • Desktop-first • M1 LOCKED • Convert M1 design → executable tasks • Generated Jan 12, 2026</div>
+</div>
+<nav><a class="" href="index.html">Overview</a> <a class="active" href="m1-contracts.html">M1 Contracts Map</a> <a class="" href="m1-implementation.html">M1 Implementation</a> <a class="" href="task-board.html">Task Board</a> <a class="" href="integration.html">M1↔M2 Integration</a></nav>
+</header>
+<div class="wrap">
+<div class="card ok">
+<h2>M1 Contracts → Implementation mapping</h2>
+<p>M1’s “contracts” are primarily UX + safety + workflow constraints. These become executable tasks and tests.</p>
+<table>
+<tr><th>Contract / Rule</th><th>Implemented by</th><th>Primary folders</th></tr>
+<tr><td>AI key server-only</td><td>Local proxy service + IPC</td><td><code>/server/ai_proxy</code>, <code>/desktop/</code></td></tr>
+<tr><td>No silent mutation</td><td>Draft staging + accept/reject merge UI</td><td><code>/client/editor</code></td></tr>
+<tr><td>Scope slider (sentence→chapter)</td><td>Tool request schema + UI control + logs</td><td><code>/client/ai</code>, <code>/server/ai_proxy</code></td></tr>
+<tr><td>Golden Circle required</td><td>Session loadout form + validation gate</td><td><code>/client/session</code></td></tr>
+<tr><td>POV + Enneagram voice lock</td><td>Voice profiles + rewrite tools + evaluators</td><td><code>/client/ai/tools</code></td></tr>
+<tr><td>Color &amp; sound symbolism</td><td>Symbol palette panel + registry + alerts</td><td><code>/client/symbols</code></td></tr>
+<tr><td>Continuity map</td><td>Graph view + queries to M2</td><td><code>/client/graphs</code></td></tr>
+<tr><td>Canon reads/writes</td><td>M2 API client (read now; write later)</td><td><code>/client/lib/canon</code>, <code>/server/canon</code></td></tr>
+</table>
+</div>
+<div class="card"><span class="badge">No-drift</span> Build only within task file-touch lists. If a task needs more files, update the task spec first.</div>
+</div>
+
+</div></section>
+<section id="m1-implementation" class="doc-section" data-group="M1" data-name="Implementation">
+<div class="meta"><span class="pill">M1</span> <span class="pill">Implementation</span> <span class="pill subtle">m1-implementation.html</span></div>
+<div class="doc-content">
+
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — M1 Implementation Kickoff</h1>
+<div class="sub">v1.1 • Desktop-first • M1 LOCKED • Convert M1 design → executable tasks • Generated Jan 12, 2026</div>
+</div>
+<nav><a class="" href="index.html">Overview</a> <a class="" href="m1-contracts.html">M1 Contracts Map</a> <a class="active" href="m1-implementation.html">M1 Implementation</a> <a class="" href="task-board.html">Task Board</a> <a class="" href="integration.html">M1↔M2 Integration</a></nav>
+</header>
+<div class="wrap">
+<div class="card ok">
+<h2>M1 Implementation Plan (Desktop-first) — Pass 1</h2>
+<p>This is the hand-off ready execution breakdown for building the CEO Cockpit as a desktop app.</p>
+</div>
+<details open=""><summary>Task M1-T0 — Desktop scaffold (Tauri + Vite) + repo structure</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Initialize desktop app container (Tauri preferred).</li>
+<li>Set up client app (React + routing + state + local storage abstraction).</li>
+<li>Set up local service folder (API proxy + file I/O).</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/desktop/ (tauri/electron config)
+/client/
+/server/ (local services)
+/docs/DEV_SETUP.md</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Desktop app launches, shows a home screen.</li>
+<li>Local service starts (even with placeholder endpoints).</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M1-T1 — Data model for writing workspace (local project store)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Define local project format (folder-based) for portability.</li>
+<li>Define objects: Project, Novel, StoryDay, ChapterDraft, SessionLoadout, AI Run Log.</li>
+<li>Implement autosave + version snapshots.</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/lib/project_store/*
+/client/state/*
+/server/fs/*
+/docs/PROJECT_FORMAT.md</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Create/open project folder works.</li>
+<li>Autosave persists drafts and metadata.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M1-T2 — CEO Cockpit shell (Agenda/KPIs/Queue)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Today dashboard layout</li>
+<li>Queue CRUD with filters</li>
+<li>KPIs derived from actual writing activity (wordcount, days completed, unresolved seeds)</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/pages/Cockpit.*
+/client/components/kpi/*
+/client/components/queue/*
+/client/lib/metrics/*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Queue items can be created, assigned to StoryDays, and marked done.</li>
+<li>KPIs update without manual edits.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M1-T3 — Chapter=Day editor (spine writing surface)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Calendar/day navigation</li>
+<li>Editor with autosave</li>
+<li>Wordcount + read-time estimate (20–30 min target)</li>
+<li>Draft staging for AI merges</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/editor/*
+/client/pages/DayEditor.*
+/client/lib/read_time/*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Author can write and navigate days without losing text.</li>
+<li>Read-time estimate updates live.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M1-T4 — Session Context Builder (WHY/HOW/WHAT gate)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Session loadout UI: plot/subplot, characters, settings, symbols, payoff type</li>
+<li>Require WHY/HOW/WHAT before AI runs and before “Chapter Complete”</li>
+<li>Preset saving and re-use</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/session/*
+/client/components/loadout/*
+/client/lib/validation/*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>AI run button disabled until required fields are satisfied (with clear error messages).</li>
+<li>Loadouts save/restore correctly.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M1-T5 — Symbolism suite (Color + Sound) + alerts</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Symbol registry (modality-first: color, sound, environment, ritual)</li>
+<li>Chapter palette + soundscape chooser</li>
+<li>Overuse/underuse warnings</li>
+<li>Intentional override notes</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/symbols/*
+/client/lib/alerts/*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Symbols can be attached to days/scenes.</li>
+<li>Alerts trigger when thresholds exceeded.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M1-T6 — Setting intelligence tabs + deep vault stubs</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Location dashboards: sensory profile + culture + power + economics</li>
+<li>Deep-vault entries (facts/metrics/claims) read from M2</li>
+<li>Portal-ready export stub (later in M5/M7)</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/settings/*
+/client/locations/*
+/client/lib/canon/*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Location panels render and can be linked to StoryDays.</li>
+<li>Canon facts display read-only from M2 API.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M1-T7 — Character engine (growth cycles + Bio Factory UI)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Character profiles: Enneagram, fears/desires, stress/growth markers</li>
+<li>Growth cycle timeline (growth/regress/stagnate) with triggers</li>
+<li>Bio Factory templates (auto/biography, diary/blog, audio/video script stubs)</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/characters/*
+/client/bio_factory/*
+/client/lib/templates/*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Character timeline can be updated per day/week.</li>
+<li>Bio Factory can generate structured drafts stored in project folder (canon write later).</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M1-T8 — Beat board (drag/drop) + Scene model</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Beat model tied to StoryDay + scene + intent</li>
+<li>Drag/drop beat board per day</li>
+<li>Beat-to-draft AI hooks (calls tools in T10)</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/beats/*
+/client/components/dragdrop/*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Beats reorder deterministically and persist.</li>
+<li>Beat board can export a “scene plan” JSON.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M1-T9 — Continuity map (graph view) + queries</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Graph visualization of entities/seeds/symbols across days</li>
+<li>Filters: character, location, symbol, subplot</li>
+<li>Flags: dropped seeds, overused entities, missing payoff</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/graphs/*
+/client/lib/graph_queries/*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Graph loads from project metadata + M2 canon reads.</li>
+<li>Flags are reproducible (same inputs → same warnings).</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M1-T10 — AI suite (local proxy, tools, logs, cost caps)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Local proxy for OpenAI calls (server-only key)</li>
+<li>Tool schemas: outline, beats, constrained drafting, revision ops, continuity scan, voice lock</li>
+<li>Scope slider: sentence/paragraph/scene/chapter</li>
+<li>Run log (inputs, outputs, model/settings, token/cost estimates)</li>
+<li>Cost caps + rate limits</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/server/ai_proxy/*
+/client/ai/*
+/client/runlog/*
+/docs/AI_TOOLS.md</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Browser/UI never sees the API key.</li>
+<li>Every AI run produces a log entry and a draft staged for accept/reject.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M1-T11 — Inline AI rewrite (selection-scoped) + diff merge</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Select text → run rewrite op (clarity/pacing/voice/dialogue/etc.)</li>
+<li>Diff UI: accept/reject per paragraph</li>
+<li>Constraints: no future knowledge; no new entities default</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/editor/inline_ai/*
+/client/components/diff/*
+/server/ai_proxy/tools/rewrite.*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Only selection + declared context sent to proxy.</li>
+<li>Author can accept/reject changes granularly.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M1-T12 — Export/backup (project portability)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>One-click zip export of project</li>
+<li>Daily automatic backup rotation (local)</li>
+<li>Export manuscript (per novel, per day) to Markdown/Docx later (M7)</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/server/fs/export/*
+/client/export/*
+/docs/EXPORTS.md</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>User can export a zip and restore it on another machine.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M1-T13 — Desktop packaging, updates, and crash recovery</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Packaging for macOS/Windows/Linux</li>
+<li>Crash recovery: restore last autosave state</li>
+<li>Settings panel: paths, caps, models, offline mode</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/desktop/*
+/client/settings_app/*
+/docs/RELEASE.md</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>App rebuilds reliably with a repeatable release process.</li>
+<li>Crash recovery works (forced kill test).</li>
+</ul>
+</div></details>
+<div class="card"><span class="badge">No-drift</span> Build only within task file-touch lists. If a task needs more files, update the task spec first.</div>
+</div>
+
+</div></section>
+<section id="m2-index-v-01" class="doc-section" data-group="M2" data-name="Index (v_01)">
+<div class="meta"><span class="pill">M2</span> <span class="pill">Index (v_01)</span> <span class="pill subtle">v_01/index.html</span></div>
+<div class="doc-content">
+
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — Implementation Kickoff</h1>
+<div class="sub">v1.0 • M2 LOCKED • Convert contracts → executable tasks • Generated Jan 12, 2026</div>
+</div>
+<nav><a class="active" href="index.html">Overview</a> <a class="" href="m2-implementation.html">M2 Implementation</a> <a class="" href="m2-contracts.html">M2 Contracts Map</a> <a class="" href="task-board.html">Task Board</a></nav>
+</header>
+<div class="wrap">
+<div class="card ok">
+<h2>LOCKED: M2 Canon Engine Core</h2>
+<ul>
+<li>M2 design is locked. Next step is implementation from contracts with no drift.</li>
+<li>Implementation assumes <b>local-first</b> (SQLite) with an upgrade path to Postgres.</li>
+<li>All writes must flow through <b>CanonCommit</b> (diff + rollback).</li>
+</ul>
+</div>
+<div class="card">
+<h2>Implementation path (high-level)</h2>
+<ol>
+<li>Scaffold server + db layer</li>
+<li>Implement schemas + migrations</li>
+<li>Implement validators + invariants</li>
+<li>Implement CanonCommit (preview/apply/revert)</li>
+<li>Implement API endpoints</li>
+<li>Fixtures + smoke tests</li>
+<li>Wire M1 to read from M2 (writes later)</li>
+</ol>
+</div>
+<div class="card"><span class="badge">No-drift</span> Build only within task file-touch lists. If a task needs more files, update the task spec first.</div>
+</div>
+
+</div></section>
+<section id="m2-contracts-v-01" class="doc-section" data-group="M2" data-name="Contracts (v_01)">
+<div class="meta"><span class="pill">M2</span> <span class="pill">Contracts (v_01)</span> <span class="pill subtle">v_01/m2-contracts.html</span></div>
+<div class="doc-content">
+
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — Implementation Kickoff</h1>
+<div class="sub">v1.0 • M2 LOCKED • Convert contracts → executable tasks • Generated Jan 12, 2026</div>
+</div>
+<nav><a class="" href="index.html">Overview</a> <a class="" href="m2-implementation.html">M2 Implementation</a> <a class="active" href="m2-contracts.html">M2 Contracts Map</a> <a class="" href="task-board.html">Task Board</a></nav>
+</header>
+<div class="wrap">
+<div class="card">
+<h2>M2 Contracts → Implementation mapping</h2>
+<table>
+<tr><th>Contract</th><th>Implements</th><th>Primary folders</th></tr>
+<tr><td><code>/contracts/canon_schema_v1.md</code></td><td>DB tables + models</td><td><code>/server/db</code>, <code>/server/models</code>, <code>/server/migrations</code></td></tr>
+<tr><td><code>/contracts/canon_invariants_v1.md</code></td><td>Validators + tests</td><td><code>/server/validators</code>, <code>/server/tests</code></td></tr>
+<tr><td><code>/contracts/canon_ids_v1.md</code></td><td>ID utilities + alias rules</td><td><code>/server/utils</code>, <code>/server/models</code></td></tr>
+<tr><td><code>/contracts/canon_commit_v1.md</code></td><td>Commit tables + transaction API</td><td><code>/server/services</code>, <code>/server/models</code>, <code>/server/api</code></td></tr>
+<tr><td><code>/contracts/canon_api_v1.md</code></td><td>HTTP endpoints + request schemas</td><td><code>/server/api</code></td></tr>
+</table>
+</div>
+<div class="card callout">
+<h2>Tech choice baseline (editable later)</h2>
+<ul>
+<li><b>Server:</b> Node (Express/Fastify) <i>or</i> Python (FastAPI). Choose one for the repo; tasks below are language-agnostic.</li>
+<li><b>DB:</b> SQLite in dev (file), migrations in repo.</li>
+<li><b>Validation:</b> JSON schema or typed models + explicit invariant tests.</li>
+</ul>
+</div>
+<div class="card"><span class="badge">No-drift</span> Build only within task file-touch lists. If a task needs more files, update the task spec first.</div>
+</div>
+
+</div></section>
+<section id="m2-implementation-v-01" class="doc-section" data-group="M2" data-name="Implementation (v_01)">
+<div class="meta"><span class="pill">M2</span> <span class="pill">Implementation (v_01)</span> <span class="pill subtle">v_01/m2-implementation.html</span></div>
+<div class="doc-content">
+
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — Implementation Kickoff</h1>
+<div class="sub">v1.0 • M2 LOCKED • Convert contracts → executable tasks • Generated Jan 12, 2026</div>
+</div>
+<nav><a class="" href="index.html">Overview</a> <a class="active" href="m2-implementation.html">M2 Implementation</a> <a class="" href="m2-contracts.html">M2 Contracts Map</a> <a class="" href="task-board.html">Task Board</a></nav>
+</header>
+<div class="wrap">
+<div class="card ok">
+<h2>M2 Implementation Plan (Pass 1)</h2>
+<p>This is the “hand-off ready” execution breakdown. Each task includes scope, file-touch list, and acceptance criteria.</p>
+</div>
+<details open=""><summary>Task M2-T0 — Repo scaffold for Canon Engine</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Create server skeleton folders for DB, models, validators, services, API, tests.</li>
+<li>Add environment config stubs (local only).</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/server/
+/server/db/
+/server/models/
+/server/validators/
+/server/services/
+/server/api/
+/server/tests/
+/data/.gitignore</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Server can start (even with placeholder routes).</li>
+<li>Repo contains empty-but-correct structure to implement tasks below.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M2-T1 — DB + migration runner</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>SQLite connection factory</li>
+<li>Migration runner (apply ordered scripts)</li>
+<li>CLI commands: init/migrate/reset</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/server/db/
+/server/migrations/
+/server/cli/ (or equivalent)
+/server/tests/test_db_bootstrap.*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li><code>init+migrate</code> creates schema from scratch.</li>
+<li><code>reset</code> drops + recreates + loads fixtures (later).</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M2-T2 — Core tables (entities) + deterministic IDs</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Implement tables/models for: Person, Location, Org, Faction, StoryDay, Event, Artifact, Symbol, Metric, Claim, Evidence</li>
+<li>Deterministic ID generator + collision detection</li>
+<li>Alias table + reveal linkage (identity_of)</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/server/migrations/0001_core_tables.*
+/server/models/*
+/server/utils/id_generator.*
+/server/tests/test_ids.*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Creating entities requires valid IDs.</li>
+<li>Aliases can be added and queried without breaking entity references.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M2-T3 — Invariants + validators</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Implement testable invariants from <code>canon_invariants_v1</code></li>
+<li>Key ones: timeline overlap, location impossibility, symbol modality, evidence required for elevated facts</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/server/validators/*
+/server/tests/test_invariants.*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Invalid writes are rejected with clear errors.</li>
+<li>Tests cover core invariants and pass on fixtures.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M2-T4 — CanonCommit (preview/apply/revert)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Commit table + commit_items table</li>
+<li>Preview diff</li>
+<li>Apply commit transaction</li>
+<li>Revert commit transaction</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/server/migrations/0002_canon_commit.*
+/server/services/canon_commit_service.*
+/server/tests/test_commit.*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>All mutations run through CanonCommit.</li>
+<li>Rollback restores prior state without corruption.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M2-T5 — Canon API (read + write via commits)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>CRUD READ: list/get/search per entity</li>
+<li>WRITE: create/update/delete via commit endpoints</li>
+<li>Timeline endpoints: by StoryDay</li>
+<li>Graph endpoint: neighborhood relations</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/server/api/*
+/server/services/*
+/server/tests/test_api.*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>No direct-write endpoints exist.</li>
+<li>API returns deterministic, structured JSON for cockpit consumption.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M2-T6 — Fixtures + smoke tests</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Build a 1-month sample world dataset</li>
+<li>Ensure invariants and commit protocol pass</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/server/fixtures/*
+/server/tests/test_fixtures.*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li><code>reset</code> loads fixtures cleanly.</li>
+<li>Smoke suite passes end-to-end (init → migrate → load → query).</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M2-T7 — M1 integration stubs (read-only)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Add read-only client functions for M1: getStoryDay, searchEntities, fetchRelations, fetchSymbols</li>
+<li>No writing from M1 until M2 is stable</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/lib/canon_api_client.*
+/client/tests/test_canon_client.*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>M1 can display canon data with stable caching behavior.</li>
+</ul>
+</div></details>
+<div class="card"><span class="badge">No-drift</span> Build only within task file-touch lists. If a task needs more files, update the task spec first.</div>
+</div>
+
+</div></section>
+<section id="m2-task-board-v-01" class="doc-section" data-group="M2" data-name="Task Board (v_01)">
+<div class="meta"><span class="pill">M2</span> <span class="pill">Task Board (v_01)</span> <span class="pill subtle">v_01/task-board.html</span></div>
+<div class="doc-content">
+
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — Implementation Kickoff</h1>
+<div class="sub">v1.0 • M2 LOCKED • Convert contracts → executable tasks • Generated Jan 12, 2026</div>
+</div>
+<nav><a class="" href="index.html">Overview</a> <a class="" href="m2-implementation.html">M2 Implementation</a> <a class="" href="m2-contracts.html">M2 Contracts Map</a> <a class="active" href="task-board.html">Task Board</a></nav>
+</header>
+<div class="wrap">
+<div class="card ok">
+<h2>Task Board (copy into GitHub Issues / Linear)</h2>
+<p>Each line is an issue title. Prefix matches the task IDs above.</p>
+<pre>
+M2-T0 Repo scaffold for Canon Engine
+M2-T1 DB + migration runner
+M2-T2 Core tables (entities) + deterministic IDs + aliasing
+M2-T3 Invariants + validators
+M2-T4 CanonCommit (preview/apply/revert)
+M2-T5 Canon API (read + write via commits)
+M2-T6 Fixtures + smoke tests (1-month sample world)
+M2-T7 M1 integration stubs (read-only canon client)
+  </pre>
+</div>
+<div class="card callout">
+<h2>Definition of Done (global)</h2>
+<ul>
+<li>All writes flow through CanonCommit.</li>
+<li>Invariants are enforced and tested.</li>
+<li>Reset builds a known dataset.</li>
+<li>API supports cockpit queries with predictable JSON.</li>
+</ul>
+</div>
+<div class="card"><span class="badge">No-drift</span> Build only within task file-touch lists. If a task needs more files, update the task spec first.</div>
+</div>
+
+</div></section>
+<section id="m2-m2-m8-summary" class="doc-section" data-group="M2" data-name="M2–M8 Summary">
+<div class="meta"><span class="pill">M2</span> <span class="pill">M2–M8 Summary</span> <span class="pill subtle">m2-m8.html</span></div>
+<div class="doc-content">
+
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — Living World Novel Engine</h1>
+<div class="sub">HTML Protocol Edition (v0.7) • M1 expanded with AI Writing Suite (author-controlled scope) • No-drift • Generated Jan 12, 2026</div>
+</div>
+<nav><a class="navlink" href="index.html">Overview</a><a class="navlink" href="modules.html">All Modules</a><a class="navlink" href="m0.html">M0 Repo Hardening</a><a class="navlink" href="m1.html">M1 CEO Cockpit + AI</a><a class="navlink active" href="m2-m8.html">M2–M8 Baselines</a><a class="navlink" href="change-control.html">Change Control</a></nav>
+</header>
+<div class="wrap">
+<div class="card">
+<h2>M2–M8 Baseline Phases</h2>
+<p class="muted">Paused until M1 is locked. Once M1 is locked, we expand M2 next.</p>
+<h3>M2 Canon Engine Core</h3>
+<ul>
+<li>M2.0 Contracts (schema + invariants)</li>
+<li>M2.1 Migrations + DB bootstrap</li>
+<li>M2.2 Models + validations</li>
+<li>M2.3 Minimal CRUD API</li>
+<li>M2.4 Fixtures + smoke tests</li>
+</ul>
+</div>
+<div class="card muted">No-drift reminder: any change outside a phase’s file-touch list requires a contract update first. All design stays in HTML until you say “LOCK.”</div>
+</div>
+
+</div></section>
+<section id="m3-overview" class="doc-section" data-group="M3" data-name="Overview">
+<div class="meta"><span class="pill">M3</span> <span class="pill">Overview</span> <span class="pill subtle">(generated)</span></div>
+<div class="doc-content">
+
+<h1>M3 — Disclosure + Reader Progress Engine (Spoiler-safe + Full Lore)</h1>
+<p><strong>Purpose:</strong> Guarantee the portal can be explored deeply without accidental spoilers, while allowing “Full Lore Mode” as an explicit choice.</p>
+<h2>Contracts (drift prevention)</h2>
+<ul>
+  <li><strong>M3-C1: Reader Progress</strong> — <code>reader_progress_day</code> (YYYY-MM-DD). Stored in <code>localStorage</code> by default; optional account sync later.</li>
+  <li><strong>M3-C2: Disclosure Modes</strong> — <code>mode = "safe" | "full"</code>.
+    <ul>
+      <li><strong>Safe mode (non‑negotiable):</strong> show an item iff <code>reveal_day &lt;= reader_progress_day</code>.</li>
+      <li><strong>Full mode:</strong> show regardless of <code>reveal_day</code>, with a persistent on‑screen indicator.</li>
+    </ul>
+  </li>
+  <li><strong>M3-C3: Override Governance</strong> — Author override can bypass gating only when explicitly declared, logged with a reason, and visible in writer/admin audit logs.</li>
+</ul>
+
+</div></section>
+<section id="m3-contracts" class="doc-section" data-group="M3" data-name="Contracts">
+<div class="meta"><span class="pill">M3</span> <span class="pill">Contracts</span> <span class="pill subtle">(generated)</span></div>
+<div class="doc-content">
+
+<h1>M3 Contracts</h1>
+<h2>M3-C1 — Reader Progress</h2>
+<ul>
+  <li><code>reader_progress_day</code>: ISO date string (<code>YYYY-MM-DD</code>).</li>
+  <li>Persistence: <code>localStorage</code> key (e.g., <code>reader_progress_day</code>).</li>
+  <li>Default: earliest day in Book 1 source timeline (Dec 1).</li>
+</ul>
+<h2>M3-C2 — Disclosure Modes</h2>
+<ul>
+  <li><code>mode</code>: <code>safe</code> (default) or <code>full</code>.</li>
+  <li>Safe rule: <code>reveal_day &lt;= reader_progress_day</code>.</li>
+  <li>Full rule: ignore <code>reveal_day</code>, but show a persistent “FULL LORE (SPOILERS)” banner.</li>
+  <li>Switching to full requires explicit confirmation dialog.</li>
+</ul>
+<h2>M3-C3 — Author Override Governance</h2>
+<ul>
+  <li>Override requires: explicit declaration + reason.</li>
+  <li>Audit log entry: timestamp, author, item id(s), reason, and which gate was bypassed.</li>
+</ul>
+
+</div></section>
+<section id="m3-implementation" class="doc-section" data-group="M3" data-name="Implementation">
+<div class="meta"><span class="pill">M3</span> <span class="pill">Implementation</span> <span class="pill subtle">(generated)</span></div>
+<div class="doc-content">
+
+<h1>M3 Implementation Plan</h1>
+
+<h2>Phase M3.1 — Spoiler Gate Core (logic only)</h2>
+<h3>Build</h3>
+<ul>
+  <li>Implement <code>shouldReveal(item, reader_progress_day, mode)</code>.</li>
+  <li>Implement <code>renderContext(item)</code> that respects gating.</li>
+</ul>
+<h3>Acceptance</h3>
+<ul>
+  <li>Safe mode hides future reveals.</li>
+  <li>Full mode shows everything.</li>
+</ul>
+<h3>File touch list</h3>
+<ul>
+  <li><code>contracts/disclosure_contract.json</code></li>
+  <li><code>core/disclosure.ts</code> (or python equivalent)</li>
+  <li><code>tests/test_disclosure.*</code></li>
+</ul>
+
+<h2>Phase M3.2 — Progress Tracking (Local)</h2>
+<h3>Build</h3>
+<ul>
+  <li>UI control: “Mark current reading day”.</li>
+  <li>Store <code>reader_progress_day</code> in <code>localStorage</code>.</li>
+  <li>Apply immediately across portal pages.</li>
+</ul>
+<h3>Acceptance</h3>
+<ul>
+  <li>Reload persists progress.</li>
+  <li>Changing progress updates what’s visible.</li>
+</ul>
+<h3>File touch</h3>
+<ul>
+  <li><code>apps/public-site/*</code> (progress component)</li>
+  <li><code>apps/public-site/lib/progress_store.*</code></li>
+</ul>
+
+<h2>Phase M3.3 — Full Lore Mode (Consent + Banner)</h2>
+<h3>Build</h3>
+<ul>
+  <li>Toggle requires explicit confirmation: “You will see spoilers. Continue?”</li>
+  <li>Persistent banner in Full mode + one‑click revert to Safe.</li>
+</ul>
+<h3>Acceptance</h3>
+<ul>
+  <li>Banner always visible in Full mode.</li>
+  <li>No accidental switching.</li>
+</ul>
+<h3>File touch</h3>
+<ul>
+  <li><code>apps/public-site/components/ModeToggle.*</code></li>
+  <li><code>apps/public-site/layout.*</code></li>
+</ul>
+
+<h2>Phase M3.4 — Optional Account Sync (designed now, built later)</h2>
+<h3>Build</h3>
+<ul>
+  <li>Account table + auth + sync endpoint.</li>
+  <li>Sync <code>reader_progress_day</code> + <code>mode</code>.</li>
+</ul>
+<h3>Acceptance</h3>
+<ul>
+  <li>Same progress on two devices.</li>
+</ul>
+<h3>File touch</h3>
+<ul>
+  <li><code>apps/api/auth/*</code></li>
+  <li><code>apps/api/progress/*</code></li>
+  <li><code>apps/public-site/auth/*</code></li>
+</ul>
+
+</div></section>
+    </div>
+  </main>
+</div>
+
+<script>
+(function() {
+  const nav = document.getElementById('nav');
+  const links = Array.from(nav.querySelectorAll('a[data-target]'));
+  const sections = links.map(a => document.getElementById(a.dataset.target)).filter(Boolean);
+  const activeGroup = document.getElementById('activeGroup');
+  const activeName = document.getElementById('activeName');
+  const search = document.getElementById('navSearch');
+
+  function setActive(id) {
+    links.forEach(a => a.classList.toggle('active', a.dataset.target === id));
+    const sec = document.getElementById(id);
+    if (sec) {
+      activeGroup.textContent = sec.dataset.group || '—';
+      activeName.textContent = sec.dataset.name || '—';
+    }
+  }
+
+  function scrollToSection(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({behavior: 'smooth', block: 'start'});
+    setActive(id);
+    history.replaceState(null, '', '#' + id);
+  }
+
+  nav.addEventListener('click', (e) => {
+    const a = e.target.closest('a[data-target]');
+    if (!a) return;
+    e.preventDefault();
+    scrollToSection(a.dataset.target);
+  });
+
+  // Intersection observer to keep the active pill + nav highlight accurate while scrolling.
+  const observer = new IntersectionObserver((entries) => {
+    const visible = entries
+      .filter(en => en.isIntersecting)
+      .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+    if (visible && visible.target && visible.target.id) {
+      setActive(visible.target.id);
+    }
+  }, {
+    root: document.querySelector('.main'),
+    threshold: [0.15, 0.25, 0.4, 0.6, 0.8]
+  });
+  sections.forEach(sec => observer.observe(sec));
+
+  // Search filter
+  function normalize(s) { return (s || '').toLowerCase(); }
+  search.addEventListener('input', () => {
+    const q = normalize(search.value);
+    links.forEach(a => {
+      const text = normalize(a.textContent);
+      const show = !q || text.includes(q) || normalize(a.dataset.target).includes(q);
+      a.parentElement.style.display = show ? '' : 'none';
+    });
+    // hide empty groups
+    document.querySelectorAll('.nav-group').forEach(g => {
+      const any = Array.from(g.querySelectorAll('li')).some(li => li.style.display !== 'none');
+      g.style.display = any ? '' : 'none';
+    });
+  });
+
+  // Buttons
+  document.getElementById('btnTop').addEventListener('click', () => {
+    document.querySelector('.main').scrollTo({top: 0, behavior: 'smooth'});
+  });
+  document.getElementById('btnNext').addEventListener('click', () => {
+    // find current active section, then go to next
+    const current = links.findIndex(a => a.classList.contains('active'));
+    const next = links[Math.min(current + 1, links.length - 1)];
+    if (next) scrollToSection(next.dataset.target);
+  });
+
+  // initial hash
+  const initial = (location.hash || '').replace('#','');
+  if (initial) {
+    setTimeout(() => scrollToSection(initial), 50);
+  } else if (links[0]) {
+    setActive(links[0].dataset.target);
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,2051 @@
+<!doctype html><html><head><meta charset='utf-8'/><meta name='viewport' content='width=device-width, initial-scale=1'/><title>Master Build Plan — Consolidated M0–M8</title><style>
+:root{--bg:#0b0d12;--panel:#121622;--text:#e8eaf2;--muted:#a6adc8;--link:#9ecbff;--hr:#24304a;--card:#0f1320;}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial; background:var(--bg); color:var(--text); line-height:1.5}
+a{color:var(--link); text-decoration:none}
+a:hover{text-decoration:underline}
+.layout{display:flex; min-height:100vh}
+.sidebar{width:320px; flex:0 0 320px; border-right:1px solid var(--hr); background:linear-gradient(180deg,var(--panel),#0b0d12); position:sticky; top:0; height:100vh; overflow:auto; padding:16px}
+.brand .title{font-size:18px; font-weight:800; letter-spacing:.2px}
+.brand .subtitle{font-size:12px; color:var(--muted); margin-top:2px}
+.brand .meta{font-size:11px; color:var(--muted); margin-top:8px}
+.filter{width:100%; margin:14px 0 10px; padding:10px 10px; border-radius:10px; border:1px solid var(--hr); background:rgba(255,255,255,.03); color:var(--text)}
+.nav a{display:block; padding:7px 8px; border-radius:10px; margin:2px 0; color:var(--text)}
+.nav a:hover{background:rgba(255,255,255,.04); text-decoration:none}
+.nav hr{border:0; border-top:1px solid var(--hr); margin:10px 0}
+.content{flex:1; padding:28px; overflow:auto}
+.doc{max-width:1000px; margin:0 auto 42px; padding:22px 22px; background:rgba(255,255,255,.02); border:1px solid var(--hr); border-radius:16px}
+.doc h1{font-size:26px; margin:0 0 14px}
+.doc h2{font-size:18px; margin:22px 0 10px}
+.doc h3{font-size:14px; margin:18px 0 8px; color:var(--muted); text-transform:uppercase; letter-spacing:.8px}
+.doc p, .doc li{color:var(--text)}
+.doc code, .doc pre{background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:10px}
+.doc pre{padding:12px; overflow:auto}
+.doc code{padding:2px 6px}
+.doc table{width:100%; border-collapse:collapse; margin:10px 0}
+.doc th,.doc td{border:1px solid var(--hr); padding:8px; vertical-align:top}
+.doc th{background:rgba(255,255,255,.04)}
+.small{font-size:12px; color:var(--muted)}
+</style></head><body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="title">Master Build Plan</div>
+      <div class="subtitle">Consolidated Modules M0–M8</div>
+      <div class="meta">Built: 2026-01-12 17:10</div>
+    </div>
+    <input id="filter" class="filter" placeholder="Filter nav… (e.g., M6, search, packaging)" />
+    <div class="nav">
+      <a href="#project-index">Project Index</a>
+      <a href="#m0">M0 — Constitution & Repo Hardening</a>
+      <a href="#m1">M1 — CEO Writer Cockpit + AI Writing Suite</a>
+      <a href="#m2-contracts">M2 — Canon Engine (Contracts)</a>
+      <a href="#m2-implementation">M2 — Canon Engine (Implementation)</a>
+      <a href="#m3">M3 — Disclosure + Reader Progress</a>
+      <hr/>
+      <a href="#m4-implementation">M4 — Day-Locked Timeline + Canon Engine</a>
+      <a href="#m5-implementation">M5 — Writer UI Contract Integration</a>
+      <a href="#m6">M6 — Entity Graph + Crosslinking</a>
+      <a href="#m7">M7 — Search + M7QL</a>
+      <a href="#m8">M8 — Build + Packaging</a>
+      <hr/>
+      <a href="#completeness-checklist">What’s Missing / To Finish the Plan</a>
+      <a href="#microstep-template">Micro-step Template (Use for every phase)</a>
+    </div>
+  </aside>
+
+  <main class="content" id="content">
+    <section class="doc">
+      
+<div class="layout">
+<aside class="sidebar">
+<div class="brand">
+<h1 id="top">Project Master Reader</h1>
+<div class="sub">
+        Consolidated one-page reader for M0/M1/M2 plus generated M3.<br/>
+        Works offline (no fetch/CORS). M2 is elevated to first-class navigation.
+      </div>
+<div class="lock">
+<span class="badge"><strong>Book 1 source timeline lock:</strong> Dec 1 → Jan 3</span>
+<span class="badge">Architecture: <strong>day-based</strong> (in‑universe layer later)</span>
+</div>
+<div class="small">Generated: 2026-01-12</div>
+</div>
+<div class="search">
+<input id="navSearch" placeholder="Filter navigation… (e.g., m2, contracts, task)" type="text"/>
+</div>
+
+</aside>
+<main class="main">
+<div class="topbar">
+<div class="row">
+<div class="left">
+<span class="pill" id="activeGroup">—</span>
+<span class="pill" id="activeName">—</span>
+</div>
+<div class="jump">
+<button id="btnTop" title="Scroll to top">Top</button>
+<button id="btnNext" title="Next section">Next</button>
+</div>
+</div>
+</div>
+<div class="content" id="content">
+<section class="doc-section" data-group="Project" data-name="Index" id="project-index">
+<div class="meta"><span class="pill">Project</span> <span class="pill">Index</span> <span class="pill subtle">index.html</span></div>
+<div class="doc-content">
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — M1 Implementation Kickoff</h1>
+<div class="sub">v1.1 • Desktop-first • M1 LOCKED • Convert M1 design → executable tasks • Generated Jan 12, 2026</div>
+</div>
+
+</header>
+<div class="wrap">
+<div class="card ok">
+<h2>Decision locked: Desktop-first</h2>
+<ul>
+<li>The CEO Cockpit ships as a <b>desktop app</b> (offline-first, fast, stable).</li>
+<li>All OpenAI calls go through a <b>local server proxy</b> (key never in UI).</li>
+<li>M1 reads canon via M2 API; M1 writes canon only via CanonCommit (later, after M2 stability).</li>
+</ul>
+</div>
+<div class="card">
+<h2>Recommended desktop stack (baseline)</h2>
+<ul>
+<li><b>Tauri + Vite/React</b> (preferred: lightweight, secure)</li>
+<li><b>Electron</b> fallback if needed for plugin ecosystem</li>
+<li>Local service: Node/Fastify or Python/FastAPI for:
+      <ul>
+<li>OpenAI proxy</li>
+<li>M2 canon API (if we host M2 in same service)</li>
+<li>File system exports/imports</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="card callout">
+<h2>Core behavior rules</h2>
+<ul>
+<li>AI proposes; author approves. No silent inserts.</li>
+<li>Every session declares WHY → HOW → WHAT.</li>
+<li>Payoff rule: cognitive domination OR emotional resolution OR cliffhanger.</li>
+<li>Reader stance: inside the rebellion.</li>
+</ul>
+</div>
+<div class="card"><span class="badge">No-drift</span> Build only within task file-touch lists. If a task needs more files, update the task spec first.</div>
+</div>
+</div></section>
+<section class="doc-section" data-group="Project" data-name="Modules Overview" id="project-modules-overview">
+<div class="meta"><span class="pill">Project</span> <span class="pill">Modules Overview</span> <span class="pill subtle">modules.html</span></div>
+<div class="doc-content">
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — Living World Novel Engine</h1>
+<div class="sub">HTML Protocol Edition (v0.7) • M1 expanded with AI Writing Suite (author-controlled scope) • No-drift • Generated Jan 12, 2026</div>
+</div>
+
+</header>
+<div class="wrap">
+<div class="card">
+<h2>Modules</h2>
+<p class="muted">We are deepening M1 before moving to M2. M2–M8 remain baseline placeholders for now.</p>
+<ol>
+<li><a href="m0.html"><b>M0</b> Constitution &amp; Repo Hardening</a></li>
+<li><a href="m1.html"><b>M1</b> CEO Writer Cockpit + AI Writing Suite</a></li>
+<li><a href="m2-m8.html"><b>M2–M8</b> Baseline phases</a></li>
+</ol>
+</div>
+<div class="card muted">No-drift reminder: any change outside a phase’s file-touch list requires a contract update first. All design stays in HTML until you say “LOCK.”</div>
+</div>
+</div></section>
+<section class="doc-section" data-group="Project" data-name="Integration" id="project-integration">
+<div class="meta"><span class="pill">Project</span> <span class="pill">Integration</span> <span class="pill subtle">integration.html</span></div>
+<div class="doc-content">
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — M1 Implementation Kickoff</h1>
+<div class="sub">v1.1 • Desktop-first • M1 LOCKED • Convert M1 design → executable tasks • Generated Jan 12, 2026</div>
+</div>
+
+</header>
+<div class="wrap">
+<div class="card ok">
+<h2>M1 ↔ M2 Integration (no drift boundary)</h2>
+<ul>
+<li><b>Read path (now):</b> M1 reads canon via M2 API (entities, events, symbols, metrics, relations).</li>
+<li><b>Write path (later):</b> M1 writes to canon only through CanonCommit endpoints (after M2 stability).</li>
+<li><b>Project store:</b> M1 stores drafts + session metadata locally; canon remains the authoritative truth graph.</li>
+</ul>
+</div>
+<div class="card">
+<h2>Read-only queries M1 needs on day 1</h2>
+<ul>
+<li>Get StoryDay package: events + involved entities + symbols + locations</li>
+<li>Search entities by name/alias</li>
+<li>Fetch relationships neighborhood for an entity</li>
+<li>Fetch setting facts/metrics/claims</li>
+</ul>
+</div>
+<div class="card">
+<h2>Write operations (deferred until M2 is stable)</h2>
+<ul>
+<li>Commit new Symbol definitions</li>
+<li>Commit new Artifact entries (bio factory outputs)</li>
+<li>Commit new Events discovered during writing</li>
+</ul>
+<p class="callout">All writes must create a CanonCommit with rationale and diff preview.</p>
+</div>
+<div class="card"><span class="badge">No-drift</span> Build only within task file-touch lists. If a task needs more files, update the task spec first.</div>
+</div>
+</div></section>
+<section class="doc-section" data-group="Project" data-name="Change Control" id="project-change-control">
+<div class="meta"><span class="pill">Project</span> <span class="pill">Change Control</span> <span class="pill subtle">change-control.html</span></div>
+<div class="doc-content">
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — Living World Novel Engine</h1>
+<div class="sub">HTML Protocol Edition (v0.7) • M1 expanded with AI Writing Suite (author-controlled scope) • No-drift • Generated Jan 12, 2026</div>
+</div>
+
+</header>
+<div class="wrap">
+<div class="card">
+<h2>Change control (HTML protocol)</h2>
+<ol>
+<li>All edits happen in HTML until you say <b>LOCK</b>.</li>
+<li>Change requests must specify module/phase + acceptance criteria.</li>
+<li>Once LOCK: generate Markdown build doc + contracts, then code starts by phase.</li>
+</ol>
+</div>
+<div class="card"><h2>Change request template</h2>
+<pre>CHANGE REQUEST
+- Version: v0.7
+- Module/Phase:
+- What to change:
+- Why:
+- Acceptance criteria:
+- Any files affected (if known):</pre></div>
+<div class="card muted">No-drift reminder: any change outside a phase’s file-touch list requires a contract update first. All design stays in HTML until you say “LOCK.”</div>
+</div>
+</div></section>
+<section class="doc-section" data-group="Project" data-name="Task Board" id="project-task-board">
+<div class="meta"><span class="pill">Project</span> <span class="pill">Task Board</span> <span class="pill subtle">task-board.html</span></div>
+<div class="doc-content">
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — M1 Implementation Kickoff</h1>
+<div class="sub">v1.1 • Desktop-first • M1 LOCKED • Convert M1 design → executable tasks • Generated Jan 12, 2026</div>
+</div>
+
+</header>
+<div class="wrap">
+<div class="card ok">
+<h2>Task Board (copy into GitHub Issues / Linear)</h2>
+<pre>
+M1-T0 Desktop scaffold (Tauri + Vite) + repo structure
+M1-T1 Local project store format (portable)
+M1-T2 CEO Cockpit shell (Agenda/KPIs/Queue)
+M1-T3 Chapter=Day editor (spine writing surface)
+M1-T4 Session Context Builder (WHY/HOW/WHAT gate)
+M1-T5 Symbolism suite (Color + Sound) + alerts
+M1-T6 Setting intelligence tabs + deep vault stubs
+M1-T7 Character engine (growth cycles + Bio Factory UI)
+M1-T8 Beat board (drag/drop) + scene model
+M1-T9 Continuity map (graph view) + flags
+M1-T10 AI suite (local proxy, tools, logs, cost caps)
+M1-T11 Inline AI rewrite (selection-scoped) + diff merge
+M1-T12 Export/backup (project portability)
+M1-T13 Desktop packaging, updates, crash recovery
+  </pre>
+</div>
+<div class="card callout">
+<h2>Definition of Done (M1)</h2>
+<ul>
+<li>Daily writing workflow is frictionless (create day → plan → write → AI assist → accept/reject → mark complete).</li>
+<li>All AI calls are server-proxied; logs + caps in place.</li>
+<li>Project is portable; exports restore cleanly.</li>
+<li>Read-only canon integration works (M2).</li>
+</ul>
+</div>
+<div class="card"><span class="badge">No-drift</span> Build only within task file-touch lists. If a task needs more files, update the task spec first.</div>
+</div>
+</div></section>
+<section class="doc-section" data-group="M0" data-name="Module 0" id="m0-module-0">
+<div class="meta"><span class="pill">M0</span> <span class="pill">Module 0</span> <span class="pill subtle">m0.html</span></div>
+<div class="doc-content">
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — Living World Novel Engine</h1>
+<div class="sub">HTML Protocol Edition (v0.7) • M1 expanded with AI Writing Suite (author-controlled scope) • No-drift • Generated Jan 12, 2026</div>
+</div>
+
+</header>
+<div class="wrap">
+<div class="card ok">
+<h2 id="m0">M0 — Constitution &amp; Repo Hardening</h2>
+<p class="muted">See v0.5 zip for full M0 micro-steps. (Kept unchanged; order preserved.)</p>
+</div>
+<div class="card muted">No-drift reminder: any change outside a phase’s file-touch list requires a contract update first. All design stays in HTML until you say “LOCK.”</div>
+</div>
+</div></section>
+<section class="doc-section" data-group="M1" data-name="Overview" id="m1-overview">
+<div class="meta"><span class="pill">M1</span> <span class="pill">Overview</span> <span class="pill subtle">m1.html</span></div>
+<div class="doc-content">
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — Living World Novel Engine</h1>
+<div class="sub">HTML Protocol Edition (v0.7) • M1 expanded with AI Writing Suite (author-controlled scope) • No-drift • Generated Jan 12, 2026</div>
+</div>
+
+</header>
+<div class="wrap">
+<div class="card ok">
+<h2 id="m1">M1 — CEO Writer Cockpit + AI Writing Suite</h2>
+<p>This module is your <b>CEO command center</b> for producing the book (spine) and building the living world behind it — with heavy AI assistance that stays disciplined.</p>
+<p class="muted callout"><b>Scope slider rule:</b> The author decides how much AI writes in a pass (sentence → paragraph → scene → chapter).</p>
+</div>
+<div class="card">
+<h2>Non‑negotiables (AI discipline)</h2>
+<ul>
+<li><b>Known‑variables only:</b> every generation must list its inputs (day, beats, entities, seeds, POV constraints).</li>
+<li><b>No silent changes:</b> AI never inserts text without explicit accept.</li>
+<li><b>Audit trail:</b> every run is logged (inputs, model, settings, outputs, diffs).</li>
+<li><b>Guardrails:</b> “no new entities” default; “no future day info” default.</li>
+</ul>
+</div>
+<details open="">
+<summary>Phase M1.6 — AI system architecture contract (key safety + observability)</summary>
+<div class="card">
+<h3>Objective</h3>
+<ul>
+<li>Design AI integration so it is powerful, measurable, and safe.</li>
+<li>Keep OpenAI key <b>server-only</b>. Browser never sees secrets.</li>
+</ul>
+<h3>Micro-steps</h3>
+<ul class="checklist">
+<li>Create <code>/contracts/ai_architecture_v1.md</code>:
+        <ul>
+<li>Local proxy API for all model calls (FastAPI or Node)</li>
+<li>Rate limits + cost caps + token budgets</li>
+<li>Request/response logging (aiRunLog)</li>
+<li>Determinism knobs (temperature presets)</li>
+<li>Offline behavior</li>
+</ul>
+</li>
+<li>Define AI “modes”: Draft / Revise / Continuity / Voice / Outline.</li>
+<li>Define tool schemas (structured inputs/outputs; no free-form chaos).</li>
+<li>Define “no-canon-write” rule: AI produces suggestions only.</li>
+</ul>
+</div>
+</details>
+<details open="">
+<summary>Phase M1.7 — Scope Slider + Pass Templates (sentence → chapter)</summary>
+<div class="card">
+<h3>Objective</h3>
+<ul><li>Make AI output size and intent author-controlled, every time.</li></ul>
+<h3>Micro-steps</h3>
+<ul class="checklist">
+<li>Add “Scope” control: Sentence / Paragraph / Scene / Chapter.</li>
+<li>Add “Pass template” chooser (per scope):
+        <ul>
+<li>Outline-only</li>
+<li>Beats + notes</li>
+<li>Draft prose</li>
+<li>Draft + revision notes</li>
+</ul>
+</li>
+<li>Require “Known variables” panel to be filled (or confirmed) before run.</li>
+<li>Store scope + template in aiRunLog.</li>
+</ul>
+<h3>Acceptance criteria</h3>
+<ul><li>Author can reliably request exactly as much writing as desired per run.</li></ul>
+</div>
+</details>
+<details open="">
+<summary>Phase M1.8 — Tool Pack: Outline &amp; Beats (Day/Scene)</summary>
+<div class="card">
+<h3>Objective</h3>
+<ul><li>Generate actionable outlines and beats tied to a specific StoryDay.</li></ul>
+<h3>Micro-steps</h3>
+<ul class="checklist">
+<li>Tool: Day Outline Generator (returns beats, goals, stakes, cliffhanger options).</li>
+<li>Tool: Scene Beat Builder (returns 3–7 beats per scene with escalation notes).</li>
+<li>Tool: Beat-to-Scene Draft (writes within constraints; no new entities by default).</li>
+<li>Outputs are structured JSON + optional prose blocks.</li>
+</ul>
+</div>
+</details>
+<details open="">
+<summary>Phase M1.9 — Tool Pack: Drafting &amp; Co‑writing (paragraph → chapter)</summary>
+<div class="card">
+<h3>Objective</h3>
+<ul><li>AI can draft full paragraphs, scenes, or entire chapters confined to known variables.</li></ul>
+<h3>Micro-steps</h3>
+<ul class="checklist">
+<li>Tool: Constrained Chapter Draft (inputs: beats + seed targets + entity roster + tone constraints).</li>
+<li>Tool: Dialogue-first Draft (writes dialogue skeleton then fills action).</li>
+<li>Tool: Action-first Draft (writes action/scene geography then layers dialogue).</li>
+<li>Require “No new entities” toggle (default ON).</li>
+<li>Require “No future day knowledge” toggle (default ON).</li>
+<li>Each output includes:
+        <ul>
+<li>Assumptions list</li>
+<li>Seeds touched</li>
+<li>Entities referenced</li>
+<li>Potential continuity risks</li>
+</ul>
+</li>
+</ul>
+</div>
+</details>
+<details open="">
+<summary>Phase M1.10 — Revision Suite (operations, not black-box rewrites)</summary>
+<div class="card">
+<h3>Objective</h3>
+<ul><li>AI revisions are selectable operations with granular accept/reject.</li></ul>
+<h3>Micro-steps</h3>
+<ul class="checklist">
+<li>Operations: clarity, pacing, imagery, dialogue realism, tone consistency.</li>
+<li>Require constraints block: what must not change.</li>
+<li>Output includes change summary + paragraph-level diffs.</li>
+<li>Accept/Reject per paragraph (author-controlled merge).</li>
+</ul>
+</div>
+</details>
+<details open="">
+<summary>Phase M1.11 — Continuity &amp; Seed Intelligence (pre-canon)</summary>
+<div class="card">
+<h3>Objective</h3>
+<ul><li>Catch contradictions and missing payoffs before they become canon.</li></ul>
+<h3>Micro-steps</h3>
+<ul class="checklist">
+<li>Continuity scan scope: current day + previous 7 days + open seeds.</li>
+<li>Flag categories: contradiction, ambiguity, missing payoff, unintroduced entity.</li>
+<li>Produce fix suggestions with links back to day/seed.</li>
+<li>Store continuity reports in export bundle.</li>
+</ul>
+</div>
+</details>
+<details open="">
+<summary>Phase M1.12 — Enneagram Voice Lock (POV truth with override)</summary>
+<div class="card">
+<h3>Objective</h3>
+<ul><li>Rewrite drill-down POV in-character with Enneagram contracts + explicit override.</li></ul>
+<h3>Micro-steps</h3>
+<ul class="checklist">
+<li>Inputs always include Enneagram profile + stress/growth state + forbidden moves.</li>
+<li>Output includes voice rating + what changed notes.</li>
+<li>Override requires reason and renders “intentional break” banner in output.</li>
+</ul>
+</div>
+</details>
+<details open="">
+<summary>Phase M1.13 — Safety, privacy, and cost controls (must-have)</summary>
+<div class="card">
+<h3>Objective</h3>
+<ul><li>Prevent runaway costs, data leaks, and spoiler contamination.</li></ul>
+<h3>Micro-steps</h3>
+<ul class="checklist">
+<li>Cost caps per day/week (soft + hard).</li>
+<li>Token budgets per tool/scope.</li>
+<li>Log redaction policy (hashes/snippets; avoid full text by default).</li>
+<li>Local-only mode (disable external calls).</li>
+</ul>
+</div>
+</details>
+<div class="card muted">No-drift reminder: any change outside a phase’s file-touch list requires a contract update first. All design stays in HTML until you say “LOCK.”</div>
+</div>
+</div></section>
+<section class="doc-section" data-group="M1" data-name="Contracts" id="m1-contracts">
+<div class="meta"><span class="pill">M1</span> <span class="pill">Contracts</span> <span class="pill subtle">m1-contracts.html</span></div>
+<div class="doc-content">
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — M1 Implementation Kickoff</h1>
+<div class="sub">v1.1 • Desktop-first • M1 LOCKED • Convert M1 design → executable tasks • Generated Jan 12, 2026</div>
+</div>
+
+</header>
+<div class="wrap">
+<div class="card ok">
+<h2>M1 Contracts → Implementation mapping</h2>
+<p>M1’s “contracts” are primarily UX + safety + workflow constraints. These become executable tasks and tests.</p>
+<table>
+<tr><th>Contract / Rule</th><th>Implemented by</th><th>Primary folders</th></tr>
+<tr><td>AI key server-only</td><td>Local proxy service + IPC</td><td><code>/server/ai_proxy</code>, <code>/desktop/</code></td></tr>
+<tr><td>No silent mutation</td><td>Draft staging + accept/reject merge UI</td><td><code>/client/editor</code></td></tr>
+<tr><td>Scope slider (sentence→chapter)</td><td>Tool request schema + UI control + logs</td><td><code>/client/ai</code>, <code>/server/ai_proxy</code></td></tr>
+<tr><td>Golden Circle required</td><td>Session loadout form + validation gate</td><td><code>/client/session</code></td></tr>
+<tr><td>POV + Enneagram voice lock</td><td>Voice profiles + rewrite tools + evaluators</td><td><code>/client/ai/tools</code></td></tr>
+<tr><td>Color &amp; sound symbolism</td><td>Symbol palette panel + registry + alerts</td><td><code>/client/symbols</code></td></tr>
+<tr><td>Continuity map</td><td>Graph view + queries to M2</td><td><code>/client/graphs</code></td></tr>
+<tr><td>Canon reads/writes</td><td>M2 API client (read now; write later)</td><td><code>/client/lib/canon</code>, <code>/server/canon</code></td></tr>
+</table>
+</div>
+<div class="card"><span class="badge">No-drift</span> Build only within task file-touch lists. If a task needs more files, update the task spec first.</div>
+</div>
+</div></section>
+<section class="doc-section" data-group="M1" data-name="Implementation" id="m1-implementation">
+<div class="meta"><span class="pill">M1</span> <span class="pill">Implementation</span> <span class="pill subtle">m1-implementation.html</span></div>
+<div class="doc-content">
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — M1 Implementation Kickoff</h1>
+<div class="sub">v1.1 • Desktop-first • M1 LOCKED • Convert M1 design → executable tasks • Generated Jan 12, 2026</div>
+</div>
+
+</header>
+<div class="wrap">
+<div class="card ok">
+<h2>M1 Implementation Plan (Desktop-first) — Pass 1</h2>
+<p>This is the hand-off ready execution breakdown for building the CEO Cockpit as a desktop app.</p>
+</div>
+<details open=""><summary>Task M1-T0 — Desktop scaffold (Tauri + Vite) + repo structure</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Initialize desktop app container (Tauri preferred).</li>
+<li>Set up client app (React + routing + state + local storage abstraction).</li>
+<li>Set up local service folder (API proxy + file I/O).</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/desktop/ (tauri/electron config)
+/client/
+/server/ (local services)
+/docs/DEV_SETUP.md</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Desktop app launches, shows a home screen.</li>
+<li>Local service starts (even with placeholder endpoints).</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M1-T1 — Data model for writing workspace (local project store)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Define local project format (folder-based) for portability.</li>
+<li>Define objects: Project, Novel, StoryDay, ChapterDraft, SessionLoadout, AI Run Log.</li>
+<li>Implement autosave + version snapshots.</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/lib/project_store/*
+/client/state/*
+/server/fs/*
+/docs/PROJECT_FORMAT.md</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Create/open project folder works.</li>
+<li>Autosave persists drafts and metadata.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M1-T2 — CEO Cockpit shell (Agenda/KPIs/Queue)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Today dashboard layout</li>
+<li>Queue CRUD with filters</li>
+<li>KPIs derived from actual writing activity (wordcount, days completed, unresolved seeds)</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/pages/Cockpit.*
+/client/components/kpi/*
+/client/components/queue/*
+/client/lib/metrics/*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Queue items can be created, assigned to StoryDays, and marked done.</li>
+<li>KPIs update without manual edits.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M1-T3 — Chapter=Day editor (spine writing surface)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Calendar/day navigation</li>
+<li>Editor with autosave</li>
+<li>Wordcount + read-time estimate (20–30 min target)</li>
+<li>Draft staging for AI merges</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/editor/*
+/client/pages/DayEditor.*
+/client/lib/read_time/*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Author can write and navigate days without losing text.</li>
+<li>Read-time estimate updates live.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M1-T4 — Session Context Builder (WHY/HOW/WHAT gate)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Session loadout UI: plot/subplot, characters, settings, symbols, payoff type</li>
+<li>Require WHY/HOW/WHAT before AI runs and before “Chapter Complete”</li>
+<li>Preset saving and re-use</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/session/*
+/client/components/loadout/*
+/client/lib/validation/*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>AI run button disabled until required fields are satisfied (with clear error messages).</li>
+<li>Loadouts save/restore correctly.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M1-T5 — Symbolism suite (Color + Sound) + alerts</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Symbol registry (modality-first: color, sound, environment, ritual)</li>
+<li>Chapter palette + soundscape chooser</li>
+<li>Overuse/underuse warnings</li>
+<li>Intentional override notes</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/symbols/*
+/client/lib/alerts/*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Symbols can be attached to days/scenes.</li>
+<li>Alerts trigger when thresholds exceeded.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M1-T6 — Setting intelligence tabs + deep vault stubs</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Location dashboards: sensory profile + culture + power + economics</li>
+<li>Deep-vault entries (facts/metrics/claims) read from M2</li>
+<li>Portal-ready export stub (later in M5/M7)</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/settings/*
+/client/locations/*
+/client/lib/canon/*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Location panels render and can be linked to StoryDays.</li>
+<li>Canon facts display read-only from M2 API.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M1-T7 — Character engine (growth cycles + Bio Factory UI)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Character profiles: Enneagram, fears/desires, stress/growth markers</li>
+<li>Growth cycle timeline (growth/regress/stagnate) with triggers</li>
+<li>Bio Factory templates (auto/biography, diary/blog, audio/video script stubs)</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/characters/*
+/client/bio_factory/*
+/client/lib/templates/*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Character timeline can be updated per day/week.</li>
+<li>Bio Factory can generate structured drafts stored in project folder (canon write later).</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M1-T8 — Beat board (drag/drop) + Scene model</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Beat model tied to StoryDay + scene + intent</li>
+<li>Drag/drop beat board per day</li>
+<li>Beat-to-draft AI hooks (calls tools in T10)</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/beats/*
+/client/components/dragdrop/*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Beats reorder deterministically and persist.</li>
+<li>Beat board can export a “scene plan” JSON.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M1-T9 — Continuity map (graph view) + queries</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Graph visualization of entities/seeds/symbols across days</li>
+<li>Filters: character, location, symbol, subplot</li>
+<li>Flags: dropped seeds, overused entities, missing payoff</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/graphs/*
+/client/lib/graph_queries/*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Graph loads from project metadata + M2 canon reads.</li>
+<li>Flags are reproducible (same inputs → same warnings).</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M1-T10 — AI suite (local proxy, tools, logs, cost caps)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Local proxy for OpenAI calls (server-only key)</li>
+<li>Tool schemas: outline, beats, constrained drafting, revision ops, continuity scan, voice lock</li>
+<li>Scope slider: sentence/paragraph/scene/chapter</li>
+<li>Run log (inputs, outputs, model/settings, token/cost estimates)</li>
+<li>Cost caps + rate limits</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/server/ai_proxy/*
+/client/ai/*
+/client/runlog/*
+/docs/AI_TOOLS.md</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Browser/UI never sees the API key.</li>
+<li>Every AI run produces a log entry and a draft staged for accept/reject.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M1-T11 — Inline AI rewrite (selection-scoped) + diff merge</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Select text → run rewrite op (clarity/pacing/voice/dialogue/etc.)</li>
+<li>Diff UI: accept/reject per paragraph</li>
+<li>Constraints: no future knowledge; no new entities default</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/editor/inline_ai/*
+/client/components/diff/*
+/server/ai_proxy/tools/rewrite.*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Only selection + declared context sent to proxy.</li>
+<li>Author can accept/reject changes granularly.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M1-T12 — Export/backup (project portability)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>One-click zip export of project</li>
+<li>Daily automatic backup rotation (local)</li>
+<li>Export manuscript (per novel, per day) to Markdown/Docx later (M7)</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/server/fs/export/*
+/client/export/*
+/docs/EXPORTS.md</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>User can export a zip and restore it on another machine.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M1-T13 — Desktop packaging, updates, and crash recovery</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Packaging for macOS/Windows/Linux</li>
+<li>Crash recovery: restore last autosave state</li>
+<li>Settings panel: paths, caps, models, offline mode</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/desktop/*
+/client/settings_app/*
+/docs/RELEASE.md</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>App rebuilds reliably with a repeatable release process.</li>
+<li>Crash recovery works (forced kill test).</li>
+</ul>
+</div></details>
+<div class="card"><span class="badge">No-drift</span> Build only within task file-touch lists. If a task needs more files, update the task spec first.</div>
+</div>
+</div></section>
+<section class="doc-section" data-group="M2" data-name="Index (v_01)" id="m2-index-v-01">
+<div class="meta"><span class="pill">M2</span> <span class="pill">Index (v_01)</span> <span class="pill subtle">v_01/index.html</span></div>
+<div class="doc-content">
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — Implementation Kickoff</h1>
+<div class="sub">v1.0 • M2 LOCKED • Convert contracts → executable tasks • Generated Jan 12, 2026</div>
+</div>
+
+</header>
+<div class="wrap">
+<div class="card ok">
+<h2>LOCKED: M2 Canon Engine Core</h2>
+<ul>
+<li>M2 design is locked. Next step is implementation from contracts with no drift.</li>
+<li>Implementation assumes <b>local-first</b> (SQLite) with an upgrade path to Postgres.</li>
+<li>All writes must flow through <b>CanonCommit</b> (diff + rollback).</li>
+</ul>
+</div>
+<div class="card">
+<h2>Implementation path (high-level)</h2>
+<ol>
+<li>Scaffold server + db layer</li>
+<li>Implement schemas + migrations</li>
+<li>Implement validators + invariants</li>
+<li>Implement CanonCommit (preview/apply/revert)</li>
+<li>Implement API endpoints</li>
+<li>Fixtures + smoke tests</li>
+<li>Wire M1 to read from M2 (writes later)</li>
+</ol>
+</div>
+<div class="card"><span class="badge">No-drift</span> Build only within task file-touch lists. If a task needs more files, update the task spec first.</div>
+</div>
+</div></section>
+<section class="doc-section" data-group="M2" data-name="Contracts (v_01)" id="m2-contracts-v-01">
+<div class="meta"><span class="pill">M2</span> <span class="pill">Contracts (v_01)</span> <span class="pill subtle">v_01/m2-contracts.html</span></div>
+<div class="doc-content">
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — Implementation Kickoff</h1>
+<div class="sub">v1.0 • M2 LOCKED • Convert contracts → executable tasks • Generated Jan 12, 2026</div>
+</div>
+
+</header>
+<div class="wrap">
+<div class="card">
+<h2 id="m2-contracts">M2 Contracts → Implementation mapping</h2>
+<table>
+<tr><th>Contract</th><th>Implements</th><th>Primary folders</th></tr>
+<tr><td><code>/contracts/canon_schema_v1.md</code></td><td>DB tables + models</td><td><code>/server/db</code>, <code>/server/models</code>, <code>/server/migrations</code></td></tr>
+<tr><td><code>/contracts/canon_invariants_v1.md</code></td><td>Validators + tests</td><td><code>/server/validators</code>, <code>/server/tests</code></td></tr>
+<tr><td><code>/contracts/canon_ids_v1.md</code></td><td>ID utilities + alias rules</td><td><code>/server/utils</code>, <code>/server/models</code></td></tr>
+<tr><td><code>/contracts/canon_commit_v1.md</code></td><td>Commit tables + transaction API</td><td><code>/server/services</code>, <code>/server/models</code>, <code>/server/api</code></td></tr>
+<tr><td><code>/contracts/canon_api_v1.md</code></td><td>HTTP endpoints + request schemas</td><td><code>/server/api</code></td></tr>
+</table>
+</div>
+<div class="card callout">
+<h2>Tech choice baseline (editable later)</h2>
+<ul>
+<li><b>Server:</b> Node (Express/Fastify) <i>or</i> Python (FastAPI). Choose one for the repo; tasks below are language-agnostic.</li>
+<li><b>DB:</b> SQLite in dev (file), migrations in repo.</li>
+<li><b>Validation:</b> JSON schema or typed models + explicit invariant tests.</li>
+</ul>
+</div>
+<div class="card"><span class="badge">No-drift</span> Build only within task file-touch lists. If a task needs more files, update the task spec first.</div>
+</div>
+</div></section>
+<section class="doc-section" data-group="M2" data-name="Implementation (v_01)" id="m2-implementation-v-01">
+<div class="meta"><span class="pill">M2</span> <span class="pill">Implementation (v_01)</span> <span class="pill subtle">v_01/m2-implementation.html</span></div>
+<div class="doc-content">
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — Implementation Kickoff</h1>
+<div class="sub">v1.0 • M2 LOCKED • Convert contracts → executable tasks • Generated Jan 12, 2026</div>
+</div>
+
+</header>
+<div class="wrap">
+<div class="card ok">
+<h2 id="m2-implementation">M2 Implementation Plan (Pass 1)</h2>
+<p>This is the “hand-off ready” execution breakdown. Each task includes scope, file-touch list, and acceptance criteria.</p>
+</div>
+<details open=""><summary>Task M2-T0 — Repo scaffold for Canon Engine</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Create server skeleton folders for DB, models, validators, services, API, tests.</li>
+<li>Add environment config stubs (local only).</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/server/
+/server/db/
+/server/models/
+/server/validators/
+/server/services/
+/server/api/
+/server/tests/
+/data/.gitignore</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Server can start (even with placeholder routes).</li>
+<li>Repo contains empty-but-correct structure to implement tasks below.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M2-T1 — DB + migration runner</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>SQLite connection factory</li>
+<li>Migration runner (apply ordered scripts)</li>
+<li>CLI commands: init/migrate/reset</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/server/db/
+/server/migrations/
+/server/cli/ (or equivalent)
+/server/tests/test_db_bootstrap.*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li><code>init+migrate</code> creates schema from scratch.</li>
+<li><code>reset</code> drops + recreates + loads fixtures (later).</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M2-T2 — Core tables (entities) + deterministic IDs</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Implement tables/models for: Person, Location, Org, Faction, StoryDay, Event, Artifact, Symbol, Metric, Claim, Evidence</li>
+<li>Deterministic ID generator + collision detection</li>
+<li>Alias table + reveal linkage (identity_of)</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/server/migrations/0001_core_tables.*
+/server/models/*
+/server/utils/id_generator.*
+/server/tests/test_ids.*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Creating entities requires valid IDs.</li>
+<li>Aliases can be added and queried without breaking entity references.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M2-T3 — Invariants + validators</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Implement testable invariants from <code>canon_invariants_v1</code></li>
+<li>Key ones: timeline overlap, location impossibility, symbol modality, evidence required for elevated facts</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/server/validators/*
+/server/tests/test_invariants.*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>Invalid writes are rejected with clear errors.</li>
+<li>Tests cover core invariants and pass on fixtures.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M2-T4 — CanonCommit (preview/apply/revert)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Commit table + commit_items table</li>
+<li>Preview diff</li>
+<li>Apply commit transaction</li>
+<li>Revert commit transaction</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/server/migrations/0002_canon_commit.*
+/server/services/canon_commit_service.*
+/server/tests/test_commit.*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>All mutations run through CanonCommit.</li>
+<li>Rollback restores prior state without corruption.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M2-T5 — Canon API (read + write via commits)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>CRUD READ: list/get/search per entity</li>
+<li>WRITE: create/update/delete via commit endpoints</li>
+<li>Timeline endpoints: by StoryDay</li>
+<li>Graph endpoint: neighborhood relations</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/server/api/*
+/server/services/*
+/server/tests/test_api.*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>No direct-write endpoints exist.</li>
+<li>API returns deterministic, structured JSON for cockpit consumption.</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M2-T6 — Fixtures + smoke tests</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Build a 1-month sample world dataset</li>
+<li>Ensure invariants and commit protocol pass</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/server/fixtures/*
+/server/tests/test_fixtures.*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li><code>reset</code> loads fixtures cleanly.</li>
+<li>Smoke suite passes end-to-end (init → migrate → load → query).</li>
+</ul>
+</div></details>
+<details open=""><summary>Task M2-T7 — M1 integration stubs (read-only)</summary>
+<div class="card">
+<h3>Scope</h3>
+<ul>
+<li>Add read-only client functions for M1: getStoryDay, searchEntities, fetchRelations, fetchSymbols</li>
+<li>No writing from M1 until M2 is stable</li>
+</ul>
+<h3>File-touch list</h3>
+<pre>/client/lib/canon_api_client.*
+/client/tests/test_canon_client.*</pre>
+<h3>Acceptance</h3>
+<ul>
+<li>M1 can display canon data with stable caching behavior.</li>
+</ul>
+</div></details>
+<div class="card"><span class="badge">No-drift</span> Build only within task file-touch lists. If a task needs more files, update the task spec first.</div>
+</div>
+</div></section>
+<section class="doc-section" data-group="M2" data-name="Task Board (v_01)" id="m2-task-board-v-01">
+<div class="meta"><span class="pill">M2</span> <span class="pill">Task Board (v_01)</span> <span class="pill subtle">v_01/task-board.html</span></div>
+<div class="doc-content">
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — Implementation Kickoff</h1>
+<div class="sub">v1.0 • M2 LOCKED • Convert contracts → executable tasks • Generated Jan 12, 2026</div>
+</div>
+
+</header>
+<div class="wrap">
+<div class="card ok">
+<h2>Task Board (copy into GitHub Issues / Linear)</h2>
+<p>Each line is an issue title. Prefix matches the task IDs above.</p>
+<pre>
+M2-T0 Repo scaffold for Canon Engine
+M2-T1 DB + migration runner
+M2-T2 Core tables (entities) + deterministic IDs + aliasing
+M2-T3 Invariants + validators
+M2-T4 CanonCommit (preview/apply/revert)
+M2-T5 Canon API (read + write via commits)
+M2-T6 Fixtures + smoke tests (1-month sample world)
+M2-T7 M1 integration stubs (read-only canon client)
+  </pre>
+</div>
+<div class="card callout">
+<h2>Definition of Done (global)</h2>
+<ul>
+<li>All writes flow through CanonCommit.</li>
+<li>Invariants are enforced and tested.</li>
+<li>Reset builds a known dataset.</li>
+<li>API supports cockpit queries with predictable JSON.</li>
+</ul>
+</div>
+<div class="card"><span class="badge">No-drift</span> Build only within task file-touch lists. If a task needs more files, update the task spec first.</div>
+</div>
+</div></section>
+<section class="doc-section" data-group="M2" data-name="M2–M8 Summary" id="m2-m2-m8-summary">
+<div class="meta"><span class="pill">M2</span> <span class="pill">M2–M8 Summary</span> <span class="pill subtle">m2-m8.html</span></div>
+<div class="doc-content">
+<header>
+<div class="brand">
+<h1>Omniscient Build Plan — Living World Novel Engine</h1>
+<div class="sub">HTML Protocol Edition (v0.7) • M1 expanded with AI Writing Suite (author-controlled scope) • No-drift • Generated Jan 12, 2026</div>
+</div>
+
+</header>
+<div class="wrap">
+<div class="card">
+<h2>M2–M8 Baseline Phases</h2>
+<p class="muted">Paused until M1 is locked. Once M1 is locked, we expand M2 next.</p>
+<h3>M2 Canon Engine Core</h3>
+<ul>
+<li>M2.0 Contracts (schema + invariants)</li>
+<li>M2.1 Migrations + DB bootstrap</li>
+<li>M2.2 Models + validations</li>
+<li>M2.3 Minimal CRUD API</li>
+<li>M2.4 Fixtures + smoke tests</li>
+</ul>
+</div>
+<div class="card muted">No-drift reminder: any change outside a phase’s file-touch list requires a contract update first. All design stays in HTML until you say “LOCK.”</div>
+</div>
+</div></section>
+<section class="doc-section" data-group="M3" data-name="Overview" id="m3-overview">
+<div class="meta"><span class="pill">M3</span> <span class="pill">Overview</span> <span class="pill subtle">(generated)</span></div>
+<div class="doc-content">
+<h1 id="m3">M3 — Disclosure + Reader Progress Engine (Spoiler-safe + Full Lore)</h1>
+<p><strong>Purpose:</strong> Guarantee the portal can be explored deeply without accidental spoilers, while allowing “Full Lore Mode” as an explicit choice.</p>
+<h2>Contracts (drift prevention)</h2>
+<ul>
+<li><strong>M3-C1: Reader Progress</strong> — <code>reader_progress_day</code> (YYYY-MM-DD). Stored in <code>localStorage</code> by default; optional account sync later.</li>
+<li><strong>M3-C2: Disclosure Modes</strong> — <code>mode = "safe" | "full"</code>.
+    <ul>
+<li><strong>Safe mode (non‑negotiable):</strong> show an item iff <code>reveal_day &lt;= reader_progress_day</code>.</li>
+<li><strong>Full mode:</strong> show regardless of <code>reveal_day</code>, with a persistent on‑screen indicator.</li>
+</ul>
+</li>
+<li><strong>M3-C3: Override Governance</strong> — Author override can bypass gating only when explicitly declared, logged with a reason, and visible in writer/admin audit logs.</li>
+</ul>
+</div></section>
+<section class="doc-section" data-group="M3" data-name="Contracts" id="m3-contracts">
+<div class="meta"><span class="pill">M3</span> <span class="pill">Contracts</span> <span class="pill subtle">(generated)</span></div>
+<div class="doc-content">
+<h1>M3 Contracts</h1>
+<h2>M3-C1 — Reader Progress</h2>
+<ul>
+<li><code>reader_progress_day</code>: ISO date string (<code>YYYY-MM-DD</code>).</li>
+<li>Persistence: <code>localStorage</code> key (e.g., <code>reader_progress_day</code>).</li>
+<li>Default: earliest day in Book 1 source timeline (Dec 1).</li>
+</ul>
+<h2>M3-C2 — Disclosure Modes</h2>
+<ul>
+<li><code>mode</code>: <code>safe</code> (default) or <code>full</code>.</li>
+<li>Safe rule: <code>reveal_day &lt;= reader_progress_day</code>.</li>
+<li>Full rule: ignore <code>reveal_day</code>, but show a persistent “FULL LORE (SPOILERS)” banner.</li>
+<li>Switching to full requires explicit confirmation dialog.</li>
+</ul>
+<h2>M3-C3 — Author Override Governance</h2>
+<ul>
+<li>Override requires: explicit declaration + reason.</li>
+<li>Audit log entry: timestamp, author, item id(s), reason, and which gate was bypassed.</li>
+</ul>
+</div></section>
+<section class="doc-section" data-group="M3" data-name="Implementation" id="m3-implementation">
+<div class="meta"><span class="pill">M3</span> <span class="pill">Implementation</span> <span class="pill subtle">(generated)</span></div>
+<div class="doc-content">
+<h1>M3 Implementation Plan</h1>
+<h2>Phase M3.1 — Spoiler Gate Core (logic only)</h2>
+<h3>Build</h3>
+<ul>
+<li>Implement <code>shouldReveal(item, reader_progress_day, mode)</code>.</li>
+<li>Implement <code>renderContext(item)</code> that respects gating.</li>
+</ul>
+<h3>Acceptance</h3>
+<ul>
+<li>Safe mode hides future reveals.</li>
+<li>Full mode shows everything.</li>
+</ul>
+<h3>File touch list</h3>
+<ul>
+<li><code>contracts/disclosure_contract.json</code></li>
+<li><code>core/disclosure.ts</code> (or python equivalent)</li>
+<li><code>tests/test_disclosure.*</code></li>
+</ul>
+<h2>Phase M3.2 — Progress Tracking (Local)</h2>
+<h3>Build</h3>
+<ul>
+<li>UI control: “Mark current reading day”.</li>
+<li>Store <code>reader_progress_day</code> in <code>localStorage</code>.</li>
+<li>Apply immediately across portal pages.</li>
+</ul>
+<h3>Acceptance</h3>
+<ul>
+<li>Reload persists progress.</li>
+<li>Changing progress updates what’s visible.</li>
+</ul>
+<h3>File touch</h3>
+<ul>
+<li><code>apps/public-site/*</code> (progress component)</li>
+<li><code>apps/public-site/lib/progress_store.*</code></li>
+</ul>
+<h2>Phase M3.3 — Full Lore Mode (Consent + Banner)</h2>
+<h3>Build</h3>
+<ul>
+<li>Toggle requires explicit confirmation: “You will see spoilers. Continue?”</li>
+<li>Persistent banner in Full mode + one‑click revert to Safe.</li>
+</ul>
+<h3>Acceptance</h3>
+<ul>
+<li>Banner always visible in Full mode.</li>
+<li>No accidental switching.</li>
+</ul>
+<h3>File touch</h3>
+<ul>
+<li><code>apps/public-site/components/ModeToggle.*</code></li>
+<li><code>apps/public-site/layout.*</code></li>
+</ul>
+<h2>Phase M3.4 — Optional Account Sync (designed now, built later)</h2>
+<h3>Build</h3>
+<ul>
+<li>Account table + auth + sync endpoint.</li>
+<li>Sync <code>reader_progress_day</code> + <code>mode</code>.</li>
+</ul>
+<h3>Acceptance</h3>
+<ul>
+<li>Same progress on two devices.</li>
+</ul>
+<h3>File touch</h3>
+<ul>
+<li><code>apps/api/auth/*</code></li>
+<li><code>apps/api/progress/*</code></li>
+<li><code>apps/public-site/auth/*</code></li>
+</ul>
+</div></section>
+</div>
+</main>
+</div>
+
+
+    </section>
+
+    <section class="doc">
+      
+<div class="layout">
+<aside class="sidebar">
+<div class="brand">
+<div class="title">Standalone Modules Reader</div>
+<div class="sub">
+        Book 1 Source Timeline (locked): <strong>Dec 1 → Jan 3</strong><br/>
+        Modules included: <strong>M4</strong> + <strong>M5</strong><br/>
+        Offline-friendly single file.
+      </div>
+<div class="badge">Tip: <span class="kbd">Ctrl</span> + <span class="kbd">F</span> to search within a module</div>
+</div>
+
+<div class="footer">
+      Generated for your build protocol. We’ll merge with M0–M3 later.
+    </div>
+</aside>
+<main class="main">
+<div class="topbar">
+<div>
+<div style="font-weight:700; font-size:14px;">M4–M5 Standalone Build Pack</div>
+<div style="color:var(--muted); font-size:12px; margin-top:4px;">
+          Navigation is day-architecture compatible and designed to drop into the master reader later.
+        </div>
+</div>
+<div class="badge">Version: <strong>v_01</strong></div>
+</div>
+<section class="content" data-module="m4" id="m4-implementation">
+<h1>M4 — Implementation (Day-Locked Timeline + Canon Engine)</h1>
+<p>This is the concrete build spec you can hand to engineering without drift.</p>
+<h2>1) File layout</h2>
+<pre><code>/modules/M4/
+  README.md
+
+/config/
+  timeline_config.book1.json
+
+/contracts/
+  canon_item.schema.json
+  canon_state_machine.json
+  override_policy.json
+
+/core/
+  timeline.ts
+  canon_state.ts
+  audit_log.ts
+  consistency_validator.ts
+  export_timeline_index.ts
+
+/tests/
+  test_timeline_window.spec.ts
+  test_canon_state.spec.ts
+  test_overrides.spec.ts
+  test_validator.spec.ts
+  test_export_index.spec.ts
+
+/apps/writer-dashboard/components/
+  DayNavigator.tsx
+  DayDetailPanel.tsx
+  MoveItemModal.tsx
+  CanonStateBadge.tsx
+  ConflictReportPanel.tsx</code></pre>
+<h2>2) Config + contracts (source of truth)</h2>
+<h3>2.1 timeline_config.book1.json</h3>
+<pre><code class="language-json">{
+  "book_id": "BOOK1",
+  "source_window": {
+    "start": "2025-12-01",
+    "end": "2026-01-03",
+    "day_count": 34
+  },
+  "day_indexing": {
+    "index_start": 1,
+    "format": "YYYY-MM-DD"
+  }
+}</code></pre>
+<h3>2.2 canon_item.schema.json (minimal required fields)</h3>
+<pre><code class="language-json">{
+  "required": ["id", "type", "title", "source_day", "source_day_index", "canon_state", "audit"],
+  "properties": {
+    "id": { "type": "string" },
+    "type": { "enum": ["scene", "beat", "fact", "artifact", "note"] },
+    "title": { "type": "string" },
+    "source_day": { "type": "string" },
+    "source_day_index": { "type": "number" },
+    "in_universe": {
+      "type": "object",
+      "properties": {
+        "universe_day": { "type": "string" },
+        "universe_time_of_day": { "type": "string" },
+        "universe_offset": { "type": "string" }
+      }
+    },
+    "canon_state": { "enum": ["seed", "draft", "locked", "retconned", "archived"] },
+    "relationships": {
+      "type": "object",
+      "properties": {
+        "depends_on": { "type": "array", "items": { "type": "string" } },
+        "contradicts": { "type": "array", "items": { "type": "string" } },
+        "references": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "audit": {
+      "type": "object",
+      "required": ["created_at", "updated_at", "last_editor", "override"],
+      "properties": {
+        "created_at": { "type": "string" },
+        "updated_at": { "type": "string" },
+        "last_editor": { "type": "string" },
+        "override": {
+          "type": "object",
+          "required": ["is_override"],
+          "properties": {
+            "is_override": { "type": "boolean" },
+            "reason": { "type": "string" },
+            "approved_by": { "type": "string" },
+            "timestamp": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}</code></pre>
+<h3>2.3 override_policy.json</h3>
+<pre><code class="language-json">{
+  "override_triggers": ["move_locked_item_day", "change_locked_item_core_fact"],
+  "requirements": ["explicit_declaration", "reason", "timestamp", "last_editor"],
+  "visibility": ["writer_audit_log", "admin_audit_log"]
+}</code></pre>
+<h2>3) Core implementation</h2>
+<p>See module text in chat for full code blocks: <code>core/timeline.ts</code>, <code>core/canon_state.ts</code>, <code>core/audit_log.ts</code>, <code>core/consistency_validator.ts</code>, <code>core/export_timeline_index.ts</code>.</p>
+<h2>4) Writer UI behavior</h2>
+<ul>
+<li>DayNavigator renders Dec 1 → Jan 3 list, click selects day.</li>
+<li>DayDetailPanel groups day items by type, shows canon badge + actions.</li>
+<li>MoveItemModal: if locked, override reason + confirmation required; logs audit.</li>
+</ul>
+<h2>5) Test plan</h2>
+<ul>
+<li>Window validation + day index correctness (Dec 1 = 1, Jan 3 = 34)</li>
+<li>Canon state transition rules</li>
+<li>Override enforcement on locked moves</li>
+<li>Validator: contradictions, dependency cycles, missing deps</li>
+<li>Export index deterministic build</li>
+</ul>
+<h2>Definition of Done</h2>
+<ol>
+<li>Create items only inside Dec 1 → Jan 3</li>
+<li>source_day_index always derived + validated</li>
+<li>Locked items can’t move without override + audit</li>
+<li>Conflict report exists</li>
+<li>Timeline index export is deterministic</li>
+<li>Writer UI enforces the rules</li>
+</ol>
+</section>
+<section class="content" data-module="m5" id="m5-implementation" style="margin-top:18px;">
+<h1>M5 — Implementation (Canon Registry + Capture + Search)</h1>
+<p><strong>Purpose:</strong> Provide the system that actually <em>stores</em>, <em>edits</em>, <em>tags</em>, and <em>retrieves</em> all canon items (scenes/beats/facts/artifacts/notes) in a way that supports M3 disclosure gating and M4 day-lock integrity.</p>
+<h2>What M5 owns</h2>
+<ul>
+<li>A single <strong>Canon Registry</strong> (database or file-backed) for all <code>CanonItem</code> objects.</li>
+<li><strong>Capture flows</strong>: quick-add, bulk import, attachment linking.</li>
+<li><strong>Search + filters</strong>: by day, type, canon_state, tags, relationships.</li>
+<li><strong>Writer-facing CRUD UI</strong> that respects M4 rules and logs edits to M4 audit.</li>
+<li><strong>Exports</strong> consumed by Reader/Portal: day-index, search index, and (later) graph index.</li>
+</ul>
+<h2>M5 Contracts</h2>
+<h3>M5-C1: Single Source Registry</h3>
+<p>All canon content MUST resolve to a canonical record in the registry. No “loose files” are treated as canon unless registered.</p>
+<h3>M5-C2: CRUD must call M4 validators</h3>
+<ul>
+<li>Create/Update MUST run <code>assertDayLock(item, cfg)</code> (M4) before commit.</li>
+<li>Moves MUST use <code>moveItemDay(...)</code> (M4) to enforce overrides.</li>
+</ul>
+<h3>M5-C3: Edit provenance is mandatory</h3>
+<p>Every edit writes an audit event (M4). Bulk operations must create one audit event per item.</p>
+<h3>M5-C4: Attachments are first-class</h3>
+<p>Artifacts (images, PDFs, audio, screenshots) are stored as <code>type="artifact"</code> canon items, with file metadata and links to related scenes/facts.</p>
+<h3>M5-C5: Search is deterministic + offline-safe exports</h3>
+<p>Exported indexes must be stable and reproducible for packaging into a static reader build.</p>
+<h2>Data layer</h2>
+<h3>Option A: JSONL (fast start, git-friendly)</h3>
+<pre><code>/data/
+  canon_items.jsonl   # one JSON per line (CanonItem)
+  attachments/        # blobs or pointers
+  indexes/
+    timeline_index.json
+    search_index.json</code></pre>
+<h3>Option B: SQLite (cleaner for scale)</h3>
+<pre><code>canon.db
+tables:
+  canon_items
+  canon_tags
+  canon_relationships
+  audit_events
+  attachments</code></pre>
+<h2>API surface (server or local service)</h2>
+<pre><code class="language-ts">GET    /canon?day=YYYY-MM-DD&amp;type=fact&amp;state=locked&amp;tag=...
+GET    /canon/:id
+POST   /canon               (create)
+PUT    /canon/:id           (update)
+POST   /canon/:id/move-day  (uses M4 move + override rules)
+POST   /canon/import        (bulk import)
+GET    /canon/export/timeline-index
+GET    /canon/export/search-index
+GET    /canon/conflicts     (uses M4 validator)</code></pre>
+<h2>Core implementation files</h2>
+<h3>core/registry.ts (repo interface)</h3>
+<pre><code class="language-ts">export interface CanonRegistry {
+  getById(id: string): Promise&lt;CanonItem | null&gt;;
+  query(params: QueryParams): Promise&lt;CanonItem[]&gt;;
+  create(item: CanonItem, editor: string): Promise&lt;CanonItem&gt;;
+  update(id: string, patch: Partial&lt;CanonItem&gt;, editor: string): Promise&lt;CanonItem&gt;;
+  moveDay(id: string, newDay: string, editor: string, override?: OverridePayload): Promise&lt;CanonItem&gt;;
+  bulkImport(items: CanonItem[], editor: string): Promise&lt;{created: number; updated: number; errors: any[]}&gt;;
+}</code></pre>
+<h3>core/create_update.ts (enforcement)</h3>
+<ul>
+<li>On create: compute <code>source_day_index</code> from config, set <code>audit</code>, validate day-lock, write.</li>
+<li>On update: block illegal canon transitions (use M4), validate day-lock, write, audit.</li>
+<li>On moveDay: always call M4 <code>moveItemDay</code>.</li>
+</ul>
+<h3>core/indexes.ts (exports)</h3>
+<ul>
+<li>Build <code>timeline_index.json</code> using M4 export builder.</li>
+<li>Build <code>search_index.json</code> (minimal: tokenized title + tags + day + type + state).</li>
+</ul>
+<h2>Writer Dashboard UI</h2>
+<h3>Capture Bar</h3>
+<ul>
+<li>Quick add: choose type + title + day (default = selected day)</li>
+<li>Optional: tags + relationships (depends_on/references/contradicts)</li>
+<li>Save runs validations; errors shown inline</li>
+</ul>
+<h3>Item Editor</h3>
+<ul>
+<li>Edit title/body/metadata</li>
+<li>Canon state dropdown (enforced transitions)</li>
+<li>Relationships editor</li>
+<li>Attachment panel (upload/link → creates/links artifact records)</li>
+<li>Audit trail viewer</li>
+</ul>
+<h3>Search &amp; Filters</h3>
+<ul>
+<li>Full-text search over title/body (or SQLite FTS)</li>
+<li>Filters: day, type, canon_state, tags</li>
+<li>Sort: day index then type then title</li>
+</ul>
+<h2>Tests (acceptance)</h2>
+<ol>
+<li>Create item without source_day → reject</li>
+<li>Create item outside Dec 1 → Jan 3 → reject</li>
+<li>Create item inside window → auto day_index set correctly</li>
+<li>Update locked item day without override → reject</li>
+<li>Bulk import: one bad item doesn’t block good ones; errors returned</li>
+<li>Search index export deterministic</li>
+<li>Query filters return stable ordering</li>
+</ol>
+<h2>Definition of Done</h2>
+<ol>
+<li>Canon registry stores all CanonItems and enforces M4 on writes</li>
+<li>Writer UI can create/edit/move items with proper override handling</li>
+<li>Search + filters work across day/type/state/tags</li>
+<li>Exports: timeline_index + search_index</li>
+<li>Conflicts endpoint/panel surfaces M4 validator output</li>
+</ol>
+</section>
+</main>
+</div>
+
+
+    </section>
+
+    <section class="doc">
+      
+<div class="wrap">
+<aside class="nav">
+<div class="brand">
+<h1 id="m6">M6 Standalone Reader</h1>
+<div class="sub">Entity Graph + Crosslinking Engine — canonical people/places/orgs/objects + relationships + backlinks.<br/>Self-contained offline HTML (file:// friendly).</div>
+<div class="pillrow">
+<div class="pill"><b>Module</b> M6</div>
+<div class="pill"><b>Aligns</b> M3/M4</div>
+<div class="pill"><b>Output</b> Exports</div>
+</div>
+</div>
+<div class="search" title="Search this page (Ctrl/Cmd+F works too)">
+<svg fill="none" height="16" viewbox="0 0 24 24" width="16"><path d="M10 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z" stroke="currentColor" stroke-width="2"></path><path d="m21 21-4.3-4.3" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path></svg>
+<input id="filter" placeholder="Filter navigation…"/>
+</div>
+
+<div class="foot">
+      Tip: open this file directly in your browser. No external assets required.
+    </div>
+</aside>
+<main class="content">
+<div class="hero" id="top">
+<h1>M6 — Entity Graph + Crosslinking Engine</h1>
+<p>
+        M6 creates a canonical registry of <b>Entities</b> (people, places, orgs, objects, concepts, events)
+        and a typed <b>Relationship Graph</b> between them, plus <b>backlinks</b> from entities to every
+        canon item (scene/beat/fact/artifact) that references them.
+      </p>
+<div class="grid">
+<div class="card">
+<h3>Why this exists</h3>
+<p>
+            Day-based canon will drift if names are repeatedly typed as raw strings. M6 forces stable IDs and makes
+            crosslink navigation deterministic (character pages, place pages, relationship views, “everything connected to X”).
+          </p>
+</div>
+<div class="card">
+<h3>Non-negotiables</h3>
+<p>
+            Entities must be referenced by <b>entity_id</b>. Relationships are versioned and spoiler-safe via M3 reveal rules.
+            Timeline validity (first appearance day) must pass M4 day-lock.
+          </p>
+</div>
+</div>
+<div class="callout">
+<b>Alignment:</b> M4 gives every canon item a Source Day; M3 gates visibility by reveal_day/progress_day.
+        M6 piggybacks on both so entity pages never leak spoilers in Safe mode.
+      </div>
+</div>
+<section id="m6-overview">
+<h2>Overview</h2>
+<p>
+        M6 introduces a canonical “entity layer” that all content attaches to. Instead of retyping
+        “Jeff Elmore” or “Jacksonville City Hall” in multiple places, canon items reference stable IDs:
+        <code>entity_refs: [{ entity_id: "...", role: "speaker" }]</code>.
+      </p>
+<div class="krow">
+<div class="k"><span>Inputs:</span> canon items (M4), disclosure mode/progress (M3)</div>
+<div class="k"><span>Outputs:</span> entity index + edge index + backlinks exports</div>
+<div class="k"><span>Core value:</span> no name drift, strong crosslink navigation</div>
+</div>
+<div class="hr"></div>
+<p><b>Entity types:</b> person, place, org, object, concept, event.</p>
+<p><b>Edge examples:</b> family_of, employed_by, located_in, owns, conflicts_with, member_of.</p>
+</section>
+<section id="m6-contracts">
+<h2>Contracts</h2>
+<h3>M6-C1: Canonical Entity IDs</h3>
+<ul>
+<li>Every entity has <code>entity_id</code>, <code>entity_type</code>, <code>primary_name</code>, optional <code>aliases[]</code>.</li>
+<li><b>Rule:</b> Canon items reference entities by <code>entity_id</code> (no raw-string references when an entity exists).</li>
+</ul>
+<h3>M6-C2: Entity References Are First-Class</h3>
+<ul>
+<li>Canon items may contain <code>entity_refs[]</code> entries with <code>role</code> and <code>confidence</code>.</li>
+<li><b>Rule:</b> All <code>entity_id</code> references must resolve (no dangling IDs).</li>
+</ul>
+<h3>M6-C3: Relationship Graph</h3>
+<ul>
+<li>Entities connect via typed edges: <code>(source_entity_id) --relationship_type--&gt; (target_entity_id)</code>.</li>
+<li>Edges can include validity windows (<code>as_of_day</code> or <code>day_range</code>) aligned to Source Day.</li>
+<li><b>Rule:</b> Relationships are versioned via canon state + validity; no silent rewrites.</li>
+</ul>
+<h3>M6-C4: Spoiler Safety Alignment</h3>
+<ul>
+<li>Entities and edges can carry <code>reveal_day</code> and <code>reveal_policy</code>.</li>
+<li><b>Safe mode:</b> show iff <code>reveal_day &lt;= reader_progress_day</code>.</li>
+<li><b>Full mode:</b> show regardless (with persistent indicator, owned by M3).</li>
+</ul>
+<h3>M6-C5: Name Drift Guard</h3>
+<ul>
+<li>Primary name changes for <code>locked</code> entities require explicit override + audit logging (governance mirrors M4).</li>
+</ul>
+</section>
+<section id="m6-schemas">
+<h2>Data Schemas</h2>
+<h3>Entity</h3>
+<pre>{
+  "entity_id": "uuid-or-slug",
+  "entity_type": "person|place|org|object|concept|event",
+  "primary_name": "string",
+  "aliases": ["string"],
+  "summary": "string",
+  "tags": ["string"],
+  "first_appearance": {
+    "source_day": "YYYY-MM-DD",
+    "source_day_index": 1,
+    "canon_item_id": "uuid"
+  },
+  "reveal_day": "YYYY-MM-DD",
+  "reveal_policy": "inherit_item|explicit",
+  "canon_state": "seed|draft|locked|retconned|archived",
+  "audit": {
+    "created_at": "ISO",
+    "updated_at": "ISO",
+    "last_editor": "string",
+    "override": { "is_override": false, "reason": "string", "timestamp": "ISO" }
+  }
+}</pre>
+<h3>Relationship Edge</h3>
+<pre>{
+  "edge_id": "uuid",
+  "source_entity_id": "uuid",
+  "target_entity_id": "uuid",
+  "relationship_type": "string",
+  "direction": "directed|undirected",
+  "strength": "weak|medium|strong",
+  "validity": {
+    "as_of_day": "YYYY-MM-DD",
+    "day_range": { "start": "YYYY-MM-DD", "end": "YYYY-MM-DD" }
+  },
+  "reveal_day": "YYYY-MM-DD",
+  "reveal_policy": "inherit_item|explicit",
+  "evidence": { "canon_item_id": "uuid", "note": "string" },
+  "canon_state": "seed|draft|locked|retconned|archived",
+  "audit": { "...": "same shape as entity.audit" }
+}</pre>
+<h3>Canon Item Entity Refs (M4 extension)</h3>
+<pre>{
+  "entity_refs": [
+    { "entity_id": "uuid", "role": "subject|speaker|location|owner|antagonist|witness|other", "confidence": 0.85 }
+  ]
+}</pre>
+</section>
+<section id="m6-phases">
+<h2>Phases</h2>
+<h3>M6.1 — Entity Registry Core (CRUD)</h3>
+<ul>
+<li>Create/read/update entities with strict ID uniqueness.</li>
+<li>First appearance must pass M4 day-lock validation.</li>
+<li>Default <code>reveal_day</code> to first appearance unless explicit.</li>
+</ul>
+<h3>M6.2 — Linker: Canon Items ↔ Entities</h3>
+<ul>
+<li>Attach <code>entity_refs[]</code> to canon items.</li>
+<li>Backlinks: entity → list of referencing items grouped by Source Day.</li>
+<li>Reject dangling references.</li>
+</ul>
+<h3>M6.3 — Relationship Graph Engine (Edges + Validity)</h3>
+<ul>
+<li>Create/query edges; validity windows enable “as-of” views.</li>
+<li>Locked edges require override to edit.</li>
+</ul>
+<h3>M6.4 — Spoiler Gate Integration (M3)</h3>
+<ul>
+<li><code>shouldRevealEntity</code> and <code>shouldRevealEdge</code> implement Safe vs Full behavior.</li>
+</ul>
+<h3>M6.5 — Writer UI: Entity Explorer + Graph View</h3>
+<ul>
+<li>List + filters (type/state/tag), detail panel, backlinks, relationships.</li>
+<li>Rename locked entity triggers override modal + audit log.</li>
+</ul>
+<h3>M6.6 — Export Layer (Static-friendly)</h3>
+<ul>
+<li>Export deterministic JSON: <code>entity_index.json</code>, <code>entity_edges.json</code>, optionally <code>entity_backlinks.json</code>.</li>
+</ul>
+</section>
+<section id="m6-implementation">
+<h2>Implementation</h2>
+<h3>Recommended folder layout</h3>
+<pre>/modules/M6/
+  README.md
+  /contracts/
+    entity.schema.json
+    entity_edge.schema.json
+  /core/
+    entity_store.ts
+    entity_validators.ts
+    entity_linker.ts
+    entity_graph.ts
+    disclosure_entity.ts
+    export_entities.ts
+  /tests/
+    test_entity_registry.spec.ts
+    test_entity_linker.spec.ts
+    test_entity_edges.spec.ts
+    test_entity_disclosure.spec.ts
+    test_entity_exports.spec.ts
+  /apps/writer-dashboard/pages/
+    entities.tsx
+  /apps/writer-dashboard/components/
+    EntityList.tsx
+    EntityDetailPanel.tsx
+    EntityBacklinks.tsx
+    EntityRelationships.tsx
+    EntityGraphMini.tsx
+    RenameEntityModal.tsx
+    AddEdgeModal.tsx</pre>
+<h3>Core function signatures</h3>
+<pre>// entity_store
+createEntity(input): Entity
+updateEntity(entity_id, patch, editor, override?): Entity
+getEntity(entity_id): Entity
+searchEntities(query, filters): Entity[]
+
+// entity_linker
+attachEntityRefToItem(item_id, entity_ref): CanonItem
+getBacklinks(entity_id): { by_day: Record&lt;string, CanonItemSummary[]&gt; }
+
+// entity_graph
+createEdge(edgeInput): Edge
+getEdgesForEntity(entity_id, opts?): Edge[]
+getEdgesAsOfDay(entity_id, source_day): Edge[]
+
+// disclosure_entity
+shouldRevealEntity(entity, reader_day, mode): boolean
+shouldRevealEdge(edge, reader_day, mode): boolean
+
+// export_entities
+exportEntityIndex(entities): EntityIndex
+exportEdges(edges): EdgeIndex
+exportBacklinks(items): BacklinkIndex</pre>
+<h3>Implementation notes (practical guardrails)</h3>
+<ul>
+<li><b>Identity:</b> choose UUIDs for entities and edges; optionally layer human-friendly slugs for display only.</li>
+<li><b>Determinism:</b> exports sorted by <code>entity_type</code>, then <code>primary_name</code>, then <code>entity_id</code>.</li>
+<li><b>Validity:</b> treat edge validity as a filter step in queries; do not delete—retcon.</li>
+<li><b>Governance:</b> follow M4 override logging for locked entity renames / locked edge edits.</li>
+</ul>
+</section>
+<section id="m6-tests">
+<h2>Tests</h2>
+<div class="two">
+<div class="card">
+<h3>test_entity_registry</h3>
+<ul>
+<li>valid type + primary_name required</li>
+<li>first appearance passes M4 window validation</li>
+<li>reveal_day defaults to first appearance day</li>
+</ul>
+</div>
+<div class="card">
+<h3>test_entity_linker</h3>
+<ul>
+<li>unknown entity_id attach fails</li>
+<li>backlinks grouped by day_index with stable ordering</li>
+</ul>
+</div>
+<div class="card">
+<h3>test_entity_edges</h3>
+<ul>
+<li>edge to missing entity rejected</li>
+<li>as-of queries respect validity ranges</li>
+<li>locked edge edits require override</li>
+</ul>
+</div>
+<div class="card">
+<h3>test_entity_disclosure / exports</h3>
+<ul>
+<li>safe hides entity facets/edges beyond progress_day</li>
+<li>full shows all</li>
+<li>exports deterministic + stable IDs</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="m6-dod">
+<h2>Definition of Done</h2>
+<ul>
+<li>Entities exist as canonical IDs (not raw strings).</li>
+<li>Canon items reference entities via <code>entity_refs[]</code>.</li>
+<li>Backlinks work: entity → all referencing items grouped by Source Day.</li>
+<li>Entity relationships support validity windows + evidence pointers.</li>
+<li>Safe/Full mode disclosure works for entities and edges.</li>
+<li>Exports support offline portal rendering: <code>entity_index.json</code>, <code>entity_edges.json</code>, and optionally <code>entity_backlinks.json</code>.</li>
+</ul>
+<div class="callout">
+<b>Result:</b> You can click any character/place/org and see everything connected to it—without spoilers in Safe mode and without name drift ever again.
+      </div>
+</section>
+</main>
+</div>
+
+
+    </section>
+
+    <section class="doc">
+      
+<div class="wrap">
+<aside class="nav">
+<div class="brand">
+<h1 id="m7m8">M7 + M8 Standalone Reader</h1>
+<div class="sub">Offline review doc for Search (M7) and Build/Packaging Pipeline (M8). Works via file:// — no external assets.</div>
+<div class="pillrow">
+<div class="pill"><b>Includes</b> M7</div>
+<div class="pill"><b>Includes</b> M8</div>
+<div class="pill"><b>Generated</b> 2026-01-12</div>
+</div>
+</div>
+<div class="search" title="Filter navigation">
+<svg fill="none" height="16" viewbox="0 0 24 24" width="16"><path d="M10 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z" stroke="currentColor" stroke-width="2"></path><path d="m21 21-4.3-4.3" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path></svg>
+<input id="filter" placeholder="Filter navigation…"/>
+</div>
+
+<div class="foot">Tip: Ctrl/Cmd+F searches the full doc.</div>
+</aside>
+<main class="content">
+<div class="hero" id="top">
+<h1>M7 + M8</h1>
+<p>M7 makes the portal searchable without spoilers. M8 turns everything into a deterministic offline package with exports, navigation, and reports.</p>
+<div class="grid">
+<div class="card"><h3>M7</h3><p>Unified offline search across canon items + entities + edges with M7QL and strict M3 disclosure gating.</p></div>
+<div class="card"><h3>M8</h3><p>Build + validation gate + exports + packaging pipeline. Produces the master reader and bundle zip, with release manifests and override reports.</p></div>
+</div>
+</div>
+<section id="m7">
+<h1>M7 — Search + Query Language (Spoiler-Safe Retrieval Across the Whole Portal)</h1>
+<h2>Purpose</h2>
+<p>Make everything in the portal instantly findable—scenes, beats, facts, entities, edges, artifacts—using:</p>
+<ul>
+<li>offline full-text search index</li>
+<li>structured filters (day range, canon_state, type, tags, entities)</li>
+<li>M7QL query language</li>
+<li>strict M3 Safe/Full disclosure so search never leaks spoilers</li>
+</ul>
+<h2>M7 Contracts (Non-negotiable)</h2>
+<ul>
+<li>**M7-C1: Spoiler-Safe Search** — Safe mode returns only results where `reveal_day &lt;= reader_progress_day` (no spoiler snippets).</li>
+<li>**M7-C2: Unified Search Document Model** — everything becomes a Search Doc with required `reveal_day`.</li>
+<li>**M7-C3: Deterministic Ranking + Explainability** — stable ordering + explain for writer/admin.</li>
+<li>**M7-C4: Offline-First Index Export** — generate `exports/search_index.json`.</li>
+<li>**M7-C5: Day-Locked Filtering** — day filters use M4 Source Days only.</li>
+</ul>
+<h2>Search Doc Schema (concept)</h2>
+<pre><code>{
+  "doc_type": "item|entity|edge|artifact|note",
+  "doc_id": "string",
+  "title": "string",
+  "body": "string",
+  "source_day": "YYYY-MM-DD",
+  "source_day_index": 12,
+  "reveal_day": "YYYY-MM-DD",
+  "canon_state": "seed|draft|locked|retconned|archived",
+  "tags": ["string"],
+  "entity_ids": ["string"]
+}</code></pre>
+<h2>M7QL (Query Language)</h2>
+<ul>
+<li>text: `hog farms buffalo`</li>
+<li>phrase: `"Buffalo watershed"`</li>
+<li>exclude: `-rumor`</li>
+<li>OR: `hog OR poultry`</li>
+<li>filters: `type:item canon:locked tag:environment`</li>
+<li>entity: `entity:ENTITY_ID`</li>
+<li>days: `day:2025-12-12 day_index:12 day_range:2025-12-10..2025-12-15`</li>
+</ul>
+<h2>Implementation (Concrete)</h2>
+<pre><code>/modules/M7/core/
+  build_search_docs.ts
+  tokenize.ts
+  m7ql_parser.ts
+  search_gate.ts
+  rank.ts
+  snippet.ts
+  export_search_index.ts
+  search_client.ts</code></pre>
+<p>Key functions:</p>
+<pre><code>buildDocs(items, entities, edges): SearchDoc[]
+parseM7QL(query: string): QueryAST
+shouldReveal(doc, reader_progress_day, mode): boolean
+scoreDoc(doc, ast): number
+makeSnippet(doc, ast): string
+exportSearchIndex(docs): SearchIndexPayload
+search(index, ast, opts): { results, explain? }</code></pre>
+<h2>Definition of Done (M7)</h2>
+<ul>
+<li>Unified offline search across items/entities/edges</li>
+<li>M7QL supports filters + day ranges + excludes</li>
+<li>Safe mode never leaks future reveals</li>
+<li>Deterministic ranking + explainability</li>
+<li>Offline portal search works with no server</li>
+</ul>
+</section>
+<section id="m8">
+<h1>M8 — Build + Packaging Pipeline (Offline Portal + Master Navigation)</h1>
+<h2>Purpose</h2>
+<p>M8 is the single button that turns the repo into a deterministic offline package:</p>
+<ul>
+<li>exports (M4 timeline, M6 entities/edges/backlinks, M7 search)</li>
+<li>offline HTML master reader and/or portal bundle zip</li>
+<li>build reports, override logs, conflict summaries</li>
+</ul>
+<h2>M8 Contracts (Non-negotiable)</h2>
+<ul>
+<li>**M8-C1: Deterministic Build** — same inputs → same outputs (stable sorting, no ID regeneration).</li>
+<li>**M8-C2: Validation Gate** — packaging blocked unless M4/M6/M7/M3 checks pass.</li>
+<li>**M8-C3: Offline-First Packaging** — no CDN, no fetch required.</li>
+<li>**M8-C4: Versioned Releases** — release_id + source_window + git info + report.</li>
+<li>**M8-C5: Override Visibility** — override log always included in output.</li>
+</ul>
+<h2>Outputs (Artifacts)</h2>
+<p>Always:</p>
+<ul>
+<li>`exports/timeline_index.json`</li>
+<li>`exports/entity_index.json`, `exports/entity_edges.json`, optional backlinks</li>
+<li>`exports/search_index.json`</li>
+<li>`reports/build_report.json` + `reports/build_report.md`</li>
+<li>`reports/conflict_report.json` + `reports/override_log.json`</li>
+</ul>
+<p>Package:</p>
+<ul>
+<li>`PROJECT_MASTER_READER.html` (single-file) and/or</li>
+<li>`PROJECT_PORTAL_BUNDLE.zip` (foldered bundle)</li>
+</ul>
+<h2>Pipeline Phases</h2>
+<ul>
+<li>**M8.1** Source Collector</li>
+<li>**M8.2** Validation Gate</li>
+<li>**M8.3** Export Builder</li>
+<li>**M8.4** HTML Packaging (one-page + bundle modes)</li>
+<li>**M8.5** Zip Packager + Release Stamp</li>
+</ul>
+<h2>Implementation (Concrete)</h2>
+<pre><code>/modules/M8/core/
+  collect_inputs.ts
+  validate_all.ts
+  build_exports.ts
+  deterministic_sort.ts
+  render_master_reader.ts
+  package_zip.ts
+  release_manifest.ts</code></pre>
+<p>Key functions:</p>
+<pre><code>collectInputs(rootPath): Inputs
+validateAll(inputs, cfg): BuildReport
+buildExports(inputs, cfg): Exports
+renderMasterReader(payload): string
+makeReleaseManifest(cfg, buildReport, gitInfo?): ReleaseManifest
+packageZip(files, manifest): Buffer</code></pre>
+<h2>Release Manifest (schema sketch)</h2>
+<pre><code>{
+  "release_id": "BOOK1_r001",
+  "built_at": "ISO",
+  "source_window": { "start": "YYYY-MM-DD", "end": "YYYY-MM-DD" },
+  "git": { "commit": "string", "branch": "string" },
+  "counts": { "items": 0, "entities": 0, "edges": 0, "docs": 0 },
+  "reports": {
+    "build_report": "reports/build_report.json",
+    "override_log": "reports/override_log.json",
+    "conflict_report": "reports/conflict_report.json"
+  }
+}</code></pre>
+<h2>Tests (Acceptance)</h2>
+<ul>
+<li>collector detects nested module folders</li>
+<li>validation blocks packaging on contract violations</li>
+<li>exports deterministic across repeated builds</li>
+<li>master reader works offline and includes release info + override summary</li>
+<li>manifest conforms to schema</li>
+</ul>
+<h2>Definition of Done (M8)</h2>
+<ul>
+<li>deterministic build pipeline with validation gate</li>
+<li>validated exports for M4/M6/M7</li>
+<li>offline packaging works (single-file and/or bundle)</li>
+<li>versioned releases with manifest + reports</li>
+<li>override/conflict visibility in outputs</li>
+</ul>
+</section>
+</main>
+</div>
+
+
+    </section>
+
+    <section class="doc" id="completeness-checklist">
+      <h1>What’s Missing / To Finish the Master Build Plan</h1>
+      <p>This section is added in this consolidated reader: it’s a punch-list of gaps that still need full micro-step documentation before you start the “fast build with no surprises.”</p>
+      <div id="checklist-slot">
+<h2>Cross-cutting (must exist before “fast build”)</h2>
+<ul>
+  <li><b>Single source of truth for contracts</b>: versioned schemas (JSON Schema) + contract registry + changelog rules.</li>
+  <li><b>Micro-step library</b>: every phase has a micro-step page using the template (goal → inputs → steps → tests → DoD).</li>
+  <li><b>Deterministic build discipline</b>: stable sorting everywhere, release manifest, reproducible ZIPs, and diff-friendly outputs.</li>
+  <li><b>Test matrix</b>: unit/integration/acceptance + golden fixtures for Book1 window (Dec 1–Jan 3).</li>
+  <li><b>Sample dataset</b>: tiny “toy book” + medium “Book1” fixture to validate scaling.</li>
+  <li><b>Drift control protocol</b>: change-control gates, override audit logging, and “no silent edits” policy.</li>
+  <li><b>CI pipeline</b>: lint/typecheck/tests/build/package + artifact upload; fails on nondeterminism or schema drift.</li>
+  <li><b>Observability</b>: structured logs, build report JSON, conflict report JSON, override log JSON.</li>
+  <li><b>Security + privacy</b>: local/offline guarantees, no external calls by default, and clear toggle points if added later.</li>
+</ul>
+
+<h2>M0 — Repo + Constitution (fill gaps)</h2>
+<ul>
+  <li>Define monorepo layout + module boundaries (folders, naming, import rules).</li>
+  <li>TypeScript/Node version pinning + package manager policy + lockfile rules.</li>
+  <li>Build “Contract Registry” command (list contracts, validate versions, generate docs).</li>
+  <li>Contribution workflow: branching, PR template, “contract change” checklist, release tagging.</li>
+</ul>
+
+<h2>M1 — Writer Cockpit (fill gaps)</h2>
+<ul>
+  <li>Screen-by-screen UX micro-steps: create item, edit item, lock day, override request, conflict resolution view.</li>
+  <li>Prompt library contracts: prompt IDs, inputs/outputs, evaluation harness.</li>
+  <li>Local persistence strategy (file-based DB vs embedded DB) + migration plan.</li>
+</ul>
+
+<h2>M2/M4 — Canon Engine + Day Lock (fill gaps)</h2>
+<ul>
+  <li>Formalize CanonItem lifecycle micro-steps: seed → draft → locked → retconned → archived.</li>
+  <li>Dependency + contradiction rules: explicit catalogs of contradiction types + resolution policy.</li>
+  <li>Override governance: who/what can override, how audit is recorded, and how rollbacks work.</li>
+</ul>
+
+<h2>M3 — Disclosure / Reader Progress (fill gaps)</h2>
+<ul>
+  <li>Disclosure mode rules in executable form (gate function spec + fixtures per mode).</li>
+  <li>Reader progress storage + UX micro-steps (bookmarking, “as-of day” viewing, spoiler warnings).</li>
+  <li>Author override UI + audit trail integration (ties to M4 override log).</li>
+</ul>
+
+<h2>M6 — Entity Graph + Crosslinking (missing micro-steps)</h2>
+<ul>
+  <li>Entity creation & normalization workflow (aliases, canonical IDs, dedupe).</li>
+  <li>Edge extraction: rules for auto-linking from items → entities, plus manual edge editing.</li>
+  <li>Graph validation: broken refs, orphan entities, cyclic “must-come-before” constraints.</li>
+  <li>Backlink rendering + inline crosslinks in reader outputs.</li>
+  <li>Graph export format + deterministic ordering + explain output (“why is this linked?”).</li>
+</ul>
+
+<h2>M7 — Search + M7QL (missing micro-steps)</h2>
+<ul>
+  <li>Index build pipeline: docs emitted from items/entities/edges/artifacts; tokenization; ranking; snippets.</li>
+  <li>Query language: parser, AST, filters (tags, type, day range), phrase handling, OR/AND/NOT.</li>
+  <li>Spoiler gate: shouldReveal(doc, progress, mode) fixtures; “explain why hidden” output.</li>
+  <li>Search UX micro-steps (filters, advanced query, “reveal later” messaging).</li>
+</ul>
+
+<h2>M8 — Build + Packaging (missing micro-steps)</h2>
+<ul>
+  <li>Collector: discover module outputs + validate expected files.</li>
+  <li>Validator: schema checks + drift checks + determinism checks.</li>
+  <li>Renderer: master HTML reader generation + nav injection + version stamping.</li>
+  <li>Packager: ZIP structure, manifest, reports folder, and reproducible timestamps.</li>
+  <li>Release workflow: release_id naming, version bumping, and diff review steps.</li>
+</ul>
+</div>
+    </section>
+
+    <section class="doc" id="microstep-template">
+      <h1>Micro-step Template (Use for every phase)</h1>
+      <ol>
+        <li><b>Goal</b> — single sentence (what “done” means).</li>
+        <li><b>Inputs</b> — files, schemas, prior module outputs.</li>
+        <li><b>Preconditions</b> — validations that must already pass.</li>
+        <li><b>Step-by-step</b> — numbered actions (developer precise).</li>
+        <li><b>Edge cases</b> — what can break; how we detect it.</li>
+        <li><b>Artifacts produced</b> — files + paths (deterministic names).</li>
+        <li><b>Tests</b> — unit + integration + acceptance criteria.</li>
+        <li><b>Telemetry</b> — logs, counters, audit events (and where recorded).</li>
+        <li><b>Definition of Done</b> — objective checklist + sample expected output.</li>
+      </ol>
+    </section>
+  </main>
+</div>
+<script>
+(function(){
+  const input=document.getElementById('filter');
+  const links=[...document.querySelectorAll('.nav a')];
+  const normalize=s=>s.toLowerCase();
+  input && input.addEventListener('input', ()=>{
+    const q=normalize(input.value||'').trim();
+    links.forEach(a=>{
+      const t=normalize(a.textContent||'');
+      a.style.display = (!q || t.includes(q)) ? 'block' : 'none';
+    });
+  });
+
+  // Smooth-ish scroll
+  document.querySelectorAll('.nav a').forEach(a=>{
+    a.addEventListener('click', (e)=>{
+      const href=a.getAttribute('href')||'';
+      if(!href.startsWith('#')) return;
+      const target=document.querySelector(href);
+      if(target){
+        e.preventDefault();
+        target.scrollIntoView({behavior:'smooth', block:'start'});
+        history.replaceState(null,'',href);
+      }
+    });
+  });
+})();
+</script></body></html>

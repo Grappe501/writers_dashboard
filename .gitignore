@@ -1,0 +1,21 @@
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Node / Python common
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+.env
+
+# Build outputs (generated)
+build/
+dist/
+reports/
+
+# Large zips you regenerate
+*.zip

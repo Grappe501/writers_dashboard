@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>M2 Contracts Map — Omniscient Build Plan</title>
+<style>
+:root{--bg:#0b0f14;--fg:#e8eef6;--muted:rgba(232,238,246,.72);--card:rgba(255,255,255,.04);--border:rgba(255,255,255,.12);--accent:#7cc4ff;--ok:#7CFFB2;--warn:#ffcc66;}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.5;}
+header{position:sticky;top:0;z-index:10;background:rgba(11,15,20,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
+.brand{max-width:1240px;margin:0 auto;padding:14px;}
+.brand h1{margin:0;font-size:18px;}
+.brand .sub{color:var(--muted);font-size:12px;margin-top:2px}
+nav{max-width:1240px;margin:0 auto;padding:0 14px 14px 14px;display:flex;gap:10px;flex-wrap:wrap}
+nav a{text-decoration:none;color:var(--muted);border:1px solid var(--border);background:rgba(255,255,255,.03);padding:6px 10px;border-radius:999px;font-size:12px}
+nav a.active{color:var(--fg);border-color:rgba(124,196,255,.55)}
+nav a:hover{color:var(--fg)}
+.wrap{max-width:1240px;margin:0 auto;padding:14px 14px 70px 14px}
+.card{border:1px solid var(--border);background:var(--card);border-radius:14px;padding:14px;margin:12px 0}
+h2{margin:0 0 10px 0;font-size:16px}
+h3{margin:18px 0 8px 0;font-size:14px;color:rgba(232,238,246,.92)}
+ul{margin:8px 0 8px 18px}
+li{margin:6px 0}
+pre{white-space:pre-wrap;word-break:break-word;background:rgba(255,255,255,.04);border:1px solid var(--border);padding:12px;border-radius:12px}
+.badge{display:inline-block;border:1px solid var(--border);background:rgba(255,255,255,.04);padding:2px 8px;border-radius:999px;font-size:11px;color:var(--muted)}
+.ok{border-left:3px solid var(--ok);padding-left:10px}
+.callout{border-left:3px solid var(--warn);padding-left:10px}
+table{width:100%;border-collapse:collapse;margin-top:10px}
+th,td{border:1px solid var(--border);padding:8px;text-align:left;vertical-align:top}
+th{background:rgba(255,255,255,.04)}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <h1>Omniscient Build Plan — Implementation Kickoff</h1>
+    <div class="sub">v1.0 • M2 LOCKED • Convert contracts → executable tasks • Generated Jan 12, 2026</div>
+  </div>
+  <nav><a class="" href="index.html">Overview</a> <a class="" href="m2-implementation.html">M2 Implementation</a> <a class="active" href="m2-contracts.html">M2 Contracts Map</a> <a class="" href="task-board.html">Task Board</a></nav>
+</header>
+<div class="wrap">
+
+<div class="card">
+  <h2>M2 Contracts → Implementation mapping</h2>
+  <table>
+    <tr><th>Contract</th><th>Implements</th><th>Primary folders</th></tr>
+    <tr><td><code>/contracts/canon_schema_v1.md</code></td><td>DB tables + models</td><td><code>/server/db</code>, <code>/server/models</code>, <code>/server/migrations</code></td></tr>
+    <tr><td><code>/contracts/canon_invariants_v1.md</code></td><td>Validators + tests</td><td><code>/server/validators</code>, <code>/server/tests</code></td></tr>
+    <tr><td><code>/contracts/canon_ids_v1.md</code></td><td>ID utilities + alias rules</td><td><code>/server/utils</code>, <code>/server/models</code></td></tr>
+    <tr><td><code>/contracts/canon_commit_v1.md</code></td><td>Commit tables + transaction API</td><td><code>/server/services</code>, <code>/server/models</code>, <code>/server/api</code></td></tr>
+    <tr><td><code>/contracts/canon_api_v1.md</code></td><td>HTTP endpoints + request schemas</td><td><code>/server/api</code></td></tr>
+  </table>
+</div>
+
+<div class="card callout">
+  <h2>Tech choice baseline (editable later)</h2>
+  <ul>
+    <li><b>Server:</b> Node (Express/Fastify) <i>or</i> Python (FastAPI). Choose one for the repo; tasks below are language-agnostic.</li>
+    <li><b>DB:</b> SQLite in dev (file), migrations in repo.</li>
+    <li><b>Validation:</b> JSON schema or typed models + explicit invariant tests.</li>
+  </ul>
+</div>
+
+<div class="card"><span class="badge">No-drift</span> Build only within task file-touch lists. If a task needs more files, update the task spec first.</div>
+</div>
+</body>
+</html>

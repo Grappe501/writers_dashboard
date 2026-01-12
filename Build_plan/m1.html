@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>M1 CEO Cockpit + AI — Omniscient Build Plan — Living World Novel Engine</title>
+<style>
+:root{--bg:#0b0f14;--fg:#e8eef6;--muted:rgba(232,238,246,0.72);--card:rgba(255,255,255,0.04);
+--border:rgba(255,255,255,0.10);--shadow:0 10px 30px rgba(0,0,0,0.35);--accent:#7cc4ff;--warn:#ffcc66;--ok:#7CFFB2;--bad:#ff6b6b;}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.5;}
+header{position:sticky;top:0;z-index:10;background:rgba(11,15,20,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
+.brand{max-width:1240px;margin:0 auto;padding:14px;display:flex;flex-direction:column;gap:2px;}
+.brand h1{font-size:18px;margin:0;}
+.brand .sub{font-size:12px;color:var(--muted);}
+nav{max-width:1240px;margin:0 auto;padding:0 14px 14px 14px;display:flex;gap:8px;flex-wrap:wrap;}
+.navlink{text-decoration:none;color:var(--muted);border:1px solid var(--border);background:rgba(255,255,255,0.03);padding:6px 10px;border-radius:999px;font-size:12px;}
+.navlink:hover{border-color:rgba(255,255,255,0.22);color:var(--fg);}
+.navlink.active{border-color:rgba(124,196,255,0.55);color:var(--fg);}
+.wrap{max-width:1240px;margin:0 auto;padding:14px 14px 70px 14px;}
+.card{border:1px solid var(--border);background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:14px;margin:12px 0;}
+h2{margin:0 0 10px 0;font-size:16px;}
+h3{margin:18px 0 8px 0;font-size:14px;color:rgba(232,238,246,0.92);}
+p{margin:10px 0;}
+a{color:var(--accent);}
+ul{margin:8px 0 8px 18px;}
+li{margin:6px 0;}
+pre, code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;}
+pre{white-space:pre-wrap;word-break:break-word;background:rgba(255,255,255,0.04);border:1px solid var(--border);padding:12px;border-radius:12px;}
+details{border:1px solid var(--border);background:rgba(255,255,255,0.03);border-radius:12px;padding:10px;margin:10px 0;}
+details > summary{cursor:pointer;font-weight:800;color:rgba(232,238,246,0.92);}
+.muted{color:var(--muted);}
+.callout{border-left:3px solid var(--warn);padding-left:10px;}
+.ok{border-left:3px solid var(--ok);padding-left:10px;}
+.bad{border-left:3px solid var(--bad);padding-left:10px;}
+.badge{display:inline-block;border:1px solid var(--border);background:rgba(255,255,255,0.04);padding:2px 8px;border-radius:999px;font-size:11px;color:var(--muted);}
+.checklist li{list-style:"☐  ";}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:920px){.grid2{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <h1>Omniscient Build Plan — Living World Novel Engine</h1>
+    <div class="sub">HTML Protocol Edition (v0.7) • M1 expanded with AI Writing Suite (author-controlled scope) • No-drift • Generated Jan 12, 2026</div>
+  </div>
+  <nav><a class="navlink" href="index.html">Overview</a><a class="navlink" href="modules.html">All Modules</a><a class="navlink" href="m0.html">M0 Repo Hardening</a><a class="navlink active" href="m1.html">M1 CEO Cockpit + AI</a><a class="navlink" href="m2-m8.html">M2–M8 Baselines</a><a class="navlink" href="change-control.html">Change Control</a></nav>
+</header>
+<div class="wrap">
+
+<div class="card ok">
+  <h2>M1 — CEO Writer Cockpit + AI Writing Suite</h2>
+  <p>This module is your <b>CEO command center</b> for producing the book (spine) and building the living world behind it — with heavy AI assistance that stays disciplined.</p>
+  <p class="muted callout"><b>Scope slider rule:</b> The author decides how much AI writes in a pass (sentence → paragraph → scene → chapter).</p>
+</div>
+
+<div class="card">
+  <h2>Non‑negotiables (AI discipline)</h2>
+  <ul>
+    <li><b>Known‑variables only:</b> every generation must list its inputs (day, beats, entities, seeds, POV constraints).</li>
+    <li><b>No silent changes:</b> AI never inserts text without explicit accept.</li>
+    <li><b>Audit trail:</b> every run is logged (inputs, model, settings, outputs, diffs).</li>
+    <li><b>Guardrails:</b> “no new entities” default; “no future day info” default.</li>
+  </ul>
+</div>
+
+<details open>
+  <summary>Phase M1.6 — AI system architecture contract (key safety + observability)</summary>
+  <div class="card">
+    <h3>Objective</h3>
+    <ul>
+      <li>Design AI integration so it is powerful, measurable, and safe.</li>
+      <li>Keep OpenAI key <b>server-only</b>. Browser never sees secrets.</li>
+    </ul>
+    <h3>Micro-steps</h3>
+    <ul class="checklist">
+      <li>Create <code>/contracts/ai_architecture_v1.md</code>:
+        <ul>
+          <li>Local proxy API for all model calls (FastAPI or Node)</li>
+          <li>Rate limits + cost caps + token budgets</li>
+          <li>Request/response logging (aiRunLog)</li>
+          <li>Determinism knobs (temperature presets)</li>
+          <li>Offline behavior</li>
+        </ul>
+      </li>
+      <li>Define AI “modes”: Draft / Revise / Continuity / Voice / Outline.</li>
+      <li>Define tool schemas (structured inputs/outputs; no free-form chaos).</li>
+      <li>Define “no-canon-write” rule: AI produces suggestions only.</li>
+    </ul>
+  </div>
+</details>
+
+<details open>
+  <summary>Phase M1.7 — Scope Slider + Pass Templates (sentence → chapter)</summary>
+  <div class="card">
+    <h3>Objective</h3>
+    <ul><li>Make AI output size and intent author-controlled, every time.</li></ul>
+    <h3>Micro-steps</h3>
+    <ul class="checklist">
+      <li>Add “Scope” control: Sentence / Paragraph / Scene / Chapter.</li>
+      <li>Add “Pass template” chooser (per scope):
+        <ul>
+          <li>Outline-only</li>
+          <li>Beats + notes</li>
+          <li>Draft prose</li>
+          <li>Draft + revision notes</li>
+        </ul>
+      </li>
+      <li>Require “Known variables” panel to be filled (or confirmed) before run.</li>
+      <li>Store scope + template in aiRunLog.</li>
+    </ul>
+    <h3>Acceptance criteria</h3>
+    <ul><li>Author can reliably request exactly as much writing as desired per run.</li></ul>
+  </div>
+</details>
+
+<details open>
+  <summary>Phase M1.8 — Tool Pack: Outline & Beats (Day/Scene)</summary>
+  <div class="card">
+    <h3>Objective</h3>
+    <ul><li>Generate actionable outlines and beats tied to a specific StoryDay.</li></ul>
+    <h3>Micro-steps</h3>
+    <ul class="checklist">
+      <li>Tool: Day Outline Generator (returns beats, goals, stakes, cliffhanger options).</li>
+      <li>Tool: Scene Beat Builder (returns 3–7 beats per scene with escalation notes).</li>
+      <li>Tool: Beat-to-Scene Draft (writes within constraints; no new entities by default).</li>
+      <li>Outputs are structured JSON + optional prose blocks.</li>
+    </ul>
+  </div>
+</details>
+
+<details open>
+  <summary>Phase M1.9 — Tool Pack: Drafting & Co‑writing (paragraph → chapter)</summary>
+  <div class="card">
+    <h3>Objective</h3>
+    <ul><li>AI can draft full paragraphs, scenes, or entire chapters confined to known variables.</li></ul>
+    <h3>Micro-steps</h3>
+    <ul class="checklist">
+      <li>Tool: Constrained Chapter Draft (inputs: beats + seed targets + entity roster + tone constraints).</li>
+      <li>Tool: Dialogue-first Draft (writes dialogue skeleton then fills action).</li>
+      <li>Tool: Action-first Draft (writes action/scene geography then layers dialogue).</li>
+      <li>Require “No new entities” toggle (default ON).</li>
+      <li>Require “No future day knowledge” toggle (default ON).</li>
+      <li>Each output includes:
+        <ul>
+          <li>Assumptions list</li>
+          <li>Seeds touched</li>
+          <li>Entities referenced</li>
+          <li>Potential continuity risks</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</details>
+
+<details open>
+  <summary>Phase M1.10 — Revision Suite (operations, not black-box rewrites)</summary>
+  <div class="card">
+    <h3>Objective</h3>
+    <ul><li>AI revisions are selectable operations with granular accept/reject.</li></ul>
+    <h3>Micro-steps</h3>
+    <ul class="checklist">
+      <li>Operations: clarity, pacing, imagery, dialogue realism, tone consistency.</li>
+      <li>Require constraints block: what must not change.</li>
+      <li>Output includes change summary + paragraph-level diffs.</li>
+      <li>Accept/Reject per paragraph (author-controlled merge).</li>
+    </ul>
+  </div>
+</details>
+
+<details open>
+  <summary>Phase M1.11 — Continuity & Seed Intelligence (pre-canon)</summary>
+  <div class="card">
+    <h3>Objective</h3>
+    <ul><li>Catch contradictions and missing payoffs before they become canon.</li></ul>
+    <h3>Micro-steps</h3>
+    <ul class="checklist">
+      <li>Continuity scan scope: current day + previous 7 days + open seeds.</li>
+      <li>Flag categories: contradiction, ambiguity, missing payoff, unintroduced entity.</li>
+      <li>Produce fix suggestions with links back to day/seed.</li>
+      <li>Store continuity reports in export bundle.</li>
+    </ul>
+  </div>
+</details>
+
+<details open>
+  <summary>Phase M1.12 — Enneagram Voice Lock (POV truth with override)</summary>
+  <div class="card">
+    <h3>Objective</h3>
+    <ul><li>Rewrite drill-down POV in-character with Enneagram contracts + explicit override.</li></ul>
+    <h3>Micro-steps</h3>
+    <ul class="checklist">
+      <li>Inputs always include Enneagram profile + stress/growth state + forbidden moves.</li>
+      <li>Output includes voice rating + what changed notes.</li>
+      <li>Override requires reason and renders “intentional break” banner in output.</li>
+    </ul>
+  </div>
+</details>
+
+<details open>
+  <summary>Phase M1.13 — Safety, privacy, and cost controls (must-have)</summary>
+  <div class="card">
+    <h3>Objective</h3>
+    <ul><li>Prevent runaway costs, data leaks, and spoiler contamination.</li></ul>
+    <h3>Micro-steps</h3>
+    <ul class="checklist">
+      <li>Cost caps per day/week (soft + hard).</li>
+      <li>Token budgets per tool/scope.</li>
+      <li>Log redaction policy (hashes/snippets; avoid full text by default).</li>
+      <li>Local-only mode (disable external calls).</li>
+    </ul>
+  </div>
+</details>
+
+<div class="card muted">No-drift reminder: any change outside a phase’s file-touch list requires a contract update first. All design stays in HTML until you say “LOCK.”</div>
+</div>
+</body>
+</html>

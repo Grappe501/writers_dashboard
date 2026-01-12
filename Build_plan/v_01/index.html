@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Overview — Omniscient Build Plan</title>
+<style>
+:root{--bg:#0b0f14;--fg:#e8eef6;--muted:rgba(232,238,246,.72);--card:rgba(255,255,255,.04);--border:rgba(255,255,255,.12);--accent:#7cc4ff;--ok:#7CFFB2;--warn:#ffcc66;}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.5;}
+header{position:sticky;top:0;z-index:10;background:rgba(11,15,20,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
+.brand{max-width:1240px;margin:0 auto;padding:14px;}
+.brand h1{margin:0;font-size:18px;}
+.brand .sub{color:var(--muted);font-size:12px;margin-top:2px}
+nav{max-width:1240px;margin:0 auto;padding:0 14px 14px 14px;display:flex;gap:10px;flex-wrap:wrap}
+nav a{text-decoration:none;color:var(--muted);border:1px solid var(--border);background:rgba(255,255,255,.03);padding:6px 10px;border-radius:999px;font-size:12px}
+nav a.active{color:var(--fg);border-color:rgba(124,196,255,.55)}
+nav a:hover{color:var(--fg)}
+.wrap{max-width:1240px;margin:0 auto;padding:14px 14px 70px 14px}
+.card{border:1px solid var(--border);background:var(--card);border-radius:14px;padding:14px;margin:12px 0}
+h2{margin:0 0 10px 0;font-size:16px}
+h3{margin:18px 0 8px 0;font-size:14px;color:rgba(232,238,246,.92)}
+ul{margin:8px 0 8px 18px}
+li{margin:6px 0}
+pre{white-space:pre-wrap;word-break:break-word;background:rgba(255,255,255,.04);border:1px solid var(--border);padding:12px;border-radius:12px}
+.badge{display:inline-block;border:1px solid var(--border);background:rgba(255,255,255,.04);padding:2px 8px;border-radius:999px;font-size:11px;color:var(--muted)}
+.ok{border-left:3px solid var(--ok);padding-left:10px}
+.callout{border-left:3px solid var(--warn);padding-left:10px}
+table{width:100%;border-collapse:collapse;margin-top:10px}
+th,td{border:1px solid var(--border);padding:8px;text-align:left;vertical-align:top}
+th{background:rgba(255,255,255,.04)}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <h1>Omniscient Build Plan — Implementation Kickoff</h1>
+    <div class="sub">v1.0 • M2 LOCKED • Convert contracts → executable tasks • Generated Jan 12, 2026</div>
+  </div>
+  <nav><a class="active" href="index.html">Overview</a> <a class="" href="m2-implementation.html">M2 Implementation</a> <a class="" href="m2-contracts.html">M2 Contracts Map</a> <a class="" href="task-board.html">Task Board</a></nav>
+</header>
+<div class="wrap">
+
+<div class="card ok">
+  <h2>LOCKED: M2 Canon Engine Core</h2>
+  <ul>
+    <li>M2 design is locked. Next step is implementation from contracts with no drift.</li>
+    <li>Implementation assumes <b>local-first</b> (SQLite) with an upgrade path to Postgres.</li>
+    <li>All writes must flow through <b>CanonCommit</b> (diff + rollback).</li>
+  </ul>
+</div>
+<div class="card">
+  <h2>Implementation path (high-level)</h2>
+  <ol>
+    <li>Scaffold server + db layer</li>
+    <li>Implement schemas + migrations</li>
+    <li>Implement validators + invariants</li>
+    <li>Implement CanonCommit (preview/apply/revert)</li>
+    <li>Implement API endpoints</li>
+    <li>Fixtures + smoke tests</li>
+    <li>Wire M1 to read from M2 (writes later)</li>
+  </ol>
+</div>
+
+<div class="card"><span class="badge">No-drift</span> Build only within task file-touch lists. If a task needs more files, update the task spec first.</div>
+</div>
+</body>
+</html>
