@@ -15,23 +15,13 @@ __pycache__/
 # Build outputs (generated)
 build/
 dist/
+
+# Generated reports + archives
 reports/
-
-# Large zips you regenerate
-*.zip
-
 archive/
-reports/reorg/
-* text=auto
-*.py text eol=lf
-*.html text eol=lf
-*.css text eol=lf
-*.js text eol=lf
-*.md text eol=lf
-*.json text eol=lf
-*.yml text eol=lf
-*.yaml text eol=lf
-archive/
-reports/reorg/
-reports/polish/
+
+# Backups created by tools
 *.bak_polish
+
+# Large regenerated artifacts
+*.zip
