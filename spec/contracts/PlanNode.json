@@ -1,0 +1,95 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://writers-dashboard.local/contracts/PlanNode.schema.json",
+    "title": "PlanNode Contract",
+    "description": "A single navigable node in the Writers Dashboard plan tree. This is the authoritative data spine for LeftNav and CenterPane.",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["id", "title", "kind"],
+    "properties": {
+      "id": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[a-z0-9][a-z0-9\\-_:./]{0,127}$",
+        "description": "Stable identifier (used as the primary key across persistence, notes, validation, and navigation)."
+      },
+      "title": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 160,
+        "description": "Human-readable label shown in the UI."
+      },
+      "kind": {
+        "type": "string",
+        "description": "Semantic category used for rendering and validation rules.",
+        "enum": ["hub", "module", "day", "doc", "folder", "link"]
+      },
+      "href": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Relative URL or path target. For local HTML readers, prefer relative paths from the app origin.",
+        "examples": ["../Build_plan/index.html", "../Build_plan/m1/overview.html"],
+        "pattern": "^(?!\\s+$).+"
+      },
+      "children": {
+        "type": "array",
+        "description": "Ordered list of child node ids. A node with children is considered expandable in the left navigation.",
+        "items": { "type": "string", "minLength": 1 },
+        "uniqueItems": true,
+        "default": []
+      },
+      "parentId": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Parent node id (optional for roots)."
+      },
+      "order": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "Optional sort key within the parent. When absent, UI may fall back to array order in parent.children."
+      },
+      "summary": {
+        "type": "string",
+        "maxLength": 2000,
+        "description": "Optional short description shown in the CenterPane (stubbed in M1.3; becomes useful in later phases)."
+      },
+      "tags": {
+        "type": "array",
+        "description": "Optional labels for filtering/search in later phases.",
+        "items": { "type": "string", "minLength": 1, "maxLength": 40 },
+        "uniqueItems": true,
+        "default": []
+      },
+      "status": {
+        "type": "string",
+        "description": "Optional lifecycle marker for build-plan execution tracking.",
+        "enum": ["todo", "in_progress", "blocked", "done"],
+        "default": "todo"
+      },
+      "source": {
+        "type": "object",
+        "description": "Optional provenance (useful when nodes are generated from build-plan HTML files or other inputs).",
+        "additionalProperties": false,
+        "properties": {
+          "type": { "type": "string", "enum": ["manual", "generated"] },
+          "ref": { "type": "string", "minLength": 1, "description": "Pointer to the origin (e.g., filename, URL, or generator name)." },
+          "generatedAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "meta": {
+        "type": "object",
+        "description": "Free-form metadata (non-authoritative for system behavior).",
+        "additionalProperties": true
+      }
+    },
+    "allOf": [
+      {
+        "if": { "properties": { "kind": { "enum": ["link", "doc", "hub", "module", "day"] } }, "required": ["kind"] },
+        "then": {
+          "description": "For navigable node kinds, href is usually expected. Enforcement is handled by validation rules rather than hard schema-required, to allow controlled overrides.",
+          "properties": {}
+        }
+      }
+    ]
+  }
+  

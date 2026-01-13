@@ -1,0 +1,90 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://writers-dashboard.local/contracts/OverrideRequest.schema.json",
+    "title": "OverrideRequest Contract",
+    "description": "Authoritative record of an intentional author override. Overrides allow controlled exceptions to validation rules without drifting the underlying contracts.",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["id", "type", "rationale", "requestedAt"],
+    "properties": {
+      "id": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Unique override identifier (stable)."
+      },
+      "type": {
+        "type": "string",
+        "enum": [
+          "suppress-issue",
+          "allow-missing-href",
+          "allow-orphan-node",
+          "allow-duplicate-title",
+          "custom"
+        ],
+        "description": "Override category. Validation logic interprets these types to change gating behavior."
+      },
+      "nodeId": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Optional PlanNode id the override applies to."
+      },
+      "issueId": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Optional ValidationIssue id to suppress (when type='suppress-issue')."
+      },
+      "ruleId": {
+        "type": "string",
+        "description": "Optional rule identifier affected by the override."
+      },
+      "rationale": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Plain-language justification for why this exception is intentional."
+      },
+      "requestedBy": {
+        "type": "string",
+        "description": "Optional human identifier (e.g., 'Steve')."
+      },
+      "requestedAt": {
+        "type": "string",
+        "format": "date-time",
+        "description": "When the override was created."
+      },
+      "expiresAt": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Optional expiration for time-boxed overrides."
+      },
+      "status": {
+        "type": "string",
+        "enum": ["active", "expired", "revoked"],
+        "default": "active",
+        "description": "Lifecycle state of the override."
+      },
+      "revokedAt": {
+        "type": "string",
+        "format": "date-time",
+        "description": "If revoked, when the override was revoked."
+      },
+      "revokedReason": {
+        "type": "string",
+        "description": "If revoked, why it was revoked."
+      },
+      "meta": {
+        "type": "object",
+        "description": "Free-form metadata (non-authoritative).",
+        "additionalProperties": true
+      }
+    },
+    "allOf": [
+      {
+        "if": { "properties": { "type": { "const": "suppress-issue" } }, "required": ["type"] },
+        "then": {
+          "required": ["issueId"],
+          "description": "Suppressing an issue requires the issueId. nodeId is recommended but not mandatory."
+        }
+      }
+    ]
+  }
+  

@@ -1,0 +1,88 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://writers-dashboard.local/contracts/ProjectManifest.schema.json",
+    "title": "ProjectManifest Contract",
+    "description": "Top-level project manifest for Writers Dashboard. This document is the single source of truth that populates navigation, drives node rendering, and anchors validation.",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["manifestVersion", "projectId", "title", "rootNodeId", "nodes"],
+    "properties": {
+      "manifestVersion": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Semantic version string for the manifest format (not the app). Example: '1.0.0'."
+      },
+      "projectId": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Stable identifier for the project (used in storage keys and exports)."
+      },
+      "title": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Display title for the project."
+      },
+      "description": {
+        "type": "string",
+        "description": "Optional longer description of the project."
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Optional creation timestamp for the manifest."
+      },
+      "updatedAt": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Optional last-updated timestamp for the manifest."
+      },
+      "rootNodeId": {
+        "type": "string",
+        "minLength": 1,
+        "description": "PlanNode id that should be treated as the root of navigation."
+      },
+      "nodes": {
+        "type": "array",
+        "minItems": 1,
+        "description": "Flat list of all PlanNodes. Parent/child relations are defined by node 'children' arrays.",
+        "items": { "$ref": "PlanNode.json" }
+      },
+      "overrides": {
+        "type": "array",
+        "description": "Optional list of active overrides applied to validation. Overrides should be rare and heavily justified.",
+        "items": { "$ref": "OverrideRequest.json" }
+      },
+      "validationProfile": {
+        "type": "object",
+        "description": "Optional validation tuning parameters. Defaults are applied by the app when omitted.",
+        "additionalProperties": false,
+        "properties": {
+          "requireHrefForKinds": {
+            "type": "array",
+            "description": "Kinds that are expected to have an href (unless overridden).",
+            "items": {
+              "type": "string",
+              "enum": ["link", "doc", "hub", "module", "day"]
+            },
+            "default": ["link", "doc", "hub", "module", "day"]
+          },
+          "stopTheLineOn": {
+            "type": "array",
+            "description": "Severities that should fail a gate.",
+            "items": { "type": "string", "enum": ["warn", "error"] },
+            "default": ["error"]
+          }
+        }
+      },
+      "source": {
+        "type": "object",
+        "description": "Where the manifest came from (hand-authored, generator, etc.).",
+        "additionalProperties": false,
+        "properties": {
+          "ref": { "type": "string", "minLength": 1 },
+          "generatedAt": { "type": "string", "format": "date-time" }
+        }
+      }
+    }
+  }
+  

@@ -1,0 +1,6 @@
+{
+    "expectedTotals": { "info": 0, "warn": 7, "error": 0 },
+    "expectedRuleIdsPresent": ["href-required-for-kind"],
+    "notes": "Warnings are expected until hrefs are added for hub/module/doc nodes."
+  }
+  

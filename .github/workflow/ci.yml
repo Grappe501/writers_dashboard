@@ -1,0 +1,26 @@
+name: ci
+on:
+  push:
+  pull_request:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Node install + test (if app exists)
+        run: |
+          if [ -d "writers-dashboard-app" ]; then
+            cd writers-dashboard-app
+            if [ -f "package-lock.json" ]; then npm ci; else npm install; fi
+            npm test --if-present
+          else
+            echo "writers-dashboard-app not found yet"
+          fi
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Python compile tools
+        run: python -m compileall tools

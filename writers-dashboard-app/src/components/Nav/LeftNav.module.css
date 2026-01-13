@@ -1,0 +1,33 @@
+.leftNav {
+    padding: 16px;
+  }
+  
+  .node {
+    margin-bottom: 8px;
+  }
+  
+  .nodeButton {
+    width: 100%;
+    text-align: left;
+    border: 1px solid rgba(0,0,0,0.12);
+    background: white;
+    border-radius: 10px;
+    padding: 10px 12px;
+    cursor: pointer;
+  }
+  
+  .nodeButton:hover {
+    border-color: rgba(0,0,0,0.25);
+  }
+  
+  .nodeTitle {
+    font-weight: 600;
+    font-size: 14px;
+  }
+  
+  .nodeId {
+    font-size: 12px;
+    opacity: 0.65;
+    margin-top: 2px;
+  }
+  

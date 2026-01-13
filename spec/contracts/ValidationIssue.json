@@ -1,0 +1,59 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://writers-dashboard.local/contracts/ValidationIssue.schema.json",
+    "title": "ValidationIssue Contract",
+    "description": "A single validation finding produced by schema checks, link checks, or business rules. Used by the Right Inspector and for stop-the-line gating.",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["id", "severity", "message"],
+    "properties": {
+      "id": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Stable issue identifier (machine-friendly). Example: 'missing-href'."
+      },
+      "severity": {
+        "type": "string",
+        "enum": ["info", "warn", "error"],
+        "description": "Issue severity. 'error' should block gates unless explicitly overridden."
+      },
+      "message": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Human-readable explanation of the issue."
+      },
+      "nodeId": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Optional PlanNode id this issue is associated with (enables click-to-select)."
+      },
+      "path": {
+        "type": "string",
+        "description": "Optional JSON pointer / dot-path to the failing field (e.g., '/nodes/3/href')."
+      },
+      "ruleId": {
+        "type": "string",
+        "description": "Optional rule identifier that produced the issue (e.g., 'href-required-for-link')."
+      },
+      "source": {
+        "type": "string",
+        "enum": ["schema", "link-check", "business-rule", "runtime"],
+        "description": "Where the issue came from."
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Timestamp when the issue was produced."
+      },
+      "details": {
+        "type": "object",
+        "description": "Optional structured details (kept small).",
+        "additionalProperties": true
+      },
+      "suppressedByOverrideId": {
+        "type": "string",
+        "description": "If present, indicates this issue is currently suppressed by an override request."
+      }
+    }
+  }
+  

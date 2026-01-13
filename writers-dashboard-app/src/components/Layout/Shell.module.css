@@ -1,0 +1,40 @@
+.shell {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 280px 1fr 320px;
+  }
+  
+  .left,
+  .center,
+  .right {
+    min-width: 0;
+    overflow: auto;
+    border-right: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  
+  .right {
+    border-right: none;
+    border-left: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  
+  .left {
+    background: rgba(0, 0, 0, 0.02);
+  }
+  
+  .center {
+    background: white;
+  }
+  
+  .right {
+    background: rgba(0, 0, 0, 0.015);
+  }
+  
+  @media (max-width: 980px) {
+    .shell {
+      grid-template-columns: 240px 1fr;
+    }
+    .right {
+      display: none;
+    }
+  }
+  

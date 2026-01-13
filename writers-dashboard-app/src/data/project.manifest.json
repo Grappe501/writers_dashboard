@@ -1,0 +1,69 @@
+{
+    "manifestVersion": "1.0.0",
+    "projectId": "writers-dashboard-pilot",
+    "title": "Writers Dashboard — Pilot Build",
+    "description": "Authoritative build plan and navigation manifest.",
+    "createdAt": "2026-01-13T00:00:00Z",
+    "rootNodeId": "build-plan",
+    "nodes": [
+      {
+        "id": "build-plan",
+        "title": "Build Plan",
+        "kind": "hub",
+        "href": "/readers/build_plan/index.html",
+        "children": ["m0", "m1"],
+        "status": "in_progress"
+      },
+      {
+        "id": "m0",
+        "title": "M0 — Foundation",
+        "kind": "module",
+        "href": "/readers/build_plan/m0.html",
+        "parentId": "build-plan",
+        "children": [],
+        "status": "done"
+      },
+      {
+        "id": "m1",
+        "title": "M1 — Cockpit",
+        "kind": "module",
+        "href": "/readers/build_plan/m1.html",
+        "parentId": "build-plan",
+        "children": ["m1-1", "m1-2", "m1-3", "m1-4"],
+        "status": "in_progress"
+      },
+      {
+        "id": "m1-1",
+        "title": "M1.1 — Shell",
+        "kind": "doc",
+        "href": "/readers/build_plan/m1-1.html",
+        "parentId": "m1",
+        "status": "done"
+      },
+      {
+        "id": "m1-2",
+        "title": "M1.2 — Layout",
+        "kind": "doc",
+        "href": "/readers/build_plan/m1-2.html",
+        "parentId": "m1",
+        "status": "done"
+      },
+      {
+        "id": "m1-3",
+        "title": "M1.3 — Cockpit Render",
+        "kind": "doc",
+        "href": "/readers/build_plan/m1-3.html",
+        "parentId": "m1",
+        "status": "done"
+      },
+      {
+        "id": "m1-4",
+        "title": "M1.4 — Contracts",
+        "kind": "doc",
+        "href": "/readers/build_plan/m1-4.html",
+        "parentId": "m1",
+        "status": "in_progress"
+      }
+    ]
+  }
+  
